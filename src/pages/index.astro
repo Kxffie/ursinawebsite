@@ -13,11 +13,18 @@ const featured = projects.sort(() => Math.random() - 0.5).slice(0, 6)
 ---
 <Layout title="Home">
   <head>
-    <script type="text/partytown" async src="https://www.googletagmanager.com/gtag/js?id=G-021QZDYMWM"></script>
-    <script type="text/partytown">
+    <script is:inline type="text/partytown" async src="https://www.googletagmanager.com/gtag/js?id=G-021QZDYMWM"></script>
+    <script is:inline type="text/partytown">
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
+
+      gtag("consent", "default", {
+        ad_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied",
+        analytics_storage: "denied",
+      });
 
       gtag('config', 'G-021QZDYMWM');
     </script>
@@ -76,12 +83,12 @@ const featured = projects.sort(() => Math.random() - 0.5).slice(0, 6)
   	<!-- Video Rotator Script -->
   	<script type="module">
     const videos = [
-      'heros/blood_reworking_test.webm',
-      'heros/game.mp4',
-      'heros/ursina_chunk_handler.mp4',
-      'heros/voxel_island_detection.mp4',
-      'heros/ursina_avatar.webm',
-      'heros/coins.webm',
+      '/ursinawebsite/heros/blood_reworking_test.webm',
+      '/ursinawebsite/heros/game.mp4',
+      '/ursinawebsite/heros/ursina_chunk_handler.mp4',
+      '/ursinawebsite/heros/voxel_island_detection.mp4',
+      '/ursinawebsite/heros/ursina_avatar.webm',
+      '/ursinawebsite/heros/coins.webm',
     ];
     const fadeDuration = 700;
     let idx = 0;
@@ -135,7 +142,7 @@ app.run()
         </div>
         <div class="bg-white rounded-lg overflow-hidden h-[320px]">
           <video
-            src="pythonexample.mov"
+            src="/ursinawebsite/pythonexample.mov"
             autoplay
             muted
             loop
@@ -160,11 +167,11 @@ app.run()
           const { title, image } = entry.data;
           return (
             <a
-              href={`/samples/${slug}`}
+              href={`/ursinawebsite/samples/${slug}`}
               class="group block bg-gray-100 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition"
             >
               <img
-                src={`/samples/${image}`}
+                src={`/ursinawebsite/samples/${image}`}
                 alt={title}
                 class="w-full h-32 object-cover group-hover:scale-105 transition"
               />
@@ -178,7 +185,7 @@ app.run()
         <p class="mt-2 text-gray-600 mb-4 max-w-md">
           From platformers to simulations, data visualizations to educational apps. Ursina powers it all!
         </p>
-        <a href="/samples" class="text-blue-600 hover:underline">View More →</a>
+        <a href="/ursinawebsite/samples" class="text-blue-600 hover:underline">View More →</a>
       </div>
     </div>
   </section>
@@ -227,7 +234,7 @@ app.run()
         {projects.slice(0, 6).map((item, i) => (
           <div>
             <img
-              src={`/samples/${item.data.image}`}
+              src={`/ursinawebsite/samples/${item.data.image}`}
               alt={item.data.title}
               class="w-full h-32 object-cover rounded-lg shadow-md"
             />
