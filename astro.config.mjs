@@ -11,6 +11,7 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://kxffiec.github.io',
+  base: '/ursinawebsite/',
   vite: { plugins: [tailwindcss()] },
   integrations: [
     react(), 
