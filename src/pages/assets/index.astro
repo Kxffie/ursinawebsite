@@ -1,0 +1,93 @@
+---
+// src/pages/blog/index.astro
+import { getCollection } from 'astro:content'
+import Layout from '@/layouts/Layout.astro'
+import { ArrowRight } from 'lucide-react'
+import Wave from 'react-wavify'
+
+const assets = await getCollection('assets')
+---
+
+<Layout title="Assets">
+  <!-- Hero Section -->
+  <section class="relative w-full h-[20vh] md:h-[30vh] lg:h-[30vh] overflow-hidden">
+    <video
+      autoplay muted loop playsinline poster="heros/circling_cubes.gif"
+      class="absolute inset-0 object-cover w-full h-full z-0"
+    />
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm z-10"></div>
+
+    <div class="relative z-20 container mx-auto h-full px-6 flex flex-col items-start justify-center text-white">
+      <h1 class="text-4xl md:text-6xl font-bold max-w-lg mb-4">
+        Assets
+      </h1>
+      <p class="mb-6 max-w-md text-lg">
+        Description
+      </p>
+    </div>
+
+    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+
+    <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] z-20 text-gray-50">
+      <Wave
+        client:load
+        fill="currentColor"
+        paused={false}
+        className="w-full h-16 fill-current"
+        options={{
+        height: 36,
+        amplitude: 20,
+        speed: 0.2,
+        points: 10
+        }}
+      />
+      </div>
+  </section>
+
+<!-- Projects Section -->
+<section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-6">
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {assets.map((entry) => {
+          const { slug } = entry
+          const { title, image, description, author = 'Unknown', pubDate } = entry.data
+          const published = new Date(pubDate).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          })
+  
+          return (
+            <div
+              id={slug}
+              class="flex flex-col bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-sm transition-shadow"
+            >
+              <img
+                src={`/samples/${image}`}
+                alt={title}
+                class="h-48 w-full object-cover"
+              />
+  
+              <div class="p-4 flex-1">
+                <h3 class="font-semibold text-lg mb-1 text-gray-900">{title}</h3>
+                <p class="text-sm text-gray-600">{description}</p>
+              </div>
+  
+              <div class="border-t px-4 py-2 flex items-center justify-between text-xs text-gray-500">
+                <span>{author} · {published}</span>
+                <a
+                  href={`/samples/${slug}`}
+                  class="flex items-center space-x-1 hover:text-gray-700"
+                >
+                  <span>More Details</span>
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  </section>
+  
+</Layout>

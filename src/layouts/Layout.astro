@@ -1,0 +1,55 @@
+---
+import Navbar from '@/components/Navbar.astro';
+import '../styles/global.css';
+import Footer from '@/components/Footer.astro';
+const { title } = Astro.props;
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<title>Ursina Engine | {title}</title>
+	</head>
+	<body>
+		<Navbar />
+		<slot />
+		<Footer />
+
+		<script is:inline>
+			// delegate clicks on our header anchors
+			document.addEventListener('click', (e) => {
+			  const link = e.target.closest('a.header-anchor');
+			  if (!link) return;
+		  
+			  e.preventDefault();
+		  
+			  // build the full URL
+			  const href = link.getAttribute('href');
+			  const url  = window.location.origin + window.location.pathname + href;
+		  
+			  // copy to clipboard
+			  navigator.clipboard.writeText(url).then(() => {
+				// optional: flash a simple in-page message
+				const msg = document.createElement('div');
+				msg.textContent = 'Link copied!';
+				Object.assign(msg.style, {
+				  position: 'fixed',
+				  bottom: '1rem',
+				  right: '1rem',
+				  background: 'rgba(0,0,0,0.8)',
+				  color: 'white',
+				  padding: '0.5rem 1rem',
+				  borderRadius: '0.25rem',
+				  zIndex: '9999',
+				});
+				document.body.append(msg);
+				setTimeout(() => msg.remove(), 2000);
+			  });
+			});
+		  </script>
+		  
+	</body>
+</html>
+

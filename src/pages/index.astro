@@ -1,0 +1,273 @@
+---
+// src/pages/index.astro
+import '../styles/global.css'
+import Layout from '@/layouts/Layout.astro'
+import { Button } from '@/components/ui/button'
+import { getCollection } from 'astro:content'
+import { Wrench, ScrollText } from 'lucide-react'
+import CurrencyIcon from '@/lib/CurrencyIcon.jsx'
+import Wave from 'react-wavify'
+
+const projects = await getCollection('projects')
+const featured = projects.sort(() => Math.random() - 0.5).slice(0, 6)
+---
+<Layout title="Home">
+  <!-- Hero Section -->
+  	<section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
+		<video
+		id="heroVideo"
+		muted
+		playsinline
+		poster="ursina_logo_wireframe.webp"
+		class="absolute inset-0 object-cover w-full h-full z-0 opacity-100 transition-opacity duration-[700ms]"
+		/>
+
+		<div class="absolute inset-0 bg-black/40 backdrop-blur-sm z-10"></div>
+
+		<div
+		class="relative z-20 container mx-auto h-full px-6 flex flex-col items-start justify-center text-white"
+		>
+		<h1 class="text-4xl md:text-6xl font-bold max-w-lg mb-4">
+			Python game development, simplified
+		</h1>
+		<p class="mb-6 max-w-md text-lg">
+			Ursina Engine is a free, open-source Python framework for building 2D and 3D games with minimal setup.
+		</p>
+		<Button
+			variant="default"
+			className="text-black bg-white border-black hover:bg-black hover:text-white active:scale-95 transition"
+			size="lg"
+		>
+			Start Creating Now
+		</Button>
+		</div>
+
+		<div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+
+	  <!-- Wave divider over video -->
+	  <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] z-20 text-gray-100">
+		<Wave
+		  client:load
+		  fill="currentColor"
+		  paused={false}
+		  className="w-full h-16 fill-current"
+		  options={{
+			height: 36,
+			amplitude: 20,
+			speed: 0.2,
+			points: 10
+		  }}
+		/>
+	  </div>
+
+  	</section>
+
+  	<!-- Video Rotator Script -->
+  	<script type="module">
+    const videos = [
+      'heros/blood_reworking_test.webm',
+      'heros/game.mp4',
+      'heros/ursina_chunk_handler.mp4',
+      'heros/voxel_island_detection.mp4',
+      'heros/ursina_avatar.webm',
+      'heros/coins.webm',
+    ];
+    const fadeDuration = 700;
+    let idx = 0;
+	idx = Math.floor(Math.random() * videos.length);
+    const vid = document.getElementById('heroVideo');
+
+    function playVideo(i) {
+      vid.src = videos[i];
+      vid.load();
+      vid.play().catch(() => {});
+    }
+
+    vid.addEventListener('ended', () => {
+      vid.classList.add('opacity-0');
+      setTimeout(() => {
+        idx = (idx + 1) % videos.length;
+        playVideo(idx);
+        vid.classList.remove('opacity-0');
+      }, fadeDuration);
+    });
+
+    // Start first video
+    playVideo(idx);
+  	</script>
+
+  
+
+  <!-- Powered by Python Section -->
+  <section class="py-16 bg-gray-100">
+    <div class="container mx-auto px-6">
+      <h2 class="text-2xl md:text-3xl font-bold mb-2">Powered by Python</h2>
+      <p class="mb-8 text-gray-600 max-w-2xl">
+        Python is the world's most popular programming language. Ursina lets you write concise, boilerplate-free game code.
+      </p>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="bg-gray-800 rounded-lg p-6 font-mono text-sm text-green-300 overflow-auto h-[320px]">
+          <pre><code>
+from ursina import *
+
+app = Ursina()
+
+cube = Entity(model='cube', color=hsv(300,1,1), scale=2, collider='box')
+
+def spin():
+    cube.animate('rotation_y', cube.rotation_y + 360, duration=2, curve=curve.in_out_expo)
+
+cube.on_click = spin
+EditorCamera()
+app.run()
+          </code></pre>
+        </div>
+        <div class="bg-white rounded-lg overflow-hidden h-[320px]">
+          <video
+            src="pythonexample.mov"
+            autoplay
+            muted
+            loop
+            playsinline
+            class="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+
+  <!-- Game Showcase Section -->
+  <section class="py-16 bg-white">
+
+	
+    <div class="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+        {featured.map((entry) => {
+          const { slug } = entry;
+          const { title, image } = entry.data;
+          return (
+            <a
+              href={`/samples/${slug}`}
+              class="group block bg-gray-100 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition"
+            >
+              <img
+                src={`/samples/${image}`}
+                alt={title}
+                class="w-full h-32 object-cover group-hover:scale-105 transition"
+              />
+              <div class="p-4 font-medium text-center">{title}</div>
+            </a>
+          );
+        })}
+      </div>
+      <div>
+        <h2 class="text-2xl md:text-3xl font-bold mb-2">Endless Possibilities</h2>
+        <p class="mt-2 text-gray-600 mb-4 max-w-md">
+          From platformers to simulations, data visualizations to educational apps. Ursina powers it all!
+        </p>
+        <a href="/samples" class="text-blue-600 hover:underline">View More →</a>
+      </div>
+    </div>
+  </section>
+
+  
+
+  <!-- Batteries Included Section -->
+  <section class="py-16 bg-gray-100">
+    <div class="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+      <div class="space-y-6">
+        <h2 class="text-2xl md:text-3xl font-bold">Batteries Included</h2>
+        <div class="grid gap-6">
+          <div class="flex items-start space-x-3">
+            <div>
+              <h4 class="font-semibold">Mesh API</h4>
+              <p class="text-gray-600 text-sm">Create procedural geometry with an easy-to-use Mesh class.</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <div>
+              <h4 class="font-semibold">Animation & Tweening</h4>
+              <p class="text-gray-600 text-sm">Built-in support for smooth animations and tweens.</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <div>
+              <h4 class="font-semibold">Ready-Made Prefabs</h4>
+              <p class="text-gray-600 text-sm">Includes controllers like FirstPersonController and EditorCamera.</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <div>
+              <h4 class="font-semibold">3D Primitives</h4>
+              <p class="text-gray-600 text-sm">Access cubes, spheres, cones and other procedural shapes instantly.</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <div>
+              <h4 class="font-semibold">Shader Support</h4>
+              <p class="text-gray-600 text-sm">Use built-in shaders or author custom GLSL effects.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        {projects.slice(0, 6).map((item, i) => (
+          <div>
+            <img
+              src={`/samples/${item.data.image}`}
+              alt={item.data.title}
+              class="w-full h-32 object-cover rounded-lg shadow-md"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  
+  <!-- Always Free & Open Source Section -->
+  <section class="py-16 bg-white">
+	<div class="container mx-auto px-6 text-center space-y-8">
+	  <h2 class="text-3xl md:text-4xl font-bold text-gray-800">
+		Always Free & Open Source
+	  </h2>
+	  <div class="flex flex-col md:flex-row justify-center gap-6">
+		<div class="flex-1 bg-white rounded-lg shadow hover:shadow-md transition p-6
+					flex flex-col items-center text-center">
+		  <ScrollText className="h-12 w-12 mb-4 text-black" />
+		  <h3 class="text-xl font-semibold mb-2 text-gray-800">
+			MIT License
+		  </h3>
+		  <p class="text-gray-600">
+			Use, modify, and distribute Ursina without any restrictions or fees.
+		  </p>
+		</div>
+  
+		<div class="flex-1 bg-white rounded-lg shadow hover:shadow-md transition p-6
+					flex flex-col items-center text-center">
+		  <Wrench className="h-12 w-12 mb-4 text-black" />
+		  <h3 class="text-xl font-semibold mb-2 text-gray-800">
+			Fully Open Source
+		  </h3>
+		  <p class="text-gray-600">
+			Inspect and contribute on GitHub. Community-driven improvements welcome.
+		  </p>
+		</div>
+  
+		<div class="flex-1 bg-white rounded-lg shadow hover:shadow-md transition p-6
+					flex flex-col items-center text-center">
+		  <CurrencyIcon client:load className="h-12 w-12 mb-4 text-black" />
+		  <h3 class="text-xl font-semibold mb-2 text-gray-800">
+			Zero Cost
+		  </h3>
+		  <p class="text-gray-600">
+			No subscription, no royalties, ever. Build and ship with peace of mind.
+		  </p>
+		</div>
+	  </div>
+	</div>
+  </section>
+  
+</Layout>

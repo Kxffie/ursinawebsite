@@ -1,0 +1,53 @@
+---
+// src/components/Footer.astro
+---
+<footer class="bg-gray-900 text-gray-300 py-12">
+    <div class="container mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
+      <div>
+        <a href="/" class="flex items-center mb-4">
+          <img src="/brand/ursina_logo_wireframe.webp" alt="Ursina Engine" class="h-10 w-auto mr-2" />
+          <span class="text-white font-bold text-xl">Ursina Engine</span>
+        </a>
+        <p class="text-gray-400 text-sm max-w-xs">
+          Free, open-source Python game engine built on Panda3D.
+        </p>
+      </div>
+      <div>
+        <h4 class="uppercase tracking-wider text-sm font-semibold text-gray-400 mb-4">Docs</h4>
+        <ul class="space-y-2">
+          <li><a href="/docs" class="hover:text-white">Getting Started</a></li>
+          <li><a href="/api-references" class="hover:text-white">API Reference</a></li>
+          <li><a href="/guides" class="hover:text-white">Guides & Tutorials</a></li>
+          <li><a href="/examples" class="hover:text-white">Examples</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="uppercase tracking-wider text-sm font-semibold text-gray-400 mb-4">Community</h4>
+        <ul class="space-y-2">
+          <li><a href="https://discord.gg/ursina" target="_blank" class="hover:text-white">Discord</a></li>
+          <li><a href="https://github.com/pokepetter/ursina" target="_blank" class="hover:text-white">GitHub</a></li>
+          <li><a href="https://x.com/ursinaengine" target="_blank" class="hover:text-white">Twitter</a></li>
+          <li><a href="/samples" class="hover:text-white">Showcase</a></li>
+          <li><a href="/blog" class="hover:text-white">Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="uppercase tracking-wider text-sm font-semibold text-gray-400 mb-4">Donate</h4>
+        <ul class="space-y-2">
+          <li><a href="https://github.com/sponsors/pokepetter" target="_blank" class="hover:text-white">Github Sponsor</a></li>
+          <li><a href="https://www.patreon.com/c/ursinaengine/posts" target="_blank" class="hover:text-white">Patreon</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="uppercase tracking-wider text-sm font-semibold text-gray-400 mb-4">Legal</h4>
+        <ul class="space-y-2">
+          <li><a href="https://github.com/pokepetter/ursina/blob/master/LICENSE" target="_blank" class="hover:text-white">MIT License</a></li>
+          <!-- <li><a href="/privacy" class="hover:text-white">Privacy Policy</a></li> -->
+        </ul>
+      </div>
+    </div>
+    <div class="text-center text-gray-500 text-sm mt-8">
+      © {new Date().getFullYear()} Ursina Engine. All rights reserved.
+    </div>
+  </footer>
+  

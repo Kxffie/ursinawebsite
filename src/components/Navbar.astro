@@ -1,0 +1,66 @@
+---
+// src/components/Navbar.astro
+import '../styles/global.css'
+import { Button } from '@/components/ui/button'
+---
+
+<nav id="navbar" class="w-full fixed top-0 z-30 bg-transparent transition-colors duration-300 ease-in-out">
+  <div class="container mx-auto px-6 flex items-center justify-between h-16">
+    <a href="/" class="flex items-center">
+      <img src="/brand/ursina_logo_wireframe.webp" alt="Ursina Logo" class="h-8 w-auto mr-2" />
+      <span class="hidden sm:inline font-bold text-xl text-white">Ursina Engine</span>
+    </a>
+
+    <div class="hidden md:flex space-x-8">
+      <a href="/docs" class="text-white hover:text-gray-200">Docs</a>
+      <a href="/samples" class="text-white hover:text-gray-200">Samples</a>
+      <a href="/assets" class="text-white hover:text-gray-200">Assets</a>
+      <a href="/blog" class="text-white hover:text-gray-200">Blog</a>
+    </div>
+
+    <div class="flex items-center space-x-4">
+      <Button
+        variant="default"
+        className="text-black bg-white border-black hover:bg-black hover:text-white active:scale-95 transition"
+        size="sm"
+      >
+        Get Started
+      </Button>
+      <button
+        id="mobile-menu-toggle"
+        class="md:hidden text-white focus:outline-none"
+        aria-label="Toggle menu"
+      >
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="hidden bg-black bg-opacity-50 md:hidden">
+    <a href="/docs" class="block px-6 py-3 text-white hover:bg-gray-800">Docs</a>
+    <a href="/samples" class="block px-6 py-3 text-white hover:bg-gray-800">Samples</a>
+    <a href="/examples" class="block px-6 py-3 text-white hover:bg-gray-800">Assets</a>
+    <a href="/blog" class="block px-6 py-3 text-white hover:bg-gray-800">Blog</a>
+  </div>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    if (navbar) {
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+          navbar.classList.add('bg-black', 'bg-current/50');
+          navbar.classList.remove('bg-transparent');
+        } else {
+          navbar.classList.add('bg-transparent');
+          navbar.classList.remove('bg-black', 'bg-current/50');
+        }
+      });
+    }
+
+    const btn = document.getElementById('mobile-menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+    btn?.addEventListener('click', () => menu?.classList.toggle('hidden'));
+  </script>
+</nav>
