@@ -6,11 +6,21 @@ import react from '@astrojs/react';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 
+import partytown from '@astrojs/partytown';
+import sitemap from '@astrojs/sitemap';
+
 export default defineConfig({
   site: 'https://kxffiec.github.io',
   base: '/ursinawebsite',
   vite: { plugins: [tailwindcss()] },
-  integrations: [react()],
+  integrations: [
+    react(), 
+    sitemap(),
+    partytown({
+      config: {
+        forward: ["dataLayer.push"]
+      }
+    })],
   markdown: {
     rehypePlugins: [
       rehypeSlug,
