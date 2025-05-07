@@ -12,24 +12,6 @@ const projects = await getCollection('projects')
 const featured = projects.sort(() => Math.random() - 0.5).slice(0, 6)
 ---
 <Layout title="Home">
-  <head>
-    <script is:inline type="text/partytown" async src="https://www.googletagmanager.com/gtag/js?id=G-021QZDYMWM"></script>
-    <script is:inline type="text/partytown">
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag("consent", "default", {
-        ad_storage: "denied",
-        ad_user_data: "denied",
-        ad_personalization: "denied",
-        analytics_storage: "denied",
-      });
-
-      gtag('config', 'G-021QZDYMWM');
-    </script>
-  </head>
-
   <!-- Hero Section -->
   	<section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden">
 		<video
