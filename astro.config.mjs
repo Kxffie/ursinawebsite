@@ -7,6 +7,8 @@ import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 
 export default defineConfig({
+  site: 'https://ursinaengine.github.io',
+  base: '/ursinawebsite',
   vite: { plugins: [tailwindcss()] },
   integrations: [react()],
   markdown: {
