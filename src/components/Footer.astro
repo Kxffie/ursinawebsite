@@ -1,53 +1,78 @@
 ---
 // src/components/Footer.astro
 ---
-<footer class="mt-auto bg-gray-900 text-gray-300 px-4 sm:px-6 lg:px-8 py-12">
-    <div class="container mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
-      <div>
-        <a href="/" class="flex items-center mb-4">
-          <img src="https://raw.githubusercontent.com/Kxffie/ursinawebsite/refs/heads/main/public/brand/ursina_logo_wireframe.webp" alt="Ursina Engine" class="h-10 w-auto mr-2" />
-          <span class="text-white font-bold text-xl">Ursina Engine</span>
+
+<footer class="mt-auto border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
+      <!-- Brand Section -->
+      <div class="space-y-4">
+        <a href="/" class="flex items-center gap-3 group">
+          <img
+            src="https://raw.githubusercontent.com/Kxffie/ursinawebsite/refs/heads/main/public/brand/ursina_logo_wireframe.webp"
+            alt="Ursina Engine"
+            class="h-10 w-auto transition-transform group-hover:scale-105"
+          />
+          <span class="text-lg font-bold tracking-tight text-foreground">
+            Ursina Engine
+          </span>
         </a>
-        <p class="text-gray-400 text-sm max-w-xs">
+        <p class="text-sm text-muted-foreground max-w-xs">
           Free, open-source Python game engine built on Panda3D.
         </p>
       </div>
-      <div>
-        <h4 class="uppercase tracking-wider text-sm font-semibold text-gray-400 mb-4">Docs</h4>
-        <ul class="space-y-2">
-          <li><a href="/ursinawebsite/docs" class="hover:text-white">Getting Started</a></li>
-          <li><a href="/ursinawebsite/docs" class="hover:text-white">Documentation</a></li>
-          <li><a href="/ursinawebsite/guides" class="hover:text-white">Guides & Tutorials</a></li>
-          <li><a href="/ursinawebsite/samples" class="hover:text-white">Samples</a></li>
-        </ul>
+
+      <!-- Docs Section -->
+      <div class="space-y-2">
+        <h4 class="text-sm font-medium text-foreground">Documentation</h4>
+        <nav class="flex flex-col space-y-1">
+          <a href="docs" class="text-sm text-muted-foreground hover:text-foreground transition-colors">Getting Started</a>
+          <a href="docs" class="text-sm text-muted-foreground hover:text-foreground transition-colors">API Reference</a>
+          <a href="guides" class="text-sm text-muted-foreground hover:text-foreground transition-colors">Tutorials</a>
+          <a href="samples" class="text-sm text-muted-foreground hover:text-foreground transition-colors">Samples</a>
+        </nav>
       </div>
-      <div>
-        <h4 class="uppercase tracking-wider text-sm font-semibold text-gray-400 mb-4">Community</h4>
-        <ul class="space-y-2">
-          <li><a href="https://discord.gg/ursina" target="_blank" class="hover:text-white">Discord</a></li>
-          <li><a href="https://github.com/pokepetter/ursina" target="_blank" class="hover:text-white">GitHub</a></li>
-          <li><a href="https://x.com/ursinaengine" target="_blank" class="hover:text-white">Twitter</a></li>
-          <li><a href="/ursinawebsite/samples" class="hover:text-white">Showcase</a></li>
-          <li><a href="/ursinawebsite/blog" class="hover:text-white">Blog</a></li>
-        </ul>
+
+      <!-- Community Section -->
+      <div class="space-y-2">
+        <h4 class="text-sm font-medium text-foreground">Community</h4>
+        <nav class="flex flex-col space-y-1">
+          <a href="https://discord.gg/ursina" target="_blank" class="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
+            Discord
+          </a>
+          <a href="https://github.com/pokepetter/ursina" target="_blank" class="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
+            Github
+          </a>
+          <!-- Add other community links with icons -->
+        </nav>
       </div>
-      <div>
-        <h4 class="uppercase tracking-wider text-sm font-semibold text-gray-400 mb-4">Donate</h4>
-        <ul class="space-y-2">
-          <li><a href="https://github.com/sponsors/pokepetter" target="_blank" class="hover:text-white">Github Sponsor</a></li>
-          <li><a href="https://www.patreon.com/c/ursinaengine/posts" target="_blank" class="hover:text-white">Patreon</a></li>
-        </ul>
+
+      <!-- Donate Section -->
+      <div class="space-y-2">
+        <h4 class="text-sm font-medium text-foreground">Support Us</h4>
+        <nav class="flex flex-col space-y-1">
+          <a href="https://github.com/sponsors/pokepetter" target="_blank" class="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            GitHub Sponsors
+          </a>
+          <a href="https://www.patreon.com/c/ursinaengine/" target="_blank" class="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            Patreon
+          </a>
+          <!-- Add other donation links -->
+        </nav>
       </div>
-      <div>
-        <h4 class="uppercase tracking-wider text-sm font-semibold text-gray-400 mb-4">Legal</h4>
-        <ul class="space-y-2">
-          <li><a href="https://github.com/pokepetter/ursina/blob/master/LICENSE" target="_blank" class="hover:text-white">MIT License</a></li>
-          <!-- <li><a href="/privacy" class="hover:text-white">Privacy Policy</a></li> -->
-        </ul>
+
+      <!-- Legal Section -->
+      <div class="space-y-2">
+        <h4 class="text-sm font-medium text-foreground">Legal</h4>
+        <nav class="flex flex-col space-y-1">
+          <a href="/license" class="text-sm text-muted-foreground hover:text-foreground transition-colors">MIT License</a>
+          <!-- <a href="/privacy" class="text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</a> -->
+        </nav>
       </div>
     </div>
-    <div class="text-center text-gray-500 text-sm mt-8">
-      © {new Date().getFullYear()} Ursina Engine. All rights reserved.
+
+    <div class="mt-8 pt-8 border-t text-center text-sm text-muted-foreground">
+      © {new Date().getFullYear()} Ursina Engine. Open source under MIT License.
     </div>
-  </footer>
-  
+  </div>
+</footer>

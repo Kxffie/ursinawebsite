@@ -32,94 +32,57 @@ const published = new Date(pubDate).toLocaleDateString('en-US', {
 })
 ---
 
-<Layout title={title}>
-
-    <!-- Hero Section -->
-    <section class="relative w-full h-[25vh] md:h-[30vh] lg:h-[30vh] overflow-hidden">
-        <img
-          src={`/ursinawebsite/samples/${image}`}
-          alt={title}
-          class="absolute inset-0 object-cover w-full h-full z-0"
-        />
-        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm z-10"></div>
-    
-        <div class="relative z-20 container mx-auto h-full px-6 flex flex-col items-start justify-center text-white">
-          <h1 class="text-4xl md:text-6xl font-bold max-w-lg mb-4">
-            {title}
-          </h1>
-          <p class="mb-6 max-w-md text-lg">
-            {description}
-          </p>
-        </div>
-            <div class="mb-4 flex items-center space-x-2 text-gray-600 text-sm">
-                <img
-                    src={`/ursinawebsite/${authorImg}`}
-                    alt={author}
-                    loading="lazy"
-                    class="h-10 w-10 rounded-full ring-2 ring-gray-300"
-                />
-                <div class="flex items-center space-x-2">
-                    <span>By <span class="font-medium text-gray-900">{author}</span></span>
-                    <span aria-hidden="true">·</span>
-                    <time class="">{published}</time>
-                </div>
-            </div>
-    
-        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-      </section>
-
+<Layout 
+  title={title}
+  heroImage={image} 
+  heroDesc={description}
+>
   <!-- Post content -->
-  <article class="container mx-auto h-full px-6 justify-center py-6">
-    <div class="mx-auto bg-white rounded-lg shadow-lg p-6">
-        <div class="prose prose-lg max-w-none">
-            <!-- byline -->
-            <div class="mb-4 flex items-center space-x-2 text-gray-600 text-sm">
-                <img
-                    src={`/ursinawebsite/${authorImg}`}
-                    alt={author}
-                    loading="lazy"
-                    class="h-10 w-10 rounded-full ring-2 ring-gray-300"
-                />
-                <div class="flex items-center space-x-2">
-                    <span>By <span class="font-medium text-gray-900">{author}</span></span>
-                    <span aria-hidden="true">·</span>
-                    <time class="">{published}</time>
-                </div>
-            </div>
-            
-            <Separator className="my-8" />
-            
-            <Content />
-  
-          </div>
+  <article class="container mx-auto px-6 py-6">
+    <div class="mx-auto bg-card p-6 rounded-lg shadow-lg">
+      <!-- byline -->
+      <div class="mb-4 flex items-center space-x-2 text-muted-foreground text-sm">
+        <img
+          src={`/${authorImg}`}
+          alt={author}
+          loading="lazy"
+          class="h-10 w-10 rounded-full ring-2 ring-border"
+        />
+        <div class="flex items-center space-x-2">
+          <span>
+            By <span class="font-medium text-foreground">{author}</span>
+          </span>
+          <span aria-hidden="true">·</span>
+          <time>{published}</time>
+        </div>
+      </div>
+
+      <Separator className="my-8" />
+
+      <div class="prose prose-lg max-w-none bg-card dark:prose-invert">
+        <Content />
+      </div>
 
       {source && (
-        <p class="mt-8 text-sm text-gray-600">
+        <p class="mt-8 text-sm text-muted-foreground">
           <a
             href={source}
             target="_blank"
             rel="noopener noreferrer"
-            class="flex items-center space-x-1 underline hover:text-gray-800"
+            class="flex items-center space-x-1 underline hover:text-primary"
           >
             <span>View source on GitHub</span>
             <ArrowUpRight className="h-4 w-4 inline-block" />
           </a>
         </p>
       )}
-      
 
-    <Separator className="my-8" />
+      <Separator className="my-8" />
 
-    <a
-      href="/samples"
-      class="flex items-center space-x-2 hover:underline"
-    >
-      <ArrowLeft className="h-4 w-4 inline-block" />
-      <span>Back to Samples</span>
-    </a>
-  </div>
-  
+      <a href="/samples" class="flex items-center space-x-2 text-primary hover:underline">
+        <ArrowLeft className="h-4 w-4 inline-block" />
+        <span>Back to Samples</span>
+      </a>
     </div>
   </article>
 </Layout>
-

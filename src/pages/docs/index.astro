@@ -6,7 +6,7 @@ import Wave from 'react-wavify'
 
 const docs = await getCollection('docs')
 
-const grouped: Record<string, typeof docs[number][]> = docs.reduce((acc: Record<string, typeof docs[number][]>, doc) => {
+const grouped = docs.reduce<Record<string, typeof docs[number][]>>((acc, doc) => {
   const cat = doc.data.category || 'Uncategorized'
   acc[cat] = acc[cat] ? [...acc[cat], doc] : [doc]
   return acc
@@ -14,41 +14,17 @@ const grouped: Record<string, typeof docs[number][]> = docs.reduce((acc: Record<
 
 const categories = Object.keys(grouped).sort()
 categories.forEach(cat => {
-  grouped[cat].sort((a, b) => a.data.title.localeCompare(b.data.title));
+  grouped[cat].sort((a, b) => a.data.title.localeCompare(b.data.title))
 })
 ---
 
-<Layout title="Docs">
-  
-  <!-- Hero -->
-  <section class="relative w-full h-[20vh] md:h-[30vh] lg:h-[30vh] overflow-hidden">
-    <video
-      autoplay
-      muted
-      loop
-      playsinline
-      poster="heros/circling_cubes.gif"
-      class="absolute inset-0 object-cover w-full h-full z-0"
-    />
-    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm z-10" />
-    <div class="relative z-20 container mx-auto h-full px-6 flex flex-col items-start justify-center text-white">
-      <h1 class="text-4xl md:text-6xl font-bold mb-2">Documentation</h1>
-      <p class="max-w-md text-lg">Everything you need to know about Ursina Engine</p>
-    </div>
-    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10" />
-    <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] z-20 text-gray-50">
-      <Wave
-        client:load
-        fill="currentColor"
-        paused={false}
-        className="w-full h-16 fill-current"
-        options={{ height: 36, amplitude: 20, speed: 0.2, points: 10 }}
-      />
-    </div>
-  </section>
-
+<Layout
+  title="Docs"
+  heroImage="https://github.com/pokepetter/ld44_life_is_currency/blob/master/value_of_life_screenshot.jpg?raw=true"
+  heroDesc="Documentation for the Ursina Engine"
+>
   <!-- Docs Listing -->
-  <section class="py-16 bg-gray-50">
+  <section class="py-16 bg-background/95 dark:bg-background">
     <div class="container mx-auto px-6 flex gap-8">
       <!-- Sidebar -->
       <aside class="w-64 sticky top-24 self-start">
@@ -56,16 +32,28 @@ categories.forEach(cat => {
           type="text"
           id="searchDocs"
           placeholder="Search…"
-          class="w-full mb-4 p-2 border rounded"
+          class="
+            w-full mb-4 p-2
+            border border-border
+            bg-input dark:bg-input
+            text-foreground dark:text-foreground
+            rounded
+          "
         />
         <nav class="space-y-6">
           {categories.map((cat) => (
             <>
-              <h4 class="font-semibold text-gray-700">{cat}</h4>
+              <h4 class="font-semibold text-sidebar-foreground dark:text-sidebar-foreground">
+                {cat}
+              </h4>
               {grouped[cat].map((doc) => (
                 <a
                   href={`/docs/${doc.slug}`}
-                  class="block px-3 py-1 rounded hover:bg-gray-200 text-gray-800"
+                  class="
+                    block px-3 py-1 rounded
+                    text-sidebar-foreground dark:text-sidebar-foreground
+                    hover:bg-sidebar-accent/95 dark:hover:bg-sidebar-accent
+                  "
                 >
                   {doc.data.title}
                 </a>
@@ -76,40 +64,51 @@ categories.forEach(cat => {
       </aside>
 
       <!-- Placeholder -->
-      <main class="flex-1 prose prose-lg max-w-none bg-white p-6 rounded-lg shadow">
+      <main
+        class="
+          flex-1 prose prose-lg max-w-none
+          bg-card dark:bg-card
+          p-6 rounded-lg
+          shadow
+          dark:prose-invert
+        "
+      >
         <p>Please select a topic from the sidebar to view its content.</p>
       </main>
     </div>
   </section>
 
-    <!-- Search filtering script -->
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const input = document.getElementById('searchDocs')
-        const nav   = document.querySelector('aside nav')
-        if (!nav) return;
-        const headings = Array.from(nav.querySelectorAll('h4'))
-        const links    = Array.from(nav.querySelectorAll('a'))
-        if (input) {
-          input.addEventListener('input', () => {
-          const q = (input as HTMLInputElement).value.trim().toLowerCase()
-          links.forEach(link => {
-            link.style.display = link.textContent && link.textContent.toLowerCase().includes(q) ? '' : 'none'
-          })
-          headings.forEach(h => {
-            let hasVisible = false
-            let el = h.nextElementSibling
-            while (el && el.tagName !== 'H4') {
-              if (el.tagName === 'A' && (el as HTMLElement).style.display !== 'none') {
-                hasVisible = true
-                break
-              }
-              el = el.nextElementSibling
-            }
-            h.style.display = hasVisible ? '' : 'none'
-          })
+  <!-- Search filtering script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const input = document.getElementById('searchDocs')
+      const nav = document.querySelector('aside nav')
+      if (!nav || !input) return
+
+      const headings = Array.from(nav.querySelectorAll('h4'))
+      const links = Array.from(nav.querySelectorAll('a'))
+
+      input.addEventListener('input', () => {
+        const q = (input as HTMLInputElement).value.trim().toLowerCase()
+
+        links.forEach(link => {
+          link.style.display =
+            link.textContent && link.textContent.toLowerCase().includes(q) ? '' : 'none'
         })
-      }
+
+        headings.forEach(h => {
+          let hasVisible = false
+          let el = h.nextElementSibling
+          while (el && el.tagName !== 'H4') {
+            if (el.tagName === 'A' && (el as HTMLElement).style.display !== 'none') {
+              hasVisible = true
+              break
+            }
+            el = el.nextElementSibling
+          }
+          h.style.display = hasVisible ? '' : 'none'
+        })
+      })
     })
-    </script>
+  </script>
 </Layout>

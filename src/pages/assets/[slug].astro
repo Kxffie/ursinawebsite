@@ -1,5 +1,5 @@
 ---
-// src/pages/blog/[slug].astro
+// src/pages/assets/[slug].astro
 import { getCollection, getEntry } from 'astro:content'
 import Layout from '@/layouts/Layout.astro'
 import type { CollectionEntry } from 'astro:content'
@@ -16,9 +16,6 @@ const project = (await getEntry('projects', slug)) as CollectionEntry<'projects'
 const { Content } = await project.render()
 
 const {
-  title,
-  description,
-  image,
   source,
   pubDate = new Date().toISOString(),
   author = 'Unknown',
@@ -32,41 +29,11 @@ const published = new Date(pubDate).toLocaleDateString('en-US', {
 })
 ---
 
-<Layout title={title}>
-  
-    <!-- Hero Section -->
-    <section class="relative w-full h-[25vh] md:h-[30vh] lg:h-[30vh] overflow-hidden">
-        <img
-          src={`/samples/${image}`}
-          alt={title}
-          class="absolute inset-0 object-cover w-full h-full z-0"
-        />
-        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm z-10"></div>
-    
-        <div class="relative z-20 container mx-auto h-full px-6 flex flex-col items-start justify-center text-white">
-          <h1 class="text-4xl md:text-6xl font-bold max-w-lg mb-4">
-            {title}
-          </h1>
-          <p class="mb-6 max-w-md text-lg">
-            {description}
-          </p>
-        </div>
-            <div class="mb-4 flex items-center space-x-2 text-gray-600 text-sm">
-                <img
-                    src={`/${authorImg}`}
-                    alt={author}
-                    loading="lazy"
-                    class="h-10 w-10 rounded-full ring-2 ring-gray-300"
-                />
-                <div class="flex items-center space-x-2">
-                    <span>By <span class="font-medium text-gray-900">{author}</span></span>
-                    <span aria-hidden="true">·</span>
-                    <time class="">{published}</time>
-                </div>
-            </div>
-    
-        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-      </section>
+<Layout
+  title={project.data.title}
+  heroImage="https://github.com/pokepetter/ld44_life_is_currency/blob/master/value_of_life_screenshot.jpg?raw=true"
+  heroDesc={project.data.description}
+>
 
   <!-- Post content -->
   <article class="container mx-auto h-full px-6 justify-center py-6">

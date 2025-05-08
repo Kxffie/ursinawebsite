@@ -1,89 +1,114 @@
+a---
+// src/layouts/Layout.astro
+
+import Navbar from '@/components/Navbar.astro'
+import Footer from '@/components/Footer.astro'
+import '../styles/global.css'
+
+const { title, heroImage, heroDesc } = Astro.props
 ---
-import Navbar from '@/components/Navbar.astro';
-import '../styles/global.css';
-import Footer from '@/components/Footer.astro';
-const { title } = Astro.props;
----
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" /> 
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-		<title>Ursina Engine | {title}</title>
-		<meta name="description" content="Free, open-source Python game engine built on Panda3D. Build 2D & 3D games with minimal setup." /> 
-		<link rel="canonical" href="https://ursinaengine.org{Astro.url.pathname}" />
-		<meta name="robots" content="index, follow" />
+    <title>Ursina Engine | {title}</title>
+    <meta
+      name="description"
+      content="Free, open-source Python game engine built on Panda3D. Build 2D & 3D games with minimal setup."
+    />
+    <link rel="canonical" href="https://ursinaengine.org{Astro.url.pathname}" />
+    <meta name="robots" content="index, follow" />
 
-		<meta property="og:type" content="website" />
-		<meta property="og:site_name" content="Ursina Engine" />
-		<meta property="og:title" content="Ursina Engine | {title}" />  
-		<meta property="og:description" content="Free, open-source Python game engine built on Panda3D. Build 2D & 3D games with minimal setup." />  
-		<!-- <meta property="og:url" content="https://ursinaengine.org{Astro.url.pathname}" />  
-		<meta property="og:image" content="https://ursinaengine.org/og-image.png" /> -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Ursina Engine" />
+    <meta property="og:title" content="Ursina Engine | {title}" />
+    <meta
+      property="og:description"
+      content="Free, open-source Python game engine built on Panda3D. Build 2D & 3D games with minimal setup."
+    />
 
-		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:site" content="@ursinaengine" />
-		<meta name="twitter:title" content="Ursina Engine | {title}" />  
-		<meta name="twitter:description" content="Free, open-source Python game engine built on Panda3D." />  
-		<!-- <meta name="twitter:image" content="https://ursinaengine.org/og-image.png" /> -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@ursinaengine" />
+    <meta name="twitter:title" content="Ursina Engine | {title}" />
+    <meta
+      name="twitter:description"
+      content="Free, open-source Python game engine built on Panda3D."
+    />
 
-		<meta name="theme-color" content="#0f172a" />
+    <meta name="theme-color" content="#0f172a" />
 
+    <script
+      is:inline
+      type="text/partytown"
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-021QZDYMWM"
+    ></script>
+    <script is:inline type="text/partytown">
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-021QZDYMWM');
+    </script>
+  </head>
 
+  <body>
+    <Navbar />
 
-	  <script is:inline type="text/partytown" async src="https://www.googletagmanager.com/gtag/js?id=G-021QZDYMWM"></script>
-	  <script is:inline type="text/partytown">
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-  
-		gtag("consent", "default", {
-		  ad_storage: "denied",
-		  ad_user_data: "denied",
-		  ad_personalization: "denied",
-		  analytics_storage: "denied",
-		});
-  
-		gtag('config', 'G-021QZDYMWM');
-	  </script>
-	</head>
-	<body>
-		<Navbar />
-		<slot />
-		<Footer />
+    {/** Hero only if heroImage is provided **/}
+    {heroImage ? (
+      <section
+        class="relative w-full h-[20vh] md:h-[30vh] lg:h-[30vh] bg-cover bg-center"
+        style={`background-image: url('${heroImage}')`}
+      >
+        <div class="absolute inset-0 bg-black/40"></div>
+        <div class="relative container mx-auto h-full flex flex-col md:flex-row items-center px-6">
+          <div class="md:w-1/2 text-white">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">
+				{title}
+			</h1>
+            <p class="text-lg mb-6">
+				{heroDesc}
+			</p>
+          </div>
+        </div>
+      </section>
+    ) : null}
 
-		<script is:inline>
-			document.addEventListener('click', (e) => {
-			  const link = e.target.closest('a.header-anchor');
-			  if (!link) return;
-		  
-			  e.preventDefault();
-		  
-			  const href = link.getAttribute('href');
-			  const url  = window.location.origin + window.location.pathname + href;
-		  
-			  // copy to clipboard
-			  navigator.clipboard.writeText(url).then(() => {
-				const msg = document.createElement('div');
-				msg.textContent = 'Link copied!';
-				Object.assign(msg.style, {
-				  position: 'fixed',
-				  bottom: '1rem',
-				  right: '1rem',
-				  background: 'rgba(0,0,0,0.8)',
-				  color: 'white',
-				  padding: '0.5rem 1rem',
-				  borderRadius: '0.25rem',
-				  zIndex: '9999',
-				});
-				document.body.append(msg);
-				setTimeout(() => msg.remove(), 2000);
-			  });
-			});
-		  </script>
-		  
-	</body>
+    <main>
+      <slot />
+    </main>
+
+    <Footer />
+
+    <script is:inline>
+      document.addEventListener('click', (e) => {
+        const link = e.target.closest('a.header-anchor')
+        if (!link) return
+        e.preventDefault()
+        const href = link.getAttribute('href')
+        const url = window.location.origin + window.location.pathname + href
+        navigator.clipboard.writeText(url).then(() => {
+          const msg = document.createElement('div')
+          msg.textContent = 'Link copied!'
+          Object.assign(msg.style, {
+            position: 'fixed',
+            bottom: '1rem',
+            right: '1rem',
+            background: 'rgba(0,0,0,0.8)',
+            color: 'white',
+            padding: '0.5rem 1rem',
+            borderRadius: '0.25rem',
+            zIndex: '9999',
+          })
+          document.body.append(msg)
+          setTimeout(() => msg.remove(), 2000)
+        })
+      })
+    </script>
+  </body>
 </html>
-

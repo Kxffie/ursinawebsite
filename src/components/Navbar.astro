@@ -1,36 +1,60 @@
 ---
-// src/components/Navbar.astro
 import '../styles/global.css'
 import { Button } from '@/components/ui/button'
+
+let pages = [
+  { name: 'Docs', href: '/docs' },
+  { name: 'API Reference', href: '/api' },
+  { name: 'Samples', href: '/samples' },
+  { name: 'Assets', href: '/assets' },
+  { name: 'Blog', href: '/blog' },
+]
 ---
 
-<nav id="navbar" class="w-full fixed top-0 z-30 bg-transparent transition-colors duration-300 ease-in-out">
+<nav
+  id="navbar"
+  class="
+    w-full sticky top-0 left-0 right-0 z-30
+    bg-background/80 dark:bg-background/80
+    backdrop-blur-md
+    transition-all duration-300 ease-in-out
+    border-b border-transparent
+  "
+>
   <div class="container mx-auto px-6 flex items-center justify-between h-16">
-    <a href="/ursinawebsite/" class="flex items-center">
-      <img src="https://raw.githubusercontent.com/Kxffie/ursinawebsite/refs/heads/main/public/brand/ursina_logo_wireframe.webp" alt="Ursina Logo" class="h-8 w-auto mr-2" />
-      <span class="hidden sm:inline font-bold text-xl text-white">Ursina Engine</span>
+    <a href="/" class="flex items-center group">
+      <img
+        src="https://raw.githubusercontent.com/Kxffie/ursinawebsite/refs/heads/main/public/brand/ursina_logo_wireframe.webp"
+        alt="Ursina Logo"
+        class="h-8 w-auto mr-2 transition-transform group-hover:scale-105"
+      />
+      <span class="hidden sm:inline font-bold text-xl text-foreground">
+        Ursina Engine
+      </span>
     </a>
 
     <div class="hidden md:flex space-x-8">
-      <a href="/ursinawebsite/docs" class="text-white hover:text-gray-200">Docs</a>
-      <a href="/ursinawebsite/samples" class="text-white hover:text-gray-200">Samples</a>
-      <a href="/ursinawebsite/assets" class="text-white hover:text-gray-200">Assets</a>
-      <a href="/ursinawebsite/blog" class="text-white hover:text-gray-200">Blog</a>
+      {pages.map((page) => (
+        <a
+          href={page.href}
+          class="text-foreground hover:text-muted-foreground transition-colors duration-300 relative
+                 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-px
+                 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
+        >
+          {page.name}
+        </a>
+      ))}
     </div>
 
-    <div class="flex items-center space-x-4">
-      <Button
+    <div class="flex items-center gap-4">
+      <a href="/docs"><Button
         variant="default"
-        className="text-black bg-white border-black hover:bg-black hover:text-white active:scale-95 transition"
+        className="hover:scale-105 active:scale-95 transition-transform"
         size="sm"
       >
         Get Started
-      </Button>
-      <button
-        id="mobile-menu-toggle"
-        class="md:hidden text-white focus:outline-none"
-        aria-label="Toggle menu"
-      >
+      </Button></a>
+      <button id="mobile-menu-toggle" class="md:hidden text-foreground" aria-label="Toggle menu">
         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
@@ -38,29 +62,49 @@ import { Button } from '@/components/ui/button'
     </div>
   </div>
 
-  <div id="mobile-menu" class="hidden bg-black bg-opacity-50 md:hidden">
-    <a href="/ursinawebsite/docs" class="block px-6 py-3 text-white hover:bg-gray-800">Docs</a>
-    <a href="/ursinawebsite/samples" class="block px-6 py-3 text-white hover:bg-gray-800">Samples</a>
-    <a href="/ursinawebsite/assets" class="block px-6 py-3 text-white hover:bg-gray-800">Assets</a>
-    <a href="/ursinawebsite/blog" class="block px-6 py-3 text-white hover:bg-gray-800">Blog</a>
+  <div id="mobile-menu" class="hidden bg-white/20 backdrop-blur-md md:hidden">
+    <div class="container mx-auto px-6 py-4 space-y-4">
+      {pages.map((page) => (
+        <a
+          href={page.href}
+          class="block text-[var(--foreground)] hover:text-[var(--muted-foreground)] dark:hover:text-[var(--muted-foreground)]"
+        >
+          {page.name}
+        </a>
+      ))}
+    </div>
   </div>
 
   <script>
-    const navbar = document.getElementById('navbar');
-    if (navbar) {
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 20) {
-          navbar.classList.add('bg-black', 'bg-current/50');
-          navbar.classList.remove('bg-transparent');
-        } else {
-          navbar.classList.add('bg-transparent');
-          navbar.classList.remove('bg-black', 'bg-current/50');
-        }
-      });
+    const navbar = document.getElementById('navbar')
+    const btn = document.getElementById('mobile-menu-toggle')
+    const menu = document.getElementById('mobile-menu')
+
+    let lastScroll = 0
+
+    function handleScroll() {
+      const currentScroll = window.scrollY
+      const opacity = 1 - Math.min(currentScroll / 200, 0.8)
+      if (navbar) {
+        navbar.style.opacity = opacity.toString()
+      }
+      if (navbar) {
+        navbar.style.borderColor = `rgba(125, 125, 125, ${opacity * 0.1})`
+      }
+      lastScroll = currentScroll
     }
 
-    const btn = document.getElementById('mobile-menu-toggle');
-    const menu = document.getElementById('mobile-menu');
-    btn?.addEventListener('click', () => menu?.classList.toggle('hidden'));
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    btn?.addEventListener('click', () => {
+      menu?.classList.toggle('hidden')
+    })
+
+    navbar?.addEventListener('mouseenter', () => {
+      navbar.style.opacity = '1'
+      navbar.style.borderColor = `rgba(125, 125, 125, 0.1)`
+    })
+
+    navbar?.addEventListener('mouseleave', handleScroll)
   </script>
 </nav>

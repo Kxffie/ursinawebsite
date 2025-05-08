@@ -1,19 +1,18 @@
 ---
-// src/pages/docs/[slug].astro
 import { getCollection, getEntry } from 'astro:content'
 import Layout from '@/layouts/Layout.astro'
 
 export async function getStaticPaths() {
-  const allDocs = await getCollection('docs')
-  return allDocs.map((d) => ({ params: { slug: d.slug } }))
+  const allDocs = await getCollection('api')
+  return allDocs.map(d => ({ params: { slug: d.slug } }))
 }
 
 const { slug } = Astro.params
-const docs = await getCollection('docs')
-const entry = docs.find((d) => d.slug === slug)
+const docs = await getCollection('api')
+const entry = docs.find(d => d.slug === slug)
 if (!entry) throw new Error(`Doc not found: ${slug}`)
 
-const entryResult = await getEntry('docs', slug)
+const entryResult = await getEntry('api', slug)
 if (!entryResult) throw new Error(`Entry not found for slug: ${slug}`)
 const { Content } = await entryResult.render()
 
@@ -24,7 +23,7 @@ const grouped = docs.reduce<Record<string, typeof docs[number][]>>((acc, doc) =>
 }, {})
 
 const categories = Object.keys(grouped).sort()
-categories.forEach((cat) => {
+categories.forEach(cat => {
   grouped[cat].sort((a, b) => a.data.title.localeCompare(b.data.title))
 })
 ---
@@ -32,39 +31,26 @@ categories.forEach((cat) => {
 <Layout
   title={entry.data.title}
   heroImage="https://github.com/pokepetter/ld44_life_is_currency/blob/master/value_of_life_screenshot.jpg?raw=true"
-  heroDesc={entry.data.description}
+  heroHeading={entry.data.title}
+  heroCopy={entry.data.description}
 >
-  <!-- Sidebar + Content -->
   <section class="py-16 bg-background/95 dark:bg-background">
     <div class="container mx-auto px-6 flex gap-8">
-      <!-- Sidebar -->
       <aside class="w-64 sticky top-24 self-start">
         <input
           type="text"
           id="searchDocs"
           placeholder="Search…"
-          class="
-            w-full mb-4 p-2
-            border border-border
-            bg-input
-            text-foreground
-            rounded
-          "
+          class="w-full mb-4 p-2 border border-border bg-input text-foreground rounded"
         />
         <nav class="space-y-6">
-          {categories.map((cat) => (
+          {categories.map(cat => (
             <>
-              <h4 class="font-semibold text-sidebar-foreground">
-                {cat}
-              </h4>
-              {grouped[cat].map((doc) => (
+              <h4 class="font-semibold text-sidebar-foreground">{cat}</h4>
+              {grouped[cat].map(doc => (
                 <a
                   href={`/docs/${doc.slug}`}
-                  class="
-                    block px-3 py-1 rounded
-                    text-sidebar-foreground
-                    hover:bg-sidebar-accent/95
-                  "
+                  class="block px-3 py-1 rounded text-sidebar-foreground hover:bg-sidebar-accent/95"
                 >
                   {doc.data.title}
                 </a>
@@ -74,21 +60,12 @@ categories.forEach((cat) => {
         </nav>
       </aside>
 
-      <!-- Rendered Markdown -->
-      <main
-        class="
-          flex-1 prose prose-lg max-w-none
-          bg-card
-          p-6 rounded-lg shadow
-          dark:prose-invert
-        "
-      >
+      <main class="flex-1 prose prose-lg max-w-none bg-card p-6 rounded-lg shadow dark:prose-invert">
         <Content />
       </main>
     </div>
   </section>
 
-  <!-- Search filtering script -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const input = document.getElementById('searchDocs')
@@ -100,16 +77,10 @@ categories.forEach((cat) => {
 
       input.addEventListener('input', () => {
         const q = (input as HTMLInputElement).value.trim().toLowerCase()
-
-        links.forEach((link) => {
-          link.style.display = link.textContent && link.textContent
-            .toLowerCase()
-            .includes(q)
-            ? ''
-            : 'none'
+        links.forEach(link => {
+          link.style.display = link.textContent && link.textContent.toLowerCase().includes(q) ? '' : 'none'
         })
-
-        headings.forEach((h) => {
+        headings.forEach(h => {
           let hasVisible = false
           let el = h.nextElementSibling
           while (el && el.tagName !== 'H4') {
