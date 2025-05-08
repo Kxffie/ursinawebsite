@@ -7,6 +7,32 @@ const { title } = Astro.props;
 
 <html lang="en">
 	<head>
+		<meta charset="utf-8" /> 
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>Ursina Engine | {title}</title>
+		<meta name="description" content="Free, open-source Python game engine built on Panda3D. Build 2D & 3D games with minimal setup." /> 
+		<link rel="canonical" href="https://ursinaengine.org{Astro.url.pathname}" />
+		<meta name="robots" content="index, follow" />
+
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="Ursina Engine" />
+		<meta property="og:title" content="Ursina Engine | {title}" />  
+		<meta property="og:description" content="Free, open-source Python game engine built on Panda3D. Build 2D & 3D games with minimal setup." />  
+		<!-- <meta property="og:url" content="https://ursinaengine.org{Astro.url.pathname}" />  
+		<meta property="og:image" content="https://ursinaengine.org/og-image.png" /> -->
+
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@ursinaengine" />
+		<meta name="twitter:title" content="Ursina Engine | {title}" />  
+		<meta name="twitter:description" content="Free, open-source Python game engine built on Panda3D." />  
+		<!-- <meta name="twitter:image" content="https://ursinaengine.org/og-image.png" /> -->
+
+		<meta name="theme-color" content="#0f172a" />
+
+
+
 	  <script is:inline type="text/partytown" async src="https://www.googletagmanager.com/gtag/js?id=G-021QZDYMWM"></script>
 	  <script is:inline type="text/partytown">
 		window.dataLayer = window.dataLayer || [];
@@ -25,9 +51,7 @@ const { title } = Astro.props;
 	</head>
 	<body>
 		<Navbar />
-
 		<slot />
-
 		<Footer />
 
 		<script is:inline>
