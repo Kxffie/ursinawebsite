@@ -5,6 +5,7 @@ import react from '@astrojs/react';
 
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import rehypeCallouts from 'rehype-callouts'
 
 import partytown from '@astrojs/partytown';
 import sitemap from '@astrojs/sitemap';
@@ -21,6 +22,7 @@ export default defineConfig({
     })],
   markdown: {
     rehypePlugins: [
+      rehypeCallouts,
       rehypeSlug,
       [
         rehypeAutolinkHeadings,
