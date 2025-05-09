@@ -4,6 +4,7 @@ description: "Detailed reference for the Ursina Button prefab"
 pubDate: "2025-05-06"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/button.py"
 category: "Basics"
+sort: 2
 ---
 
 # Button

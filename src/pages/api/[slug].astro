@@ -32,7 +32,8 @@ categories.forEach(cat => {
   title={entry.data.title}
   heroImage="https://github.com/pokepetter/ld44_life_is_currency/blob/master/value_of_life_screenshot.jpg?raw=true"
   heroHeading={entry.data.title}
-  heroCopy={entry.data.description}
+  heroDesc={entry.data.description}
+  heroSource={entry.data.source}
 >
   <section class="py-16 bg-background/95 dark:bg-background">
     <div class="container mx-auto px-6 flex gap-8">
@@ -45,17 +46,19 @@ categories.forEach(cat => {
         />
         <nav class="space-y-6">
           {categories.map(cat => (
-            <>
+            <div>
               <h4 class="font-semibold text-sidebar-foreground">{cat}</h4>
-              {grouped[cat].map(doc => (
-                <a
-                  href={`/docs/${doc.slug}`}
-                  class="block px-3 py-1 rounded text-sidebar-foreground hover:bg-sidebar-accent/95"
-                >
-                  {doc.data.title}
-                </a>
-              ))}
-            </>
+              {grouped[cat]
+                .sort((a, b) => (a.data.sort ?? 0) - (b.data.sort ?? 0))
+                .map(doc => (
+                  <a
+                    href={`/api/${doc.slug}`}
+                    class="block px-3 py-1 rounded text-sidebar-foreground hover:bg-sidebar-accent/95"
+                  >
+                    {doc.data.title}
+                  </a>
+                ))}
+            </div>
           ))}
         </nav>
       </aside>

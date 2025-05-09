@@ -59,6 +59,7 @@ export const collections = {
             title: z.string(),
             image: z.string().optional(),
             description: z.string(),
+            sort: z.number(),
             // slug: z.string(),  <-- remove this line
             pubDate: z.string().transform((str) => new Date(str)),
             source: z.string().optional(),

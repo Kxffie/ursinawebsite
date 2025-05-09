@@ -5,7 +5,11 @@ import Navbar from '@/components/Navbar.astro'
 import Footer from '@/components/Footer.astro'
 import '../styles/global.css'
 
-const { title, heroImage, heroDesc } = Astro.props
+import { ExternalLink } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+const { title, heroImage, heroDesc, heroSource } = Astro.props
+
+
 ---
 
 <html class="dark" lang="en">
@@ -69,11 +73,20 @@ const { title, heroImage, heroDesc } = Astro.props
         <div class="relative container mx-auto h-full flex flex-col md:flex-row items-center px-6">
           <div class="md:w-1/2 text-white">
             <h1 class="text-4xl md:text-6xl font-bold mb-4">
-				{title}
-			</h1>
+              {title}
+            </h1>
             <p class="text-lg mb-6">
-				{heroDesc}
-			</p>
+              {heroDesc}
+            </p>
+            <a href={heroSource} target="_blank" rel="noopener">
+                <Button
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
+                size="lg"
+              >
+                View Source in Github
+                <ExternalLink className="inline ml-2" />
+              </Button>
+            </a>
           </div>
         </div>
       </section>
