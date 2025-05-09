@@ -1,101 +1,39 @@
 ---
-import { getCollection, getEntry } from 'astro:content'
-import Layout from '@/layouts/Layout.astro'
+import { getEntry } from 'astro:content';
+import Layout      from '@/layouts/Layout.astro';
+import { getApiSidebar } from '@/lib/getApiSidebar';
+import Sidebar from '@/components/Sidebar.astro';
 
 export async function getStaticPaths() {
-  const allDocs = await getCollection('api')
-  return allDocs.map(d => ({ params: { slug: d.slug } }))
+  const { grouped } = await getApiSidebar();
+  return Object.values(grouped).flat().map(d => ({
+    params: { slug: d.slug }
+  }));
 }
 
-const { slug } = Astro.params
-const docs = await getCollection('api')
-const entry = docs.find(d => d.slug === slug)
-if (!entry) throw new Error(`Doc not found: ${slug}`)
+const { slug } = Astro.params;
+const entryResult = await getEntry('api', slug);
+if (!entryResult) throw new Error(`Entry not found for slug: ${slug}`);
+const { Content } = await entryResult.render();
+const { data } = entryResult;
 
-const entryResult = await getEntry('api', slug)
-if (!entryResult) throw new Error(`Entry not found for slug: ${slug}`)
-const { Content } = await entryResult.render()
-
-const grouped = docs.reduce<Record<string, typeof docs[number][]>>((acc, doc) => {
-  const cat = doc.data.category || 'Uncategorized'
-  acc[cat] = acc[cat] ? [...acc[cat], doc] : [doc]
-  return acc
-}, {})
-
-const categories = Object.keys(grouped).sort()
-categories.forEach(cat => {
-  grouped[cat].sort((a, b) => a.data.title.localeCompare(b.data.title))
-})
+const { categories, grouped } = await getApiSidebar();
 ---
 
 <Layout
-  title={entry.data.title}
+  title={data.title}
   heroImage="https://github.com/pokepetter/ld44_life_is_currency/blob/master/value_of_life_screenshot.jpg?raw=true"
-  heroHeading={entry.data.title}
-  heroDesc={entry.data.description}
-  heroSource={entry.data.source}
+  heroHeading={data.title}
+  heroDesc={data.description}
+  heroSource={data.source}
 >
   <section class="py-16 bg-background/95 dark:bg-background">
     <div class="container mx-auto px-6 flex gap-8">
-      <aside class="w-64 sticky top-24 self-start">
-        <input
-          type="text"
-          id="searchDocs"
-          placeholder="Search…"
-          class="w-full mb-4 p-2 border border-border bg-input text-foreground rounded"
-        />
-        <nav class="space-y-6">
-          {categories.map(cat => (
-            <div>
-              <h4 class="font-semibold text-sidebar-foreground">{cat}</h4>
-              {grouped[cat]
-                .sort((a, b) => (a.data.sort ?? 0) - (b.data.sort ?? 0))
-                .map(doc => (
-                  <a
-                    href={`/api/${doc.slug}`}
-                    class="block px-3 py-1 rounded text-sidebar-foreground hover:bg-sidebar-accent/95"
-                  >
-                    {doc.data.title}
-                  </a>
-                ))}
-            </div>
-          ))}
-        </nav>
-      </aside>
+      <Sidebar {categories} {grouped} client:load />
 
       <main class="flex-1 prose prose-lg max-w-none bg-card p-6 rounded-lg shadow dark:prose-invert">
         <Content />
       </main>
     </div>
   </section>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const input = document.getElementById('searchDocs')
-      const nav = document.querySelector('aside nav')
-      if (!nav || !input) return
-
-      const headings = Array.from(nav.querySelectorAll('h4'))
-      const links = Array.from(nav.querySelectorAll('a'))
-
-      input.addEventListener('input', () => {
-        const q = (input as HTMLInputElement).value.trim().toLowerCase()
-        links.forEach(link => {
-          link.style.display = link.textContent && link.textContent.toLowerCase().includes(q) ? '' : 'none'
-        })
-        headings.forEach(h => {
-          let hasVisible = false
-          let el = h.nextElementSibling
-          while (el && el.tagName !== 'H4') {
-            if (el.tagName === 'A' && (el as HTMLElement).style.display !== 'none') {
-              hasVisible = true
-              break
-            }
-            el = el.nextElementSibling
-          }
-          h.style.display = hasVisible ? '' : 'none'
-        })
-      })
-    })
-  </script>
 </Layout>

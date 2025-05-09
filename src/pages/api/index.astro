@@ -1,19 +1,9 @@
 ---
-import { getCollection } from 'astro:content'
-import Layout from '@/layouts/Layout.astro'
+import Sidebar from '@/components/Sidebar.astro';
+import Layout from '@/layouts/Layout.astro';
+import { getApiSidebar } from '@/lib/getApiSidebar';
 
-const docs = await getCollection('api')
-
-const grouped = docs.reduce<Record<string, typeof docs[number][]>>((acc, doc) => {
-  const cat = doc.data.category || 'Uncategorized'
-  acc[cat] = acc[cat] ? [...acc[cat], doc] : [doc]
-  return acc
-}, {})
-
-const categories = Object.keys(grouped).sort()
-categories.forEach(cat => {
-  grouped[cat].sort((a, b) => a.data.title.localeCompare(b.data.title))
-})
+const { categories, grouped } = await getApiSidebar();
 ---
 
 <Layout
@@ -23,65 +13,81 @@ categories.forEach(cat => {
 >
   <section class="py-16 bg-background/95 dark:bg-background">
     <div class="container mx-auto px-6 flex gap-8">
-      <aside class="w-64 sticky top-24 self-start">
-        <input
-          type="text"
-          id="searchDocs"
-          placeholder="Search…"
-          class="w-full mb-4 p-2 border border-border bg-input text-foreground rounded"
-        />
-        <nav class="space-y-6">
-          {categories.map(cat => (
-            <div>
-              <h4 class="font-semibold text-sidebar-foreground">{cat}</h4>
-              {grouped[cat]
-                .sort((a, b) => (a.data.sort ?? 0) - (b.data.sort ?? 0))
-                .map(doc => (
-                  <a
-                    href={`/api/${doc.slug}`}
-                    class="block px-3 py-1 rounded text-sidebar-foreground hover:bg-sidebar-accent/95"
-                  >
-                    {doc.data.title}
-                  </a>
-                ))}
-            </div>
-          ))}
-        </nav>
-      </aside>
+      <Sidebar {categories} {grouped} client:load />
 
-      <main class="flex-1 prose prose-lg max-w-none bg-card p-6 rounded-lg shadow dark:prose-invert">
-        <p>Please select a topic from the sidebar to view its content.</p>
+      <main class="flex-1 space-y-8">
+        <!-- Intro blurb -->
+        <section>
+          <h2 class="text-2xl font-bold mb-2">Welcome to the API Reference</h2>
+          <p class="text-lg">
+            Browse detailed docs for every class, function and module in Ursina Engine.
+            Use the sidebar search or click one of these categories to get started.
+          </p>
+        </section>
+      
+        <!-- Category cards grid -->
+        <section>
+          <h3 class="text-xl font-semibold mb-4">Browse by Category</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {categories.map(cat => (
+              <div class="bg-card p-4 rounded-lg shadow hover:shadow-md transition">
+                <h4 class="font-semibold mb-2">{cat}</h4>
+                <ul class="list-disc list-inside space-y-1 mb-3">
+                  {grouped[cat].slice(0, 2).map(doc => (
+                    <li>
+                      <a
+                        href={`/api/${doc.slug}`}
+                        class="text-primary hover:underline"
+                      >
+                        {doc.data.title}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href={`/api`}
+                  class="text-sm text-primary/40 hover:underline"
+                >
+                  View all in “{cat}”
+                </a>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- Need help section -->
+        <section class="pt-12">
+          <h3 class="text-xl font-semibold mb-4">Need help?</h3>
+          <p class="mb-6 text-lg">
+            Check out these resources for examples, guides, and tutorials.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <a
+              href="/samples"
+              class="bg-card p-4 rounded-lg shadow hover:shadow-md transition"
+            >
+              <h4 class="font-semibold mb-2">Samples</h4>
+              <p class="text-sm">View live examples of engine features in action.</p>
+            </a>
+            <a
+              href="/docs"
+              class="bg-card p-4 rounded-lg shadow hover:shadow-md transition"
+            >
+              <h4 class="font-semibold mb-2">Documentation</h4>
+              <p class="text-sm">Read the user guide for core concepts and usage.</p>
+            </a>
+            <a
+              href="/tutorials"
+              class="bg-card p-4 rounded-lg shadow hover:shadow-md transition"
+            >
+              <h4 class="font-semibold mb-2">Tutorials</h4>
+              <p class="text-sm">Follow step‑by‑step tutorials to get started quickly.</p>
+            </a>
+          </div>
+        </section>
       </main>
     </div>
   </section>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const input = document.getElementById('searchDocs')
-      const nav = document.querySelector('aside nav')
-      if (!nav || !input) return
-
-      const headings = Array.from(nav.querySelectorAll('h4'))
-      const links = Array.from(nav.querySelectorAll('a'))
-
-      input.addEventListener('input', () => {
-        const q = (input as HTMLInputElement).value.trim().toLowerCase()
-        links.forEach(link => {
-          link.style.display = link.textContent && link.textContent.toLowerCase().includes(q) ? '' : 'none'
-        })
-        headings.forEach(h => {
-          let hasVisible = false
-          let el = h.nextElementSibling
-          while (el && el.tagName !== 'H4') {
-            if (el.tagName === 'A' && (el as HTMLElement).style.display !== 'none') {
-              hasVisible = true
-              break
-            }
-            el = el.nextElementSibling
-          }
-          h.style.display = hasVisible ? '' : 'none'
-        })
-      })
-    })
-  </script>
+  
 </Layout>

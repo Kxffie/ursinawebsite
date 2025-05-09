@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 
 let pages = [
   { name: 'Docs', href: '/docs' },
-  { name: 'API Reference', href: '/api/ursina' },
+  { name: 'API Reference', href: '/api' },
   { name: 'Samples', href: '/samples' },
   { name: 'Assets', href: '/assets' },
   { name: 'Blog', href: '/blog' },
@@ -48,11 +48,11 @@ let pages = [
 
     <div class="flex items-center gap-4">
       <a href="/docs"><Button
-        variant="default"
+        variant="outline"
         className="hover:scale-105 active:scale-95 transition-transform"
         size="sm"
       >
-        Get Started
+        Download
       </Button></a>
       <button id="mobile-menu-toggle" class="md:hidden text-foreground" aria-label="Toggle menu">
         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

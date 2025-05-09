@@ -72,21 +72,24 @@ const { title, heroImage, heroDesc, heroSource } = Astro.props
         <div class="absolute inset-0 bg-black/40"></div>
         <div class="relative container mx-auto h-full flex flex-col md:flex-row items-center px-6">
           <div class="md:w-1/2 text-white">
-            <h1 class="text-4xl md:text-6xl font-bold mb-4">
-              {title}
-            </h1>
-            <p class="text-lg mb-6">
-              {heroDesc}
-            </p>
-            <a href={heroSource} target="_blank" rel="noopener">
-                <Button
-                className="bg-primary text-primary-foreground hover:bg-primary/90"
-                size="lg"
-              >
-                View Source in Github
-                <ExternalLink className="inline ml-2" />
-              </Button>
-            </a>
+            {title && (
+              <h1 class="text-4xl md:text-6xl font-bold max-w-lg mb-4">
+                {title}
+              </h1>
+            )}
+            {heroDesc && (
+              <p class="mb-6 max-w-md text-lg">
+                {heroDesc}
+              </p>
+            )}
+            {heroSource && (
+              <a href={heroSource} target="_blank" rel="noopener noreferrer">
+                <Button variant="outline" className="flex items-center gap-2">
+                  View Source
+                  <ExternalLink className="w-4 h-4" />
+                </Button>
+              </a>
+            )}
           </div>
         </div>
       </section>

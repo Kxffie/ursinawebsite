@@ -1,0 +1,118 @@
+---
+// src/components/Sidebar.astro
+import { ChevronDown } from 'lucide-react';
+export interface Props {
+  categories: string[];
+  grouped: Record<string, { slug: string; data: { title: string } }[]>;
+}
+const { categories, grouped } = Astro.props;
+---
+<aside class="w-64 sticky top-24 overflow-y-auto pr-2">
+  <input
+    type="text"
+    id="searchDocs"
+    placeholder="Search…"
+    class="w-full mb-4 px-3 py-2 border border-border bg-input text-foreground rounded"
+  />
+  <nav class="space-y-2" id="sidebarNav">
+    {categories.map(cat => (
+      <div class="category" data-open="true">
+        <button
+          type="button"
+          class="w-full flex justify-between items-center px-3 py-1 hover:bg-sidebar-accent rounded group"
+        >
+          <span class="font-semibold text-sidebar-foreground">{cat}</span>
+          <ChevronDown
+            className="chevron transition-transform duration-200"
+            width={16}
+            height={16}
+          />
+        </button>
+        <div class="links pl-5 pt-1 space-y-1">
+          {grouped[cat].map(doc => (
+            <a
+              href={`/api/${doc.slug}`}
+              class="block px-2 py-1 rounded text-sidebar-foreground hover:bg-sidebar-accent/95"
+            >
+              {doc.data.title}
+            </a>
+          ))}
+        </div>
+      </div>
+    ))}
+  </nav>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const nav = document.getElementById('sidebarNav');
+      const input = document.getElementById('searchDocs');
+      if (!nav || !input) return;
+  
+      // collapse/expand behavior
+      nav.querySelectorAll('.category').forEach(section => {
+        const btn = section.querySelector('button');
+        const links = section.querySelector('.links');
+        const chevron = section.querySelector('.chevron');
+  
+        // initialize styles
+        updateChevron(section, chevron, links);
+  
+        btn.addEventListener('click', () => {
+          const isOpen = section.getAttribute('data-open') === 'true';
+          section.setAttribute('data-open', String(!isOpen));
+          updateChevron(section, chevron, links);
+        });
+      });
+  
+      function updateChevron(section, chevron, links) {
+        const btn = section.querySelector('button');
+        const open = section.getAttribute('data-open') === 'true';
+  
+        if (open) {
+          links.style.display = '';
+          chevron.style.transform = 'rotate(0deg)';
+          chevron.style.opacity = '0';
+          btn.classList.remove('bg-card');
+          btn.addEventListener('mouseover', () => chevron.style.opacity = '1');
+          btn.addEventListener('mouseout', () => chevron.style.opacity = '0');
+        } else {
+          links.style.display = 'none';
+          chevron.style.transform = 'rotate(-90deg)';
+          chevron.style.opacity = '1';
+          btn.classList.add('bg-card');
+        }
+      }
+  
+      // search filter + auto‑open matching categories
+      const links = Array.from(nav.querySelectorAll('a'));
+  
+      input.addEventListener('input', () => {
+        const q = input.value.trim().toLowerCase();
+  
+        // show or hide individual links
+        links.forEach(a => {
+          a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+        });
+  
+        // for each category, if any link is visible, show and open it; otherwise hide it
+        nav.querySelectorAll('.category').forEach(section => {
+          const linksInSection = Array.from(section.querySelectorAll('a'));
+          const anyVisible = linksInSection.some(a => a.style.display !== 'none');
+  
+          if (anyVisible) {
+            section.style.display = '';
+            if (section.getAttribute('data-open') !== 'true') {
+              section.setAttribute('data-open', 'true');
+              const chevron = section.querySelector('.chevron');
+              const linksDiv = section.querySelector('.links');
+              updateChevron(section, chevron, linksDiv);
+            }
+          } else {
+            section.style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
+  
+</aside>
