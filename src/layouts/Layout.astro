@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button'
 const { title, heroImage, heroDesc, heroSource } = Astro.props
 
 import Analytics from '@vercel/analytics/astro'
+import  SpeedInsights  from "@vercel/speed-insights/astro"
 ---
 <!-- DARK MODE DEFAULT -->
 <html class="dark" lang="en">
@@ -133,7 +134,10 @@ import Analytics from '@vercel/analytics/astro'
     </script>
 
     <script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84q0uHVRRxEtvFPiQYbXWUorga2aqZJ0z"></script>
+    
     <!-- VERCEL ANALYTICS -->
     <Analytics />
+    <SpeedInsights />
+    <!-- VERCEL ANALYTICS -->
   </body>
 </html>
