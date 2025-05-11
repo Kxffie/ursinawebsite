@@ -1,9 +1,17 @@
 ---
 import Sidebar from '@/components/Sidebar.astro';
 import Layout from '@/layouts/Layout.astro';
-import { getApiSidebar } from '@/lib/getApiSidebar';
+import { getSidebarData } from '@/lib/getSidebarData';
+import { Eye, BookOpen, PlayCircle } from 'lucide-react';
 
-const { categories, grouped } = await getApiSidebar();
+const base = 'docs';
+const { categories, grouped } = await getSidebarData(base);
+
+let helpSection = [
+  { name: 'API Reference', href: '/api', icon: BookOpen, desc: "Browse detailed docs for every class, function and module." },
+  { name: 'Samples', href: '/samples', icon: Eye, desc: "Explore sample projects to see how things work." },
+  { name: 'Tutorials', href: '/tutorials', icon: PlayCircle, desc: "Follow step-by-step tutorials to get started quickly." }
+]
 ---
 
 <Layout
@@ -13,7 +21,7 @@ const { categories, grouped } = await getApiSidebar();
 >
   <section class="py-16 bg-background/95 dark:bg-background">
     <div class="container mx-auto px-6 flex gap-8">
-      <Sidebar {categories} {grouped} base='docs' />
+      <Sidebar {categories} {grouped} />
 
       <main class="flex-1 space-y-8">
         <!-- Intro blurb -->
@@ -23,65 +31,28 @@ const { categories, grouped } = await getApiSidebar();
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae corrupti molestiae ex pariatur. Nulla similique asperiores sunt, ipsum aliquid ea deserunt alias nobis error dicta exercitationem non eaque nam iure!
           </p>
         </section>
-      
-        <!-- Category cards grid -->
-        <section>
-          <h3 class="text-xl font-semibold mb-4">Browse by Category</h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {categories.map(cat => (
-              <div class="bg-card p-4 rounded-lg shadow hover:shadow-md transition">
-                <h4 class="font-semibold mb-2">{cat}</h4>
-                <ul class="list-disc list-inside space-y-1 mb-3">
-                  {grouped[cat].slice(0, 2).map(doc => (
-                    <li>
-                      <a
-                        href={`/api/${doc.slug}`}
-                        class="text-primary hover:underline"
-                      >
-                        {doc.data.title}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-                <a
-                  href={`/api`}
-                  class="text-sm text-primary/40 hover:underline"
-                >
-                  View all in “{cat}”
-                </a>
-              </div>
-            ))}
-          </div>
-        </section>
 
         <!-- Need help section -->
-        <section class="pt-12">
+        <section>
           <h3 class="text-xl font-semibold mb-4">Need help?</h3>
           <p class="mb-6 text-lg">
             Check out these resources for examples, guides, and tutorials.
           </p>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <a
-              href="/samples"
-              class="bg-card p-4 rounded-lg shadow hover:shadow-md transition"
-            >
-              <h4 class="font-semibold mb-2">Samples</h4>
-              <p class="text-sm">View live examples of engine features in action.</p>
-            </a>
-            <a
-              href="/docs"
-              class="bg-card p-4 rounded-lg shadow hover:shadow-md transition"
-            >
-              <h4 class="font-semibold mb-2">Documentation</h4>
-              <p class="text-sm">Read the user guide for core concepts and usage.</p>
-            </a>
-            <a
-              href="/tutorials"
-              class="bg-card p-4 rounded-lg shadow hover:shadow-md transition"
-            >
-              <h4 class="font-semibold mb-2">Tutorials</h4>
-              <p class="text-sm">Follow step‑by‑step tutorials to get started quickly.</p>
-            </a>
+            {helpSection.map(({ href, icon: Icon, name, desc }) => (
+              <a
+                href={href}
+                class="bg-card rounded-lg shadow hover:shadow-md transition px-6 py-5 hover:scale-105 active:scale-95"
+              >
+                <div class="flex items-center gap-6">
+                  <Icon className="w-8 h-8 text-primary flex-shrink-0" />
+                  <div>
+                    <h4 class="font-semibold mb-1">{name}</h4>
+                    <p class="text-sm">{desc}</p>
+                  </div>
+                </div>
+              </a>
+            ))}
           </div>
         </section>
       </main>

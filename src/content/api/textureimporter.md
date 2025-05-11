@@ -1,5 +1,5 @@
 ---
-title: "Texture Importer"
+title: "TextureImporter"
 description: "Utilities to locate, load, cache and compress image files (PNG, JPG, GIF, PSD) into Ursina `Texture` objects."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/texture_importer.py"

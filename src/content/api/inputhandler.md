@@ -1,5 +1,5 @@
 ---
-title: "Input Handler"
+title: "InputHandler"
 description: "Singleton for custom key‑binding and remapping of input events, with support for held‑key state and combined modifiers."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/input_handler.py"

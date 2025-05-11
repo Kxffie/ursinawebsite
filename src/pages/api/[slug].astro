@@ -1,23 +1,34 @@
 ---
 import { getEntry } from 'astro:content';
-import Layout      from '@/layouts/Layout.astro';
-import { getApiSidebar } from '@/lib/getApiSidebar';
+import Layout from '@/layouts/Layout.astro';
+import { getSidebarData } from '@/lib/getSidebarData';
 import Sidebar from '@/components/Sidebar.astro';
 
 export async function getStaticPaths() {
-  const { grouped } = await getApiSidebar();
-  return Object.values(grouped).flat().map(d => ({
-    params: { slug: d.slug }
+  const base = 'api';
+  const { grouped } = await getSidebarData(base);
+  const allEntries = Object.values(grouped).flat();
+
+  return allEntries.map((entry) => ({
+    params: { slug: entry.slug },
   }));
 }
 
-const { slug } = Astro.params;
-const entryResult = await getEntry('api', slug);
-if (!entryResult) throw new Error(`Entry not found for slug: ${slug}`);
-const { Content } = await entryResult.render();
-const { data } = entryResult;
+const base = 'api';
 
-const { categories, grouped } = await getApiSidebar();
+let slug = Astro.params.slug;
+if (Array.isArray(slug)) {
+  slug = slug[0];
+}
+
+const entry = await getEntry(base, slug);
+if (!entry) {
+  throw new Error(`No entry found in "${base}" for slug "${slug}"`);
+}
+
+const { data } = entry;
+const { Content } = await entry.render();
+const { categories, grouped } = await getSidebarData(base);
 ---
 
 <Layout
@@ -29,9 +40,9 @@ const { categories, grouped } = await getApiSidebar();
 >
   <section class="py-16 bg-background/95 dark:bg-background">
     <div class="container mx-auto px-6 flex gap-8">
-      <Sidebar {categories} {grouped} base='api' />
+      <Sidebar {categories} {grouped} base={base} />
 
-      <main class="flex-1 prose prose-lg max-w-none bg-card p-6 rounded-lg shadow dark:prose-invert">
+      <main class="flex-1 prose prose-lg max-w-none p-6 rounded-lg shadow dark:prose-invert">
         <Content />
       </main>
     </div>
