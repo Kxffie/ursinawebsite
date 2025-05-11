@@ -52,37 +52,8 @@ let bugSection = [
           </ul>
         </section>
 
-        <!-- CATEGORY CARDS -->
-          <h3 class="text-xl font-semibold mb-4">Browse by Category</h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {categories.map(cat => (
-              <div class="bg-card p-4 rounded-lg shadow hover:shadow-md transition">
-                <h4 class="font-semibold mb-2">{cat}</h4>
-                <ul class="list-disc list-inside space-y-1 mb-3">
-                  {grouped[cat].slice(0, 2).map(doc => (
-                    <li>
-                      <a
-                        href={`/api/${doc.slug}`}
-                        class="text-primary hover:underline"
-                      >
-                        {doc.data.title}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-                <a
-                  href={`/api`}
-                  class="text-sm text-primary/40 hover:underline"
-                >
-                  View all in “{cat}”
-                </a>
-              </div>
-            ))}
-          </div>
-        </>
-
         <!-- HELP SECTION -->
-        <section class="pt-8">
+        <section>
           <h3 class="text-xl font-semibold mb-4">Need help?</h3>
           <p class="mb-6 text-lg">
             Check out these resources for examples, guides, and tutorials.
