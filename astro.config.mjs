@@ -11,6 +11,7 @@ import partytown from '@astrojs/partytown';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
+  prefetch: true,
   vite: { plugins: [tailwindcss()] },
   integrations: [
     react(), 

@@ -1,5 +1,27 @@
 ---
 // src/components/Footer.astro
+
+let sections = [
+  { name: 'Documentation', links: [
+    { name: 'Getting Started', href: '/docs' },
+    { name: 'API Reference', href: '/api' },
+    { name: 'Tutorials', href: '/guides' },
+    { name: 'Samples', href: '/samples' },
+  ] },
+  { name: 'Community', links: [
+    { name: 'Discord', href: 'https://discord.gg/ursina' },
+    { name: 'GitHub', href: 'https://github.com/pokepetter/ursina' },
+  ] },
+  { name: 'Support Us', links: [
+    { name: 'GitHub Sponsors', href: 'https://github.com/sponsors/pokepetter' },
+    { name: 'Patreon', href: 'https://www.patreon.com/c/ursinaengine/' },
+  ] },
+  { name: 'Legal', links: [
+    { name: 'MIT License', href: '/license' },
+    // { name: 'Privacy Policy', href: '/privacy' },
+  ] },
+]
+
 ---
 
 <footer class="mt-auto border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -7,7 +29,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
       <!-- Brand Section -->
       <div class="space-y-4">
-        <a href="/" class="flex items-center gap-3 group">
+        <a data-astro-prefetch="hover" href="/" class="flex items-center gap-3 group">
           <img
             src="https://raw.githubusercontent.com/Kxffie/ursinawebsite/refs/heads/main/public/brand/ursina_logo_wireframe.webp"
             alt="Ursina Engine"
@@ -21,54 +43,24 @@
           Free, open-source Python game engine built on Panda3D.
         </p>
       </div>
-
-      <!-- Docs Section -->
-      <div class="space-y-2">
-        <h4 class="text-sm font-medium text-foreground">Documentation</h4>
-        <nav class="flex flex-col space-y-1">
-          <a href="docs" class="text-sm text-muted-foreground hover:text-foreground transition-colors">Getting Started</a>
-          <a href="docs" class="text-sm text-muted-foreground hover:text-foreground transition-colors">API Reference</a>
-          <a href="guides" class="text-sm text-muted-foreground hover:text-foreground transition-colors">Tutorials</a>
-          <a href="samples" class="text-sm text-muted-foreground hover:text-foreground transition-colors">Samples</a>
-        </nav>
-      </div>
-
-      <!-- Community Section -->
-      <div class="space-y-2">
-        <h4 class="text-sm font-medium text-foreground">Community</h4>
-        <nav class="flex flex-col space-y-1">
-          <a href="https://discord.gg/ursina" target="_blank" class="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
-            Discord
-          </a>
-          <a href="https://github.com/pokepetter/ursina" target="_blank" class="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
-            Github
-          </a>
-          <!-- Add other community links with icons -->
-        </nav>
-      </div>
-
-      <!-- Donate Section -->
-      <div class="space-y-2">
-        <h4 class="text-sm font-medium text-foreground">Support Us</h4>
-        <nav class="flex flex-col space-y-1">
-          <a href="https://github.com/sponsors/pokepetter" target="_blank" class="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            GitHub Sponsors
-          </a>
-          <a href="https://www.patreon.com/c/ursinaengine/" target="_blank" class="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            Patreon
-          </a>
-          <!-- Add other donation links -->
-        </nav>
-      </div>
-
-      <!-- Legal Section -->
-      <div class="space-y-2">
-        <h4 class="text-sm font-medium text-foreground">Legal</h4>
-        <nav class="flex flex-col space-y-1">
-          <a href="/license" class="text-sm text-muted-foreground hover:text-foreground transition-colors">MIT License</a>
-          <!-- <a href="/privacy" class="text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</a> -->
-        </nav>
-      </div>
+    
+      {sections.map((section) => (
+        <div class="space-y-2">
+          <h4 class="text-sm font-medium text-foreground">{section.name}</h4>
+          <nav class="flex flex-col space-y-1">
+            {section.links.map((link) => (
+              <a
+                data-astro-prefetch="hover"
+                href={link.href}
+                target="_blank"
+                class="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
+              >
+                {link.name}
+              </a>
+            ))}
+          </nav>
+        </div>
+      ))}
     </div>
 
     <div class="mt-8 pt-8 border-t text-center text-sm text-muted-foreground">

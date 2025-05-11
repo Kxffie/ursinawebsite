@@ -86,7 +86,11 @@ import  SpeedInsights  from "@vercel/speed-insights/astro"
               </p>
             )}
             {heroSource && (
-              <a href={heroSource} target="_blank" rel="noopener noreferrer">
+              <a 
+                href={heroSource} 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
                 <Button variant="outline" className="flex items-center gap-2">
                   View Source
                   <ExternalLink className="w-4 h-4" />
@@ -132,8 +136,6 @@ import  SpeedInsights  from "@vercel/speed-insights/astro"
         })
       })
     </script>
-
-    <script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84q0uHVRRxEtvFPiQYbXWUorga2aqZJ0z"></script>
     
     <!-- VERCEL ANALYTICS -->
     <Analytics />
