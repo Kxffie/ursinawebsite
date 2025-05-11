@@ -9,7 +9,7 @@ import { ExternalLink } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 const { title, heroImage, heroDesc, heroSource } = Astro.props
 
-
+import Analytics from '@vercel/analytics/astro'
 ---
 
 <html class="dark" lang="en">
@@ -128,5 +128,6 @@ const { title, heroImage, heroDesc, heroSource } = Astro.props
     </script>
 
     <script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84q0uHVRRxEtvFPiQYbXWUorga2aqZJ0z"></script>
+    <Analytics />
   </body>
 </html>
