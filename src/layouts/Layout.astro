@@ -11,7 +11,7 @@ const { title, heroImage, heroDesc, heroSource } = Astro.props
 
 import Analytics from '@vercel/analytics/astro'
 ---
-
+<!-- DARK MODE DEFAULT -->
 <html class="dark" lang="en">
   <head>
     <meta charset="utf-8" />
@@ -44,6 +44,7 @@ import Analytics from '@vercel/analytics/astro'
 
     <meta name="theme-color" content="#0f172a" />
 
+    <!-- GOOGLE ANALYTICS -->
     <script
       is:inline
       type="text/partytown"
@@ -61,9 +62,10 @@ import Analytics from '@vercel/analytics/astro'
   </head>
 
   <body>
+    <!-- NAVBAR -->
     <Navbar />
 
-    {/** Hero only if heroImage is provided **/}
+    <!-- HERO SECTION -->
     {heroImage ? (
       <section
         class="relative w-full h-[20vh] md:h-[30vh] lg:h-[30vh] bg-cover bg-center"
@@ -95,12 +97,15 @@ import Analytics from '@vercel/analytics/astro'
       </section>
     ) : null}
 
+    <!-- MAIN CONTENT -->
     <main>
       <slot />
     </main>
 
+    <!-- FOOTER -->
     <Footer />
 
+    <!-- COPY HEADERS FROM MARKDOWN CORRECTLY -->
     <script is:inline>
       document.addEventListener('click', (e) => {
         const link = e.target.closest('a.header-anchor')
@@ -128,6 +133,7 @@ import Analytics from '@vercel/analytics/astro'
     </script>
 
     <script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84q0uHVRRxEtvFPiQYbXWUorga2aqZJ0z"></script>
+    <!-- VERCEL ANALYTICS -->
     <Analytics />
   </body>
 </html>
