@@ -1,12 +1,92 @@
 ---
-// src/pages/docs/index.astro
-import Layout from '@/layouts/Layout.astro'
+import Sidebar from '@/components/Sidebar.astro';
+import Layout from '@/layouts/Layout.astro';
+import { getApiSidebar } from '@/lib/getApiSidebar';
+
+const { categories, grouped } = await getApiSidebar();
 ---
 
 <Layout
-  title="Docs"
+  title="Documentation"
   heroImage="https://github.com/pokepetter/ld44_life_is_currency/blob/master/value_of_life_screenshot.jpg?raw=true"
-  heroDesc="Documentation for the Ursina Engine"
+  heroDesc="Beginner documentation for the Ursina Engine"
 >
+  <section class="py-16 bg-background/95 dark:bg-background">
+    <div class="container mx-auto px-6 flex gap-8">
+      <Sidebar {categories} {grouped} base='docs' />
 
+      <main class="flex-1 space-y-8">
+        <!-- Intro blurb -->
+        <section>
+          <h2 class="text-2xl font-bold mb-2">Welcome to the Docs</h2>
+          <p class="text-lg">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae corrupti molestiae ex pariatur. Nulla similique asperiores sunt, ipsum aliquid ea deserunt alias nobis error dicta exercitationem non eaque nam iure!
+          </p>
+        </section>
+      
+        <!-- Category cards grid -->
+        <section>
+          <h3 class="text-xl font-semibold mb-4">Browse by Category</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {categories.map(cat => (
+              <div class="bg-card p-4 rounded-lg shadow hover:shadow-md transition">
+                <h4 class="font-semibold mb-2">{cat}</h4>
+                <ul class="list-disc list-inside space-y-1 mb-3">
+                  {grouped[cat].slice(0, 2).map(doc => (
+                    <li>
+                      <a
+                        href={`/api/${doc.slug}`}
+                        class="text-primary hover:underline"
+                      >
+                        {doc.data.title}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href={`/api`}
+                  class="text-sm text-primary/40 hover:underline"
+                >
+                  View all in “{cat}”
+                </a>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- Need help section -->
+        <section class="pt-12">
+          <h3 class="text-xl font-semibold mb-4">Need help?</h3>
+          <p class="mb-6 text-lg">
+            Check out these resources for examples, guides, and tutorials.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <a
+              href="/samples"
+              class="bg-card p-4 rounded-lg shadow hover:shadow-md transition"
+            >
+              <h4 class="font-semibold mb-2">Samples</h4>
+              <p class="text-sm">View live examples of engine features in action.</p>
+            </a>
+            <a
+              href="/docs"
+              class="bg-card p-4 rounded-lg shadow hover:shadow-md transition"
+            >
+              <h4 class="font-semibold mb-2">Documentation</h4>
+              <p class="text-sm">Read the user guide for core concepts and usage.</p>
+            </a>
+            <a
+              href="/tutorials"
+              class="bg-card p-4 rounded-lg shadow hover:shadow-md transition"
+            >
+              <h4 class="font-semibold mb-2">Tutorials</h4>
+              <p class="text-sm">Follow step‑by‑step tutorials to get started quickly.</p>
+            </a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </section>
+
+  
 </Layout>

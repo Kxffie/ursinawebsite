@@ -4,8 +4,9 @@ import { ChevronDown } from 'lucide-react';
 export interface Props {
   categories: string[];
   grouped: Record<string, { slug: string; data: { title: string } }[]>;
+  base?: string;
 }
-const { categories, grouped } = Astro.props;
+const { categories, grouped, base='' } = Astro.props;
 ---
 <aside class="w-64 sticky top-24 overflow-y-auto pr-2">
   <input
@@ -31,7 +32,7 @@ const { categories, grouped } = Astro.props;
         <div class="links pl-5 pt-1 space-y-1">
           {grouped[cat].map(doc => (
             <a
-              href={`/api/${doc.slug}`}
+              href={`/${base}/${doc.slug}`}
               class="block px-2 py-1 rounded text-sidebar-foreground hover:bg-sidebar-accent/95"
             >
               {doc.data.title}
