@@ -67,40 +67,47 @@ import  SpeedInsights  from "@vercel/speed-insights/astro"
     <Navbar />
 
     <!-- HERO SECTION -->
-    {heroImage ? (
-      <section
-        class="relative w-full h-[20vh] md:h-[30vh] lg:h-[30vh] bg-cover bg-center"
-        style={`background-image: url('${heroImage}')`}
-      >
-        <div class="absolute inset-0 bg-black/40"></div>
-        <div class="relative container mx-auto h-full flex flex-col md:flex-row items-center px-6">
-          <div class="md:w-1/2 text-white">
-            {title && (
-              <h1 class="text-4xl md:text-6xl font-bold max-w-lg mb-4">
-                {title}
-              </h1>
-            )}
-            {heroDesc && (
-              <p class="mb-6 max-w-md text-lg">
-                {heroDesc}
-              </p>
-            )}
-            {heroSource && (
-              <a 
-                href={heroSource} 
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                <Button variant="outline" className="flex items-center gap-2">
-                  View Source
-                  <ExternalLink className="w-4 h-4" />
-                </Button>
-              </a>
-            )}
+    {heroImage && (
+  <section
+    class="relative w-full h-[30vh] sm:h-[30vh] md:h-[40vh] lg:h-[50vh] bg-cover bg-center"
+    style={`background-image: url('${heroImage}')`}
+  >
+    {/* dark overlay */}
+    <div class="absolute inset-0 bg-black/40"></div>
+
+    {/* content container */}
+    <div class="relative container mx-auto h-full flex flex-col-reverse md:flex-row items-center justify-center md:justify-start px-4">
+      {/* text block */}
+      <div class="w-full md:w-1/2 text-white text-center md:text-left mb-6 md:mb-0">
+        {title && (
+          <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold max-w-lg">
+            {title}
+          </h1>
+        )}
+        {heroDesc && (
+          <p class="mt-4 text-base sm:text-lg md:text-xl max-w-md mx-auto md:mx-0">
+            {heroDesc}
+          </p>
+        )}
+        {heroSource && (
+          <div class="mt-6 flex justify-center md:justify-start">
+            <a href={heroSource} target="_blank" rel="noopener noreferrer">
+              <Button variant="outline" className="flex items-center gap-2">
+                View Source
+                <ExternalLink className="w-4 h-4" />
+              </Button>
+            </a>
           </div>
-        </div>
-      </section>
-    ) : null}
+        )}
+      </div>
+
+      {/* optional: you could place an image or graphic here on desktop */}
+      {/* <div class="hidden md:block md:w-1/2">…</div> */}
+    </div>
+  </section>
+)}
+
+
 
     <!-- MAIN CONTENT -->
     <main>
