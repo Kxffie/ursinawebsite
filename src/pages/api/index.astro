@@ -87,7 +87,7 @@ let bugSection = [
           <p class="mb-6 text-lg">
             Check out these resources for examples, guides, and tutorials.
           </p>
-          <div class={`grid grid-cols-1 sm:grid-cols-${helpSection.length} gap-6`}>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {helpSection.map(({ href, icon: Icon, name, desc }) => (
               <a
                 href={href}
@@ -111,7 +111,7 @@ let bugSection = [
           <p class="mb-6 text-lg">
             If you find a bug or have a suggestion, please let us know on our Github Issues tracker or join the Discord.
           </p>
-          <div class={`grid grid-cols-1 sm:grid-cols-${bugSection.length} gap-6`}>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {bugSection.map(({ href, icon: Icon, name, desc }) => (
               <a
                 href={href}
