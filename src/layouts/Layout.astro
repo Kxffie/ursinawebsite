@@ -21,14 +21,14 @@ const { title, heroImage, heroDesc, heroSource } = Astro.props
     <title>Ursina Engine | {title}</title>
     <meta
       name="description"
-      content="Free, open-source Python game engine built on Panda3D. Build 2D & 3D games with minimal setup."
+      content="Free, open-source Python game engine."
     />
     <link rel="canonical" href="https://ursinaengine.org{Astro.url.pathname}" />
     <meta name="robots" content="index, follow" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Ursina Engine" />
-    <meta property="og:title" content="Ursina Engine | {title}" />
+    <meta property="og:title" content={`Ursina Engine | ${title}`} />
     <meta
       property="og:description"
       content="Free, open-source Python game engine built on Panda3D. Build 2D & 3D games with minimal setup."
@@ -36,7 +36,7 @@ const { title, heroImage, heroDesc, heroSource } = Astro.props
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@ursinaengine" />
-    <meta name="twitter:title" content="Ursina Engine | {title}" />
+    <meta name="twitter:title" content={`Ursina Engine | ${title}`} />
     <meta
       name="twitter:description"
       content="Free, open-source Python game engine built on Panda3D."
