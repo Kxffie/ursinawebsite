@@ -29,17 +29,30 @@ let bugSection = [
       <Sidebar {categories} {grouped} base={base} />
 
       <main class="flex-1 space-y-8">
-        <!-- Intro blurb -->
+        <!-- INTRO BLURB -->
         <section>
           <h2 class="text-2xl font-bold mb-2">Welcome to the API Reference</h2>
           <p class="text-lg">
-            Browse detailed docs for every class, function and module in Ursina Engine.
-            Use the sidebar search or click one of these categories to get started.
+            Browse detailed docs for every class, function and module in the Ursina Engine. Use the sidebar or the search box to quickly find what you need.
           </p>
+
+          <h3 class="text-2xl font-bold mb-2 pt-8">How to use the search</h3>
+          <p class="text-lg mb-2">
+            There are two search modes:
+          </p>
+          <ul class="list-disc list-inside text-lg">
+            <li>
+              <strong>General search:</strong> Type any term to filter all pages.
+              <br><code>e.g. “texture”</code>
+            </li>
+            <li>
+              <strong>Category search:</strong> Prefix with a category and slash to narrow to that group.
+              <br><code>e.g. “Graphics/Color”</code> shows only “Color” pages under “Graphics”
+            </li>
+          </ul>
         </section>
-      
-        <!-- Category cards grid -->
-        <section>
+
+        <!-- CATEGORY CARDS -->
           <h3 class="text-xl font-semibold mb-4">Browse by Category</h3>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {categories.map(cat => (
@@ -66,15 +79,15 @@ let bugSection = [
               </div>
             ))}
           </div>
-        </section>
+        </>
 
-        <!-- Need help section -->
-        <section class="pt-12">
+        <!-- HELP SECTION -->
+        <section class="pt-8">
           <h3 class="text-xl font-semibold mb-4">Need help?</h3>
           <p class="mb-6 text-lg">
             Check out these resources for examples, guides, and tutorials.
           </p>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div class={`grid grid-cols-1 sm:grid-cols-${helpSection.length} gap-6`}>
             {helpSection.map(({ href, icon: Icon, name, desc }) => (
               <a
                 href={href}
@@ -92,12 +105,13 @@ let bugSection = [
           </div>
         </section>
 
-        <section class="pt-12">
+        <!-- BUG SECTION -->
+        <section class="pt-8">
           <h3 class="text-xl font-semibold mb-4">Something wrong?</h3>
           <p class="mb-6 text-lg">
             If you find a bug or have a suggestion, please let us know on our Github Issues tracker or join the Discord.
           </p>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div class={`grid grid-cols-1 sm:grid-cols-${bugSection.length} gap-6`}>
             {bugSection.map(({ href, icon: Icon, name, desc }) => (
               <a
                 href={href}
