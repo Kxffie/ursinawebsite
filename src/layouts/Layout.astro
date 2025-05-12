@@ -1,55 +1,95 @@
 a---
 // src/layouts/Layout.astro
 
-import Navbar from '@/components/Navbar.astro'
-import Footer from '@/components/Footer.astro'
-import '../styles/global.css'
+import Navbar from '@/components/Navbar.astro';
+import Footer from '@/components/Footer.astro';
+import '../styles/global.css';
 
-import { ExternalLink } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-const { title, heroImage, heroDesc, heroSource } = Astro.props
+import { ExternalLink }      from 'lucide-react';
+import { Button }            from '@/components/ui/button';
+import Analytics             from '@vercel/analytics/astro';
+import SpeedInsights         from "@vercel/speed-insights/astro";
+import { SEO }               from 'astro-seo';
 
-import Analytics from '@vercel/analytics/astro'
-import  SpeedInsights  from "@vercel/speed-insights/astro"
+const {
+  title = 'Ursina Engine',
+  description = 'Free, open-source Python game engine built on Panda3D.',
+  heroImage,
+  heroDesc,
+  heroSource,
+  canonical = `https://ursinaengine.org${Astro.url.pathname}`
+} = Astro.props;
 ---
 <!-- DARK MODE DEFAULT -->
 <html class="dark" lang="en">
   <head>
-    <!-- ASTRO SITEMAP -->
+    <!-- sitemap -->
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <!-- ASTRO SITEMAP -->
 
+    <!-- Astro SEO: this will render all title/meta/og/twitter tags -->
+    <SEO
+      title={`Ursina Engine | ${title}`}
+      titleTemplate={`%s — Ursina Engine`}
+      titleDefault="Ursina Engine"
+      description={description}
+      canonical={canonical}
+      noindex={false}
+      nofollow={false}
+      charset="utf-8"
+      languageAlternates={[
+        { href: 'https://ursinaengine.org/', hrefLang: 'en' },
+      ]}
+      openGraph={{
+        basic: {
+          title: `Ursina Engine | ${title}`,
+          type: 'website',
+          image: heroImage || '/default-og-image.png',
+          url: canonical
+        },
+        optional: {
+          description,
+          determiner: 'the',
+          locale: 'en_US',
+          localeAlternate: ['en_GB'],
+          siteName: 'Ursina Engine'
+        },
+        image: {
+          secureUrl: (heroImage || '/default-og-image.png').replace(/^http:/, 'https:'),
+          type: 'image/png',
+          width: 1200,
+          height: 630,
+          alt: `${title} — preview image`
+        }
+      }}
+      twitter={{
+        card: 'summary_large_image',
+        site: '@ursinaengine',
+        creator: '@ursinaengine',
+        title: `Ursina Engine | ${title}`,
+        description,
+        image: heroImage || '/default-og-image.png',
+        imageAlt: `${title} — preview image`
+      }}
+      extend={{
+        link: [
+          { rel: 'icon', href: '/favicon.ico' },
+          { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+          { rel: 'alternate', href: 'https://ursinaengine.org/', hreflang: 'en' },
+        ],
+        meta: [
+          { name: 'robots', content: 'index, follow' },
+          { name: 'theme-color', content: '#0f172a' },
+        ]
+      }}
+    />
+
+    <!-- legacy or custom fallbacks (optional) -->
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- end custom fallbacks -->
 
-    <title>Ursina Engine | {title}</title>
-    <meta
-      name="description"
-      content="Free, open-source Python game engine."
-    />
-    <link rel="canonical" href="https://ursinaengine.org{Astro.url.pathname}" />
-    <meta name="robots" content="index, follow" />
-
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Ursina Engine" />
-    <meta property="og:title" content={`Ursina Engine | ${title}`} />
-    <meta
-      property="og:description"
-      content="Free, open-source Python game engine built on Panda3D. Build 2D & 3D games with minimal setup."
-    />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@ursinaengine" />
-    <meta name="twitter:title" content={`Ursina Engine | ${title}`} />
-    <meta
-      name="twitter:description"
-      content="Free, open-source Python game engine built on Panda3D."
-    />
-
-    <meta name="theme-color" content="#0f172a" />
-
-    <!-- GOOGLE ANALYTICS -->
+    <!-- analytics, etc. -->
     <script
       is:inline
       type="text/partytown"
@@ -58,9 +98,7 @@ import  SpeedInsights  from "@vercel/speed-insights/astro"
     ></script>
     <script is:inline type="text/partytown">
       window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
+      function gtag() { dataLayer.push(arguments); }
       gtag('js', new Date());
       gtag('config', 'G-021QZDYMWM');
     </script>
