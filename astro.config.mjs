@@ -11,22 +11,33 @@ import partytown from '@astrojs/partytown';
 import sitemap from '@astrojs/sitemap';
 
 import AstroPWA from '@vite-pwa/astro'
-import minify from 'astro-minify-html-swc'
+
+import compressor from 'astro-compressor'
+import compress from 'astro-compress'
+import minify from "astro-min";
 
 export default defineConfig({
   site: "https://ursinawebsite.vercel.app/",
   prefetch: true,
   vite: { plugins: [tailwindcss()] },
   integrations: [
-    AstroPWA(),
+    AstroPWA(), 
     react(), 
-    sitemap(),
+    sitemap(), 
     partytown({
       config: {
         forward: ["dataLayer.push"]
       }
-    }),
+    }), 
     minify(),
+    compress({
+      CSS: false,
+      HTML: false,
+      Image: true,
+      JavaScript: false,
+      SVG: false
+    }),
+    compressor(),
   ],
   markdown: {
     rehypePlugins: [
