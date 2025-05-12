@@ -11,6 +11,7 @@ import partytown from '@astrojs/partytown';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
+  site: "https://ursinawebsite.vercel.app/",
   prefetch: true,
   vite: { plugins: [tailwindcss()] },
   integrations: [
