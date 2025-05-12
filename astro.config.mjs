@@ -10,11 +10,14 @@ import rehypeCallouts from 'rehype-callouts'
 import partytown from '@astrojs/partytown';
 import sitemap from '@astrojs/sitemap';
 
+import AstroPWA from '@vite-pwa/astro'
+
 export default defineConfig({
   site: "https://ursinawebsite.vercel.app/",
   prefetch: true,
   vite: { plugins: [tailwindcss()] },
   integrations: [
+    AstroPWA(),
     react(), 
     sitemap(),
     partytown({
