@@ -11,6 +11,7 @@ import partytown from '@astrojs/partytown';
 import sitemap from '@astrojs/sitemap';
 
 import AstroPWA from '@vite-pwa/astro'
+import minify from 'astro-minify-html-swc'
 
 export default defineConfig({
   site: "https://ursinawebsite.vercel.app/",
@@ -24,7 +25,9 @@ export default defineConfig({
       config: {
         forward: ["dataLayer.push"]
       }
-    })],
+    }),
+    minify(),
+  ],
   markdown: {
     rehypePlugins: [
       rehypeCallouts,
