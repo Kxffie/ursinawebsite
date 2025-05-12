@@ -2,8 +2,6 @@
 // src/pages/blog/index.astro
 import { getCollection } from 'astro:content'
 import Layout from '@/layouts/Layout.astro'
-import { ArrowRight } from 'lucide-react'
-import Wave from 'react-wavify'
 
 const blog = await getCollection('blog')
 ---
@@ -12,6 +10,7 @@ const blog = await getCollection('blog')
   title="Blog"
   heroImage="https://github.com/pokepetter/ld44_life_is_currency/blob/master/value_of_life_screenshot.jpg?raw=true"
   heroHeight={40}
+  heroHeightMobile={25}
   primaryText="Blog"
   subText="What's new in the Ursina Engine?"
 >

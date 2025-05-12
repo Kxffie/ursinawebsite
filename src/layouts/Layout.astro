@@ -18,6 +18,7 @@ const {
 
   heroImage,
   heroHeight,
+  heroHeightMobile,
   topLogo,
   primaryText,
   subText,
@@ -123,27 +124,28 @@ const {
 
     <!-- HERO SECTION -->
         {heroImage && (
-      <Hero
-        heroImage={heroImage}
-        heroHeight={heroHeight}
-        topLogo={topLogo}
-        primaryText={primaryText}
-        subText={subText}
-        buttons={[
-          primaryBtn && {
-            text: primaryBtn,
-            href: primaryBtnHref,
-            variant: 'primary',
-            external: primaryExternal ?? false,
-          },
-          secondaryBtn && {
-            text: secondaryBtn,
-            href: secondaryBtnHref,
-            variant: 'outline',
-            external: secondaryExternal ?? false,
-          },
-        ].filter(Boolean)}
-      />
+          <Hero
+            heroImage={heroImage}
+            heroHeight={heroHeight}
+            heroHeightMobile={heroHeightMobile}
+            topLogo={topLogo}
+            primaryText={primaryText}
+            subText={subText}
+            buttons={[
+              primaryBtn && {
+                text: primaryBtn,
+                href: primaryBtnHref,
+                variant: 'primary',
+                external: primaryExternal ?? false,
+              },
+              secondaryBtn && {
+                text: secondaryBtn,
+                href: secondaryBtnHref,
+                variant: 'outline',
+                external: secondaryExternal ?? false,
+              },
+            ].filter(Boolean)}
+          />
     )}
 
 

@@ -2,7 +2,7 @@
 import Sidebar from '@/components/Sidebar.astro';
 import Layout from '@/layouts/Layout.astro';
 import { getSidebarData } from '@/lib/getSidebarData';
-import { Eye, BookOpen, PlayCircle, Bug, MessageCircleCode } from 'lucide-react';
+import { Eye, BookOpen, PlayCircle, Bug, MessageCircleCode, Search, FolderSearch } from 'lucide-react';
 
 const base = 'docs';
 const { categories, grouped } = await getSidebarData(base);
@@ -23,6 +23,7 @@ let bugSection = [
   title="Documentation"
   heroImage="https://github.com/pokepetter/ld44_life_is_currency/blob/master/value_of_life_screenshot.jpg?raw=true"
   heroHeight={40}
+  heroHeightMobile={25}
   primaryText="Documentation"
   subText="Beginner guide to help you get started."
 >
@@ -31,15 +32,61 @@ let bugSection = [
       <Sidebar {categories} {grouped} />
 
       <main class="flex-1 space-y-8">
-        <!-- Intro blurb -->
+      <!-- INTRO BLURB -->
         <section>
           <h2 class="text-2xl font-bold mb-2">Welcome to the Docs</h2>
           <p class="text-lg">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae corrupti molestiae ex pariatur. Nulla similique asperiores sunt, ipsum aliquid ea deserunt alias nobis error dicta exercitationem non eaque nam iure!
+            A beginner guide to starting your first Ursina project.
           </p>
         </section>
 
-        <!-- HELP SECTION -->
+      <!-- SEARCH HELP -->
+        <section>
+          <h3 class="text-2xl font-bold mb-4">Quick search tips</h3>
+
+          <div class="grid gap-6 md:grid-cols-2">
+            <!-- general search -->
+            <div class="rounded-lg bg-card p-6">
+              <div class="flex items-center mb-4">
+                <Search className="h-5 w-5 text-primary mr-2" />
+                <h4 class="text-xl font-semibold">General search</h4>
+              </div>
+
+              <p class="text-base mb-2">
+                Enter any word or phrase to scan every page.
+              </p>
+
+              <input
+                type="text"
+                value="Download"
+                readonly
+                class="w-full rounded border border-border bg-input text-foreground px-3 py-2 cursor-default select-none"
+              />
+            </div>
+
+            <!-- category search -->
+            <div class="rounded-lg bg-card p-6">
+              <div class="flex items-center mb-4">
+                <FolderSearch className="h-5 w-5 text-primary mr-2" />
+                <h4 class="text-xl font-semibold">Category search</h4>
+              </div>
+
+              <p class="text-base mb-2">
+                Add a category and a slash to focus on one group.
+              </p>
+
+              <input
+                type="text"
+                value="Animation/2D"
+                readonly
+                class="w-full rounded border border-border bg-input text-foreground px-3 py-2 cursor-default select-none"
+              />
+            </div>
+          </div>
+        </section>
+
+
+      <!-- HELP SECTION -->
         <section>
           <h3 class="text-xl font-semibold mb-4">Need help?</h3>
           <p class="mb-6 text-lg">
@@ -63,7 +110,7 @@ let bugSection = [
           </div>
         </section>
 
-        <!-- BUG SECTION -->
+      <!-- BUG SECTION -->
         <section>
           <h3 class="text-xl font-semibold mb-4">Something wrong?</h3>
           <p class="mb-6 text-lg">
@@ -88,7 +135,5 @@ let bugSection = [
         </section>
       </main>
     </div>
-  </section>
-
-  
+  </section>  
 </Layout>

@@ -1,53 +1,53 @@
 ---
-// src/components/Hero.astro
-import { Button } from '@/components/ui/button';
-import { ExternalLink } from 'lucide-react';
-
+import { Button } from '@/components/ui/button'
+import { ExternalLink } from 'lucide-react'
 
 export interface Props {
-  heroImage:        string;
-  heroHeight?: string;
-
-  topLogo?:         boolean;
-  primaryText?:     string;
-  subText?:         string;
-
+  heroImage: string
+  heroHeight?: number          // desktop in vh
+  heroHeightMobile?: number    // mobile in vh
+  topLogo?: boolean
+  primaryText?: string
+  subText?: string
   buttons?: Array<{
-    text:     string;
-    href:     string;
-    variant?: 'primary' | 'outline';
-    external?: boolean;
-  }>;
+    text: string
+    href: string
+    variant?: 'primary' | 'outline'
+    external?: boolean
+  }>
 }
 
 const {
   heroImage,
-  heroHeight,
-  topLogo = false,
+  heroHeight        = 60,
+  heroHeightMobile  = 30,
+  topLogo           = false,
   primaryText,
   subText,
-  buttons = [],
-} = Astro.props as Props;
+  buttons           = [],
+} = Astro.props as Props
 
-// build the Tailwind height class, e.g. h-[70vh]
-const heightClass = `h-[${heroHeight}vh]`;
-
-// defaults for your logo slot
-const logoSrc = '/brand/ursina_logo_wireframe.webp';
-const logoAlt = 'Ursina Logo';
-const siteName = 'Ursina Engine';
+const logoSrc   = '/brand/ursina_logo_wireframe.webp'
+const logoAlt   = 'Ursina Logo'
+const siteName  = 'Ursina Engine'
 ---
 
 <section
-  class={`relative w-full bg-cover bg-center ${heightClass}`}
-  style={`background-image: url('${heroImage}')`}
+  class="relative w-full bg-cover bg-center
+         h-[var(--hero-h-mobile)] md:h-[var(--hero-h)]"
+  style={`--hero-h:${heroHeight}vh; --hero-h-mobile:${heroHeightMobile}vh; background-image:url('${heroImage}');`}
 >
   <div class="absolute inset-0 bg-black/40"></div>
 
-  <div class="relative container mx-auto h-full flex flex-col md:flex-row items-center px-6">
+  <div
+    class="relative container mx-auto h-full
+           grid place-items-center
+           md:flex md:items-center md:justify-start
+           px-6 text-center md:text-left"
+  >
     <div class="md:w-1/2 text-white">
       {topLogo && (
-        <div class="flex items-center mb-4">
+        <div class="flex items-center justify-center md:justify-start mb-4">
           <img
             src={logoSrc}
             alt={logoAlt}
@@ -60,36 +60,34 @@ const siteName = 'Ursina Engine';
       {primaryText && (
         <h1 class="text-4xl md:text-6xl font-bold mb-4">{primaryText}</h1>
       )}
-      {subText && (
-        <p class="text-lg mb-6">{subText}</p>
-      )}
 
-    
-      
-      <div class="flex flex-wrap gap-4">
+      {subText && <p class="text-lg mb-6">{subText}</p>}
+
+      <div class="flex flex-wrap justify-center md:justify-start gap-4">
         {buttons.map((btn) => {
-          const isExternal = btn.external === true;
-          const variant    = btn.variant ?? 'primary';
-          const baseClass  =
+          const variant = btn.variant ?? 'primary'
+          const cls =
             variant === 'primary'
               ? 'bg-primary text-primary-foreground hover:bg-primary/90'
-              : 'border-primary text-primary hover:bg-primary/10';
+              : 'border-primary text-primary hover:bg-primary/10'
 
           return (
             <a
               href={btn.href}
-              {...(isExternal
-                ? { target: '_blank', rel: 'noopener' }
-                : {})}
+              {...(btn.external ? { target: '_blank', rel: 'noopener' } : {})}
             >
-              <Button className={baseClass} size="lg" variant={variant === 'outline' ? 'outline' : undefined}>
+              <Button
+                className={cls}
+                size="lg"
+                variant={variant === 'outline' ? 'outline' : undefined}
+              >
                 {btn.text}
-                {isExternal && (
+                {btn.external && (
                   <ExternalLink className="w-4 h-4 ml-2 inline-block" />
                 )}
               </Button>
             </a>
-          );
+          )
         })}
       </div>
     </div>

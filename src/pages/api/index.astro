@@ -2,7 +2,7 @@
 import Sidebar from '@/components/Sidebar.astro';
 import Layout from '@/layouts/Layout.astro';
 import { getSidebarData } from '@/lib/getSidebarData';
-import { Eye, BookOpen, PlayCircle, Bug, MessageCircleCode } from 'lucide-react';
+import { Eye, BookOpen, PlayCircle, Bug, MessageCircleCode, Search, FolderSearch } from 'lucide-react';
 
 const base = 'api';
 const { categories, grouped } = await getSidebarData(base);
@@ -19,17 +19,11 @@ let bugSection = [
 ]
 ---
 
-<!-- <Layout
-  title="Home"
-  heroImage="https://github.com/pokepetter/ld44_life_is_currency/blob/master/value_of_life_screenshot.jpg?raw=true"
-  heroHeight={40}
-  primaryText="API Reference"
-  subText="Detailed documentation for every class, function and module."
-> -->
 <Layout
   title="Home"
   heroImage="https://github.com/pokepetter/ld44_life_is_currency/blob/master/value_of_life_screenshot.jpg?raw=true"
   heroHeight={40}
+  heroHeightMobile={25}
   primaryText="API Reference"
   subText="Detailed documentation for every class, function and module."
 >
@@ -42,24 +36,55 @@ let bugSection = [
         <section>
           <h2 class="text-2xl font-bold mb-2">Welcome to the API Reference</h2>
           <p class="text-lg">
-            Browse detailed docs for every class, function and module in the Ursina Engine. Use the sidebar or the search box to quickly find what you need.
+            Browse detailed docs for every class, function and module.
           </p>
-
-          <h3 class="text-2xl font-bold mb-2 pt-8">How to use the search</h3>
-          <p class="text-lg mb-2">
-            There are two search modes:
-          </p>
-          <ul class="list-disc list-inside text-lg">
-            <li>
-              <strong>General search:</strong> Type any term to filter all pages.
-              <br><code>e.g. “texture”</code>
-            </li>
-            <li>
-              <strong>Category search:</strong> Prefix with a category and slash to narrow to that group.
-              <br><code>e.g. “Graphics/Color”</code> shows only “Color” pages under “Graphics”
-            </li>
-          </ul>
         </section>
+
+        <!-- SEARCH HELP -->
+        <section>
+          <h3 class="text-2xl font-bold mb-4">Quick search tips</h3>
+
+          <div class="grid gap-6 md:grid-cols-2">
+            <!-- general search -->
+            <div class="rounded-lg bg-card p-6">
+              <div class="flex items-center mb-4">
+                <Search className="h-5 w-5 text-primary mr-2" />
+                <h4 class="text-xl font-semibold">General search</h4>
+              </div>
+
+              <p class="text-base mb-2">
+                Enter any word or phrase to scan every page.
+              </p>
+
+              <input
+                type="text"
+                value="Texture"
+                readonly
+                class="w-full rounded border border-border bg-input text-foreground px-3 py-2 cursor-default select-none"
+              />
+            </div>
+
+            <!-- category search -->
+            <div class="rounded-lg bg-card p-6">
+              <div class="flex items-center mb-4">
+                <FolderSearch className="h-5 w-5 text-primary mr-2" />
+                <h4 class="text-xl font-semibold">Category search</h4>
+              </div>
+
+              <p class="text-base mb-2">
+                Add a category and a slash to focus on one group.
+              </p>
+
+              <input
+                type="text"
+                value="Graphics/Color"
+                readonly
+                class="w-full rounded border border-border bg-input text-foreground px-3 py-2 cursor-default select-none"
+              />
+            </div>
+          </div>
+        </section>
+
 
         <!-- HELP SECTION -->
         <section>
