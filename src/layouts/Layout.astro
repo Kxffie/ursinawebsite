@@ -40,9 +40,8 @@ const {
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- Astro SEO: this will render all title/meta/og/twitter tags -->
-    <SEO
+    <!-- <SEO
       title={`Ursina Engine | ${title}`}
-      titleTemplate={`%s — Ursina Engine`}
       titleDefault="Ursina Engine"
       description={description}
       canonical={canonical}
@@ -94,13 +93,22 @@ const {
           { name: 'theme-color', content: '#0f172a' },
         ]
       }}
-    />
+    /> -->
+
 
     <!-- legacy or custom fallbacks (optional) -->
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- end custom fallbacks -->
+
+    <title>Ursina Engine | {title}</title>
+    <meta property="description" content={description} />
+    <meta property="og:image" content={heroImage}>
+    <meta property="og:site_name" content={title}>
+    <meta property="og:title" content="Ursina Engine">
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical}>
 
     <!-- analytics, etc. -->
     <script
