@@ -2,16 +2,16 @@
 // src/pages/assets/index.astro
 import { getCollection } from 'astro:content'
 import Layout from '@/layouts/Layout.astro'
-import { ArrowRight } from 'lucide-react'
-import Wave from 'react-wavify'
 
 const assets = await getCollection('assets')
 ---
 
-<Layout 
-  title="Assets" 
-  heroImage="https://github.com/pokepetter/ld44_life_is_currency/blob/master/value_of_life_screenshot.jpg?raw=true" 
-  heroDesc="Documentation for the Ursina Engine"
+<Layout
+  title="Assets"
+  heroImage="https://github.com/pokepetter/ld44_life_is_currency/blob/master/value_of_life_screenshot.jpg?raw=true"
+  heroHeight={40}
+  primaryText="Assets"
+  subText="Explore a collection of assets made for the Ursina Engine."
 >
 
 </Layout>

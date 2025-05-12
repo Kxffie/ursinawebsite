@@ -32,11 +32,15 @@ const published = new Date(pubDate).toLocaleDateString('en-US', {
 })
 ---
 
-<Layout 
+<Layout
   title={title}
-  heroImage={image} 
-  heroDesc={description}
+  heroImage={image}
+  heroHeight={40}
+  primaryText={title}
+  subText={description}
 >
+
+
   <!-- Post content -->
   <article class="container mx-auto px-6 py-6">
     <div class="mx-auto bg-card p-6 rounded-lg shadow-lg">

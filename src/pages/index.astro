@@ -4,51 +4,19 @@ import '../styles/global.css'
 import Layout from '@/layouts/Layout.astro'
 import { Button } from '@/components/ui/button'
 ---
-<Layout title="Home">
-  <section
-    class="relative w-full h-[70vh] bg-cover bg-center"
-    style="background-image: url('https://github.com/pokepetter/ld44_life_is_currency/blob/master/value_of_life_screenshot.jpg?raw=true')"
-  >
-    <div class="absolute inset-0 bg-black/40"></div>
-    <div class="relative container mx-auto h-full flex flex-col md:flex-row items-center px-6">
-      <div class="md:w-1/2 text-white">
-        <div class="flex items-center mb-4">
-          <img
-            src="https://raw.githubusercontent.com/Kxffie/ursinawebsite/refs/heads/main/public/brand/ursina_logo_wireframe.webp"
-            alt="Ursina Logo"
-            class="h-10 w-auto mr-3 transition-transform hover:scale-105"
-          />
-          <h1 class="text-2xl md:text-4xl font-bold">
-            Ursina Engine
-          </h1>
-        </div>
-        <h1 class="text-4xl md:text-6xl font-bold mb-4">
-          Game Development, Simplified
-        </h1>
-        <p class="text-lg mb-6">
-          A free, Python powered, open source game engine
-        </p>
-        <div class="flex space-x-4">
-          <a href="/docs">
-              <Button
-              className="bg-primary text-primary-foreground hover:bg-primary/90"
-              size="lg"
-            >
-              Get Started
-            </Button>
-          </a>
-          <a href="/docs">
-              <Button
-              variant="outline"
-              className="border-primary text-primary hover:bg-primary/10"
-              size="lg"
-            > 
-              Documentation
-            </Button>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
+<Layout
+  title="Home"
+  heroImage="https://github.com/pokepetter/ld44_life_is_currency/blob/master/value_of_life_screenshot.jpg?raw=true"
+  heroHeight={70}
+  topLogo={true}
+  primaryText="Game Development, Simplified"
+  subText="A free, Python-powered, open source game engine"
+  primaryBtn="Get Started"
+  primaryBtnHref="/docs"
+  primaryExternal={false}
+  secondaryBtn="Documentation"
+  secondaryBtnHref="/docs"
+  secondaryExternal={false}
+>
 
 </Layout>
