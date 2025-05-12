@@ -5,12 +5,14 @@ import Navbar from '@/components/Navbar.astro';
 import Footer from '@/components/Footer.astro';
 import '../styles/global.css';
 
-import { ExternalLink }      from 'lucide-react';
-import { Button }            from '@/components/ui/button';
 import Analytics             from '@vercel/analytics/astro';
 import SpeedInsights         from "@vercel/speed-insights/astro";
 import { SEO }               from 'astro-seo';
+import { getImagePath } from "astro-opengraph-images";
 import Hero              from '@/components/Hero.astro';
+
+const {url, site} = Astro;
+const openGraphImageUrl = getImagePath({ url, site });
 
 const {
   title = 'Ursina Engine',
@@ -53,25 +55,16 @@ const {
       ]}
       openGraph={{
         basic: {
-          title: `Ursina Engine | ${title}`,
+          title: title,
           type: 'website',
-          image: heroImage || '/default-og-image.png',
-          url: canonical
+          image: openGraphImageUrl,
+          url: url
         },
         optional: {
-          description,
-          determiner: 'the',
+          description: description,
           locale: 'en_US',
-          localeAlternate: ['en_GB'],
           siteName: 'Ursina Engine'
         },
-        image: {
-          secureUrl: (heroImage || '/default-og-image.png').replace(/^http:/, 'https:'),
-          type: 'image/png',
-          width: 1200,
-          height: 630,
-          alt: `${title} — preview image`
-        }
       }}
       twitter={{
         card: 'summary_large_image',
@@ -82,17 +75,6 @@ const {
         image: heroImage || '/default-og-image.png',
         imageAlt: `${title} — preview image`
       }}
-      extend={{
-        link: [
-          { rel: 'icon', href: '/favicon.ico' },
-          { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
-          { rel: 'alternate', href: 'https://ursinaengine.org/', hreflang: 'en' },
-        ],
-        meta: [
-          { name: 'robots', content: 'index, follow' },
-          { name: 'theme-color', content: '#0f172a' },
-        ]
-      }}
     />
 
 
@@ -101,14 +83,6 @@ const {
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- end custom fallbacks -->
-
-    <title>Ursina Engine | {title}</title>
-    <meta property="description" content={description} />
-    <meta property="og:image" content={heroImage}>
-    <meta property="og:site_name" content={title}>
-    <meta property="og:title" content="Ursina Engine">
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical}>
 
     <!-- analytics, etc. -->
     <script

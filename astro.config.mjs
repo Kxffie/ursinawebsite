@@ -16,29 +16,33 @@ import compressor from 'astro-compressor'
 import compress from 'astro-compress'
 import minify from "astro-min";
 
+import opengraphImages, {presets} from "astro-opengraph-images";
+
 export default defineConfig({
   site: "https://ursinawebsite.vercel.app/",
   prefetch: true,
   vite: { plugins: [tailwindcss()] },
-  integrations: [
-    AstroPWA(), 
-    react(), 
-    sitemap(), 
-    partytown({
-      config: {
-        forward: ["dataLayer.push"]
-      }
-    }), 
-    minify(),
-    compress({
-      CSS: false,
-      HTML: false,
-      Image: true,
-      JavaScript: false,
-      SVG: false
-    }),
-    compressor(),
-  ],
+  integrations: [AstroPWA(), react(), sitemap(), partytown({
+    config: {
+      forward: ["dataLayer.push"]
+    }
+  }), opengraphImages({
+    options: {
+      fonts: [{
+        name: "Roboto",
+        weight: 400,
+        style: "normal",
+        data: fs.readFileSync("node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff"),
+      }]
+    },
+    render: presets.blackAndWhite,
+  }), minify(), compress({
+    CSS: false,
+    HTML: false,
+    Image: true,
+    JavaScript: false,
+    SVG: false
+  }), compressor()],
   markdown: {
     rehypePlugins: [
       rehypeCallouts,
