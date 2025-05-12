@@ -1,141 +1,144 @@
 ---
 // src/components/Sidebar.astro
 import { ChevronDown } from 'lucide-react';
+
 export interface Props {
   categories: string[];
   grouped: Record<string, { slug: string; data: { title: string } }[]>;
   base?: string;
 }
-const { categories, grouped, base='' } = Astro.props;
+const { categories, grouped, base = '' } = Astro.props;
 ---
+
 <aside class="w-64 sticky top-24 overflow-y-auto pr-2">
+  <!-- search box -->
   <input
-    type="text"
     id="searchDocs"
+    type="text"
     placeholder="Search…"
     class="w-full mb-4 px-3 py-2 border border-border bg-input text-foreground rounded"
   />
-  <nav class="space-y-2" id="sidebarNav">
-    {categories.map(cat => (
-      <div class="category" data-open="true">
-        <button
-          type="button"
-          class="w-full flex justify-between items-center px-3 py-1 hover:bg-sidebar-accent rounded group"
-          data-astro-prefetch="hover"
-        >
-          <span class="font-semibold text-sidebar-foreground">{cat}</span>
-          <ChevronDown
-            className="chevron transition-transform duration-200"
-            width={16}
-            height={16}
-          />
-        </button>
-        <div class="links pl-5 pt-1 space-y-1">
-          {grouped[cat].map(doc => (
-            <a
-              data-astro-prefetch="hover"
-              href={`/${base}/${doc.slug}`}
-              class="block px-2 py-1 rounded text-sidebar-foreground hover:bg-sidebar-accent/95"
-            >
-              {doc.data.title}
-            </a>
-          ))}
+
+  <!-- expose current collection -->
+  <nav
+    id="sidebarNav"
+    data-base={base}
+    class="space-y-2"
+  >
+    {categories.map((cat) => {
+      const uncat = !cat || cat.toLowerCase() === 'uncategorized';
+      return (
+        <div class="category" data-open="true">
+          <button
+            type="button"
+            class={uncat
+              ? 'sr-only'
+              : 'w-full flex justify-between items-center px-3 py-1 hover:bg-sidebar-accent rounded group'}
+            data-astro-prefetch="hover"
+          >
+            <span class="font-semibold text-sidebar-foreground">{cat}</span>
+            {!uncat && (
+              <ChevronDown
+                className="chevron transition-transform duration-200"
+                width={16}
+                height={16}
+              />
+            )}
+          </button>
+
+          <div class={`links ${uncat ? 'pl-0' : 'pl-5 pt-1'} space-y-1`}>
+            {grouped[cat].map((doc) => (
+              <a
+                data-astro-prefetch="hover"
+                href={`/${base}/${doc.slug}`}
+                class="block px-2 py-1 rounded text-sidebar-foreground hover:bg-sidebar-accent/95"
+              >
+                {doc.data.title}
+              </a>
+            ))}
+          </div>
         </div>
-      </div>
-    ))}
+      );
+    })}
   </nav>
 
+  <!-- client JS -->
   <script is:inline>
-  document.addEventListener('DOMContentLoaded', () => {
-    const nav = document.getElementById('sidebarNav');
-    const input = document.getElementById('searchDocs');
-    const STORAGE_KEY = 'sidebar-search';
+  (() => {
+    const CHECK = 50;
+    const MAX   = 2000;
+    let waited  = 0;
 
-    if (!nav || !input) return;
-
-    // restore previous search
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      input.value = saved;
-    }
-
-    // collapse/expand behavior (unchanged) …
-    nav.querySelectorAll('.category').forEach(section => {
-      const btn = section.querySelector('button');
-      const links = section.querySelector('.links');
-      const chevron = section.querySelector('.chevron');
-      updateChevron(section, chevron, links);
-      btn.addEventListener('click', () => {
-        const open = section.getAttribute('data-open') === 'true';
-        section.setAttribute('data-open', String(!open));
-        updateChevron(section, chevron, links);
-      });
-    });
-
-    function updateChevron(section, chevron, links) {
-      const open = section.getAttribute('data-open') === 'true';
-      if (open) {
-        links.style.display = '';
-        chevron.style.transform = 'rotate(0deg)';
-        chevron.style.opacity = '0';
-        section.querySelector('button')
-          .addEventListener('mouseover', () => chevron.style.opacity = '1');
-        section.querySelector('button')
-          .addEventListener('mouseout', () => chevron.style.opacity = '0');
-      } else {
-        links.style.display = 'none';
-        chevron.style.transform = 'rotate(-90deg)';
-        chevron.style.opacity = '1';
-      }
-    }
-
-    const links = Array.from(nav.querySelectorAll('a'));
-
-    function filter() {
-      const raw = input.value.trim().toLowerCase();
-      // save search term
-      localStorage.setItem(STORAGE_KEY, raw);
-
-      let categoryFilter = null;
-      let termFilter = raw;
-      const slashIndex = raw.indexOf('/');
-      if (slashIndex > -1) {
-        categoryFilter = raw.slice(0, slashIndex);
-        termFilter = raw.slice(slashIndex + 1);
+    function ready() {
+      const nav   = document.getElementById('sidebarNav');
+      const input = document.getElementById('searchDocs');
+      if (!nav || !input) {
+        if (waited < MAX) {
+          waited += CHECK;
+          return setTimeout(ready, CHECK);
+        }
+        return;
       }
 
-      links.forEach(a => {
-        const title = a.textContent.toLowerCase();
-        const categoryName = a.closest('.category')
-          .querySelector('button').textContent.toLowerCase();
-        const inCategory = !categoryFilter || categoryName.includes(categoryFilter);
-        const matchesTerm = !termFilter || title.includes(termFilter);
-        a.style.display = (inCategory && matchesTerm) ? '' : 'none';
-      });
+      const STORAGE_KEY = `sidebar-search-${nav.dataset.base || 'default'}`;
+      input.value = localStorage.getItem(STORAGE_KEY) || '';
 
       nav.querySelectorAll('.category').forEach(section => {
-        const chevron = section.querySelector('.chevron');
+        const btn      = section.querySelector('button');
         const linksDiv = section.querySelector('.links');
-        const anyVisible = Array.from(section.querySelectorAll('a'))
-          .some(a => a.style.display !== 'none');
-        if (anyVisible) {
-          section.style.display = '';
-          if (section.getAttribute('data-open') !== 'true') {
-            section.setAttribute('data-open', 'true');
-            updateChevron(section, chevron, linksDiv);
+        const chevron  = section.querySelector('.chevron');
+        function toggle(open) {
+          linksDiv.style.display = open ? '' : 'none';
+          if (chevron) {
+            chevron.style.transform = open ? 'rotate(0deg)' : 'rotate(-90deg)';
+            chevron.style.opacity   = open ? '0' : '1';
           }
-        } else {
-          section.style.display = 'none';
         }
+        toggle(true);
+        btn.addEventListener('click', () => {
+          const open = section.getAttribute('data-open') === 'true';
+          section.setAttribute('data-open', String(!open));
+          toggle(!open);
+        });
       });
+
+      function filter () {
+        const raw = input.value.trim().toLowerCase();
+        localStorage.setItem(STORAGE_KEY, raw);
+
+        let catFilter  = null;
+        let termFilter = raw;
+        const slash = raw.indexOf('/');
+        if (slash > -1) {
+          catFilter  = raw.slice(0, slash);
+          termFilter = raw.slice(slash + 1);
+        }
+
+        const links = [...nav.querySelectorAll('a')];
+        links.forEach(a => {
+          const title   = a.textContent.toLowerCase();
+          const catName = a.closest('.category')
+                          .querySelector('button')
+                          .textContent.toLowerCase();
+          const show =
+            (!catFilter  || catName.includes(catFilter)) &&
+            (!termFilter || title.includes(termFilter));
+          a.style.display = show ? '' : 'none';
+        });
+
+        nav.querySelectorAll('.category').forEach(section => {
+          const any = [...section.querySelectorAll('a')]
+            .some(a => a.style.display !== 'none');
+          section.style.display = any ? '' : 'none';
+        });
+      }
+
+      input.addEventListener('input', filter);
+      filter();
     }
 
-    // bind and trigger once to restore filter
-    input.addEventListener('input', filter);
-    filter();
-  });
-</script>
+    ready();
+  })();
+  </script>
 
-
-  
 </aside>

@@ -1,0 +1,82 @@
+---
+// src/pages/docs/[slug].astro
+import { getEntry } from 'astro:content'
+import Layout        from '@/layouts/Layout.astro'
+import Sidebar       from '@/components/Sidebar.astro'
+import { getSidebarData } from '@/lib/getSidebarData'
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+
+export async function getStaticPaths() {
+  const base = 'docs'
+  const { grouped } = await getSidebarData(base)
+
+  return Object.values(grouped)
+    .flat()
+    .map((entry) => ({ params: { slug: entry.slug } }))
+}
+
+const base = 'docs'
+
+let slug = Astro.params.slug
+if (Array.isArray(slug)) slug = slug[0]
+
+const entry = await getEntry(base, slug)
+if (!entry) throw new Error(`No entry found in "${base}" for slug "${slug}"`)
+
+const { data } = entry
+const { Content } = await entry.render()
+
+// sidebar data (gives us the same ordering used elsewhere)
+const { categories, grouped } = await getSidebarData(base)
+const flat = categories.flatMap((cat) => grouped[cat])
+
+// work out previous / next
+const idx = flat.findIndex((e) => e.slug === slug)
+const prevEntry = idx > 0 ? flat[idx - 1] : null
+const nextEntry = idx < flat.length - 1 ? flat[idx + 1] : null
+---
+
+<Layout
+  title={data.title}
+  heroImage="https://github.com/pokepetter/ld44_life_is_currency/blob/master/value_of_life_screenshot.jpg?raw=true"
+  heroHeight={40}
+  heroHeightMobile={25}
+  primaryText={data.title}
+  subText={data.description}
+  primaryBtn="View on GitHub"
+  primaryBtnHref={data.source}
+  primaryExternal={true}
+>
+  <section class="py-16 bg-background/95 dark:bg-background">
+    <div class="container mx-auto px-6 flex gap-8">
+      <Sidebar {categories} {grouped} base={base} />
+
+      <main class="flex-1 prose prose-lg max-w-none p-6 rounded-lgdar dark:prose-invert">
+        <Content />
+
+        <!-- navigation buttons -->
+        <div class="flex justify-between mt-12">
+        {prevEntry ? (
+            <a href={`/${base}/${prevEntry.slug}`} class="shrink-0 no-underline">
+            <Button variant="outline" className="flex items-center gap-2">
+                <ArrowLeft className="w-4 h-4" />
+                Go Back
+            </Button>
+            </a>
+        ) : <span></span>}
+
+        {nextEntry ? (
+            <a href={`/${base}/${nextEntry.slug}`} class="shrink-0 no-underline">
+            <Button variant="outline" className="flex items-center gap-2">
+                Next Page
+                <ArrowRight className="w-4 h-4" />
+            </Button>
+            </a>
+        ) : <span></span>}
+        </div>
+
+      </main>
+    </div>
+  </section>
+</Layout>

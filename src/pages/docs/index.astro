@@ -29,7 +29,7 @@ let bugSection = [
 >
   <section class="py-16 bg-background/95 dark:bg-background">
     <div class="container mx-auto px-6 flex gap-8">
-      <Sidebar {categories} {grouped} />
+      <Sidebar {categories} {grouped} base={base} />
 
       <main class="flex-1 space-y-8">
       <!-- INTRO BLURB -->
@@ -58,7 +58,7 @@ let bugSection = [
 
               <input
                 type="text"
-                value="Download"
+                value="Install"
                 readonly
                 class="w-full rounded border border-border bg-input text-foreground px-3 py-2 cursor-default select-none"
               />
