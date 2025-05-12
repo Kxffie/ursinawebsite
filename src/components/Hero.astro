@@ -27,18 +27,22 @@ const {
   buttons           = [],
 } = Astro.props as Props
 
-const logoSrc   = '/brand/ursina_logo_wireframe.webp'
-const logoAlt   = 'Ursina Logo'
-const siteName  = 'Ursina Engine'
+const logoSrc = '/brand/ursina_logo_wireframe.webp'
+const logoAlt = 'Ursina Logo'
+const siteName = 'Ursina Engine'
 ---
 
 <section
-    id = "#swup"
-    class="relative w-full bg-cover bg-center
-            h-[var(--hero-h-mobile)] md:h-[var(--hero-h)]"
-    style={`--hero-h:${heroHeight}vh; --hero-h-mobile:${heroHeightMobile}vh; background-image:url('${heroImage}');`}
+  id="#swup"
+  class="relative w-full h-[var(--hero-h-mobile)] md:h-[var(--hero-h)] overflow-hidden"
+  style={`--hero-h:${heroHeight}vh; --hero-h-mobile:${heroHeightMobile}vh;`}
 >
-  <div class="absolute inset-0 bg-black/40"></div>
+  <!-- blurred image layer -->
+  <div
+    class="absolute inset-0 bg-cover bg-center filter blur-sm"
+    style={`background-image:url('${heroImage}');`}
+  />
+  <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
 
   <div
     class="relative container mx-auto h-full
