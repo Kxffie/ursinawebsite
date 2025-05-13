@@ -3,6 +3,7 @@ import { getSidebarData } from '@/lib/getSidebarData';
 import Layout from '@/layouts/Layout.astro';
 import Sidebar from '@/components/Sidebar.astro';
 import { ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const base = 'samples';
 const toSlug = (s: string) =>
@@ -69,7 +70,6 @@ const items = grouped[label];
 
           return (
             <article
-              key={slug}
               class="
                 flex flex-col lg:flex-row
                 bg-background dark:bg-[#1f1f1f]
@@ -110,8 +110,15 @@ const items = grouped[label];
                     href={`/samples/${category}/${slug}`}
                     class="flex items-center space-x-1 hover:text-primary"
                   >
-                    <span>More Details</span>
-                    <ArrowRight className="h-4 w-4" />
+                    <Button
+                        data-astro-prefetch="hover"
+                        variant="outline"
+                        className="hover:scale-105 active:scale-95 transition-transform"
+                        size="sm"
+                    >
+                        <span>More Details</span>
+                        <ArrowRight className="h-4 w-4" />
+                    </Button>
                   </a>
                 </div>
               </div>

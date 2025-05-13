@@ -3,8 +3,15 @@ import { getSidebarData } from '@/lib/getSidebarData';
 import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
 import Sidebar from '@/components/Sidebar.astro';
-import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+
+import {
+	BookOpen,
+  UploadCloud,
+	Bug,
+	MessageCircleCode,
+  ArrowRight
+} from 'lucide-react';
 
 const base = 'samples';
 const samples = await getCollection(base);
@@ -15,6 +22,43 @@ const toSlug = (str: string) =>
   str.toLowerCase()
      .replace(/[^a-z0-9]+/g, '-')
      .replace(/(^-|-$)/g, '');
+
+
+const contributeLinks = [
+  {
+    href: '/samples/submit',
+    icon: UploadCloud,
+    title: 'Submit a Sample',
+    desc: 'Share your project with the community by adding it to our gallery.',
+  },
+  {
+    href: '/docs/contributing',
+    icon: BookOpen,
+    title: 'Contribution Guide',
+    desc: 'Learn how to format your markdown and follow our style conventions.',
+  },
+  {
+    href: 'https://discord.gg/ursina',
+    icon: MessageCircleCode,
+    title: 'Join the Community',
+    desc: 'Chat with other Ursina users, get feedback, and find collaborators.',
+  },
+];
+
+const supportLinks = [
+	{
+		title: 'GitHub Issues',
+		href: 'https://github.com/pokepetter/ursina/issues',
+		icon: Bug,
+		desc: 'Report bugs or request features.'
+	},
+	{
+		title: 'Discord',
+		href: 'https://discord.gg/ursina',
+		icon: MessageCircleCode,
+		desc: 'Join our community for help and support.'
+	}
+];
 ---
 
 <Layout
@@ -106,6 +150,55 @@ const toSlug = (str: string) =>
           </section>
         );
       })}
+
+      <!-- Guide -->
+      <section class="mt-8">
+        <h3 class="text-xl font-semibold mb-4">Want to submit a project?</h3>
+        <p class="mb-6 text-lg">
+          We’d love to showcase your work. Get started by following one of these steps:
+        </p>
+
+        <div class="grid gap-6 sm:grid-cols-3">
+          {contributeLinks.map(({ href, icon: Icon, title, desc }) => (
+            <a
+              href={href}
+              class="bg-card rounded-lg shadow transition-transform transform hover:shadow-md hover:scale-[1.02] active:scale-95 px-6 py-5"
+            >
+              <div class="flex items-center gap-4">
+                <Icon className="w-8 h-8 text-primary flex-shrink-0" />
+                <div>
+                  <h4 class="font-semibold mb-1 text-foreground">{title}</h4>
+                  <p class="text-sm text-muted-foreground">{desc}</p>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <!-- Support -->
+      <section class="mt-4">
+        <h3 class="text-xl font-semibold mb-4">Something wrong?</h3>
+        <p class="mb-6 text-lg">
+          If you find a bug or have a suggestion, please let us know on our GitHub Issues tracker or join the Discord.
+        </p>
+        <div class="grid gap-6 sm:grid-cols-2">
+          {supportLinks.map(({ href, icon: Icon, title, desc }) => (
+            <a
+              href={href}
+              class="bg-card rounded-lg shadow transition px-6 py-5 hover:shadow-md hover:scale-105 active:scale-95"
+            >
+              <div class="flex items-center gap-6">
+                <Icon className="w-8 h-8 text-primary flex-shrink-0" />
+                <div>
+                  <h4 class="font-semibold mb-1">{title}</h4>
+                  <p class="text-sm">{desc}</p>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
     </div>
   </div>
 </Layout>
