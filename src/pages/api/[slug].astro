@@ -47,7 +47,7 @@ const { categories, grouped } = await getSidebarData(base);
     <div class="container mx-auto px-6 flex gap-8">
       <Sidebar {categories} {grouped} base={base} />
 
-      <main class="flex-1 prose prose-lg max-w-none p-6 rounded-lg shadow dark:prose-invert">
+      <main class="flex-1 prose prose-lg max-w-none p-6 dark:prose-invert">
         <Content />
       </main>
     </div>
