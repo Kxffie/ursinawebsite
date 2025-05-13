@@ -1,12 +1,12 @@
 ---
 title: "Rubik's Cube"
-slug: "rubiks-cube"
 image: "rubiks_cube.jpg"
 description: "Rubik's Cube"
 source: "https://github.com/pokepetter/ursina/blob/master/samples/rubiks_cube.py"
 pubDate: "5/6/2025"
 author: "Pokepetter"
 authorImg: "people/pokepetter.webp"
+officialSample: true
 ---
 
 ## How it works

@@ -1,6 +1,5 @@
 ---
 title: "Protein Visualizer"
-slug: "protein"
 image: "protein.png"
 description: "Protein Visualizer"
 source: "https://github.com/pokepetter/ursina/blob/master/samples/particle_system.py"

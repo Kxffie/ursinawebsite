@@ -1,12 +1,12 @@
 ---
 title: "Inventory System"
-slug: "inventory-system"
 image: "inventory.jpg"
 description: "Inventory System"
 source: "https://github.com/pokepetter/ursina/blob/master/samples/inventory.py"
 pubDate: "5/6/2025"
 author: "Pokepetter"
 authorImg: "people/pokepetter.webp"
+officialSample: true
 ---
 
 ## How it works

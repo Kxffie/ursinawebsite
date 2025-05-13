@@ -1,12 +1,12 @@
 ---
 title: "Particle System"
-slug: "particles-system"
 image: "particle_system.jpg"
 description: "Particle Simulation"
 source: "https://github.com/pokepetter/ursina/blob/master/samples/particle_system.py"
 pubDate: "5/6/2025"
 author: "Pokepetter"
 authorImg: "people/pokepetter.webp"
+officialSample: true
 ---
 
 ## How it works

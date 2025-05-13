@@ -1,12 +1,12 @@
 ---
 title: "FPS Shooter"
-slug: "fps-shooter"
 image: "fps.jpg"
 description: "First-person shooter demo with enemies and health"
 source: "https://github.com/pokepetter/ursina/blob/master/samples/fps.py"
 pubDate: "5/6/2025"
 author: "Pokepetter"
 authorImg: "people/pokepetter.webp"
+officialSample: true
 ---
 
 ## How it works

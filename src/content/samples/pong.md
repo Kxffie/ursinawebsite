@@ -1,12 +1,12 @@
 ---
 title: "Pong"
-slug: "pong"
 image: "pong.jpg"
 description: "Classic 2D Pong game"
 source: "https://github.com/pokepetter/ursina/blob/master/samples/pong.py"
 pubDate: "5/6/2025"
 author: "Pokepetter"
 authorImg: "people/pokepetter.webp"
+officialSample: true
 ---
 
 

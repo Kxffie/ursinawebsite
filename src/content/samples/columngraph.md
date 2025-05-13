@@ -1,12 +1,12 @@
 ---
 title: "Column Graph"
-slug: "column-graph"
 image: "column_graph.jpg"
 description: "Columnn Graph"
 source: "https://github.com/pokepetter/ursina/blob/master/samples/column_graph.py"
 pubDate: "5/6/2025"
 author: "Pokepetter"
 authorImg: "people/pokepetter.webp"
+officialSample: true
 ---
 
 ## How it works

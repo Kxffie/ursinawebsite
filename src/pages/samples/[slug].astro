@@ -7,13 +7,13 @@ import { ArrowLeft, ArrowUpRight } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 
 export async function getStaticPaths() {
-  const all = await getCollection('projects')
+  const all = await getCollection('samples')
   return all.map((p) => ({ params: { slug: p.slug } }))
 }
 
 const { slug } = Astro.params
-const project = (await getEntry('projects', slug)) as CollectionEntry<'projects'>
-const { Content } = await project.render()
+const sample = (await getEntry('samples', slug)) as CollectionEntry<'samples'>
+const { Content } = await sample.render()
 
 const {
   title,
@@ -23,7 +23,7 @@ const {
   pubDate = new Date().toISOString(),
   author = 'Unknown',
   authorImg = '/default-avatar.png',
-} = project.data
+} = sample.data
 
 const published = new Date(pubDate).toLocaleDateString('en-US', {
   year: 'numeric',
@@ -33,12 +33,15 @@ const published = new Date(pubDate).toLocaleDateString('en-US', {
 ---
 
 <Layout
-  title={title}
-  heroImage={image}
-  heroHeight={40}
-  heroHeightMobile={25}
-  primaryText={title}
-  subText={description}
+	title={title}
+	heroImage="/heros/value_of_life_screenshot-lossy.jpg"
+	heroHeight={30}
+	heroHeightMobile={25}
+	primaryText={title}
+	subText={description}
+	secondaryBtn="View on GitHub"
+	secondaryBtnHref={source}
+	secondaryExternal
 >
 
 

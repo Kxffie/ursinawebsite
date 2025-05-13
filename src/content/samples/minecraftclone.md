@@ -1,12 +1,12 @@
 ---
 title: "Minecraft Clone"
-slug: "minecraft-clone"
 image: "minecraft_clone.jpg"
 description: "Minecraft Clone"
 source: "https://github.com/pokepetter/ursina/blob/master/samples/minecraft_clone.py"
 pubDate: "5/6/2025"
 author: "Pokepetter"
 authorImg: "people/pokepetter.webp"
+officialSample: true
 ---
 
 ## How it works

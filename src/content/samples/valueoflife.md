@@ -1,6 +1,5 @@
 ---
 title: "Value of Life"
-slug: "value-of-life"
 image: "value_of_life_screenshot.jpg"
 description: "Value of Life"
 source: "https://github.com/pokepetter/ld44_life_is_currency"

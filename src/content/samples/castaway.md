@@ -1,6 +1,5 @@
 ---
 title: "Castaway"
-slug: "castaway"
 image: "castaway_screenshot.jpg"
 description: "Castaway Game for Pyweek 30"
 source: "https://github.com/pokepetter/pyweek_30_castaway"

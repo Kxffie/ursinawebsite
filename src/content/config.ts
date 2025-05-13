@@ -12,6 +12,7 @@ export const collections = {
         source: z.string(),
         author: z.string(),
         authorImg: z.string(),
+        officialSample: z.boolean().optional(),
     }),
   }),
     blog: defineCollection({

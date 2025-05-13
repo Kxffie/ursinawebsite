@@ -1,12 +1,12 @@
 ---
 title: "Tic Tac Toe"
-slug: "tictactoe"
 image: "tictactoe.jpg"
 description: "Classic Tic Tac Toe game"
 source: "https://github.com/pokepetter/ursina/blob/master/samples/tic_tac_toe.py"
 pubDate: "5/6/2025"
 author: "Pokepetter"
 authorImg: "people/pokepetter.webp"
+officialSample: true
 ---
 
 ## How it works

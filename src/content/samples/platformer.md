@@ -1,12 +1,12 @@
 ---
 title: "Platformer"
-slug: "platformer"
 image: "platformer.jpg"
 description: "2D platformer demo with physics and smooth camera follow"
 source: "https://github.com/pokepetter/ursina/blob/master/samples/platformer.py"
 pubDate: "5/6/2025"
 author: "Pokepetter"
 authorImg: "people/pokepetter.webp"
+officialSample: true
 ---
 
 ## How it works
