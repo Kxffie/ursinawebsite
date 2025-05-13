@@ -3,7 +3,7 @@ title: "Ursina"
 description: "Reference for the Ursina application singleton, which boots and manages the game window, input routing, update loop and more."  
 pubDate: "2025-05-08"  
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/main.py"  
-category: "Basics"  
+category: "[1] Basics"  
 sort: 0  
 ---  
 

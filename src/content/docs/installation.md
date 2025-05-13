@@ -2,14 +2,15 @@
 title: "Installation"
 description: "Step‑by‑step instructions for setting up Python and installing Ursina, including development builds, optional extras, and troubleshooting."
 pubDate: "2025-05-08"
-sort: -1
+category: "[1] Getting Started"
+sort: 0
 ---
 
 # Downloading and Installing Ursina
 
 ## Installing Python
 
-### By getting Python from the official website {: #install-python }
+### By getting Python from the official website
 1. Download **Python 3.12 or newer** from <https://www.python.org/downloads/>.
 2. Verify the installation and version:
 

@@ -3,7 +3,7 @@ title: "Vec4"
 description: "4D vector class with component-wise operations."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/vec4.py"
-category: "Math"
+category: "[7] Math"
 sort: 3
 ---
 

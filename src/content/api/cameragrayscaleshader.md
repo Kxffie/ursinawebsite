@@ -3,7 +3,7 @@ title: "Camera Grayscale Shader"
 description: "Toggle grayscale post-process effect."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/shaders/screenspace_shaders/camera_grayscale.py"
-category: "Shaders"
+category: "[15] Shaders"
 sort: 17
 ---
 

@@ -3,7 +3,7 @@ title: "MatCap Shader"
 description: "Shader that simulates material capture for stylized shading."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/shaders/matcap_shader.py"
-category: "Shaders"
+category: "[15] Shaders"
 sort: 2
 ---
 

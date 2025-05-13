@@ -3,7 +3,7 @@ title: "PixelEditor"
 description: "GridEditor subclass for in-engine pixel/texture editing."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/grid_editor.py"
-category: "Editor"
+category: "[12] Editor"
 sort: 2
 ---
 

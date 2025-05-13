@@ -3,7 +3,7 @@ title: "PlatformerController2d"
 description: "Prefab for 2D platformer movement with jumping and collisions."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/platformer_controller_2d.py"
-category: "Prefabs"
+category: "[10] Prefabs"
 sort: 4
 ---
 

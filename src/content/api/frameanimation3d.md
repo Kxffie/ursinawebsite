@@ -3,7 +3,7 @@ title: "FrameAnimation3d"
 description: "Play a sequence of 3D models as a frame-by-frame animation."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/frame_animation_3d.py"
-category: "Animation"
+category: "[6] Animation"
 sort: 1
 ---
 

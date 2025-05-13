@@ -3,7 +3,7 @@ title: "UrsinaStuff"
 description: "General-purpose gameplay utilities and helpers."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/ursinastuff.py"
-category: "Gameplay"
+category: "[8] Gameplay"
 sort: 0
 ---
 

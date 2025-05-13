@@ -3,7 +3,7 @@ title: "FileBrowserSave"
 description: "Save dialog with filename input and overwrite prompt."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/file_browser_save.py"
-category: "UI"
+category: "[11] UI"
 sort: 14
 ---
 

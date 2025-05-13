@@ -3,7 +3,7 @@ title: "Pixelation Shader"
 description: "Screen-space pixelation effect shader."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/shaders/screenspace_shaders/pixelation_shader.py"
-category: "Shaders"
+category: "[15] Shaders"
 sort: 14
 ---
 

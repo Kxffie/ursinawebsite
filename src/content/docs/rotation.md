@@ -1,24 +1,21 @@
 ---
 title: "Rotation"
-description: "Methods for rotating Entities and aiming them with look_at."
+description: "Covers controlling an entity's orientation with Euler angles and the look_at helper function."
 pubDate: "2025-05-12"
-category: "Entity Basics"
+category: "[2] Entity Basics"
 sort: 5
 ---
 
-# Rotation
-
-Set Euler angles directly:
-
 ```python
-e.rotation = (0, 0, 0)
+e.rotation = (0,0,0)
 e.rotation_y = 90
 ```
 
-Use `look_at()` to point an axis toward a target:
+The `look_at()` method can also be used for pointing an entity at something:
 
 ```python
-target = Entity(position=(10, 1, 8))
-e.look_at(target)               # z-axis forward
-e.look_at(target, axis='up')    # choose which axis to align
+other_entity = Entity(position=(10,1,8))
+
+e.look_at(other_entity) # make z‑axis (forward) point at other_entity
+e.look_at(other_entity, axis='up') # optionally define which axis
 ```

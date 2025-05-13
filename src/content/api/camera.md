@@ -3,7 +3,7 @@ title: "Camera"
 description: "Reference for the Camera singleton, which manages 3D and UI cameras, projection mode, clipping and post‑processing."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/camera.py"
-category: "Core Modules"
+category: "[2] Core Modules"
 sort: 0
 ---
 

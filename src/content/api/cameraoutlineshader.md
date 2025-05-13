@@ -3,7 +3,7 @@ title: "Camera Outline Shader"
 description: "Outline effect for camera view in screen-space."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/shaders/screenspace_shaders/camera_outline_shader.py"
-category: "Shaders"
+category: "[15] Shaders"
 sort: 13
 ---
 

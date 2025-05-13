@@ -3,7 +3,7 @@ title: "Duplicate"
 description: "Clone an entity, optionally including its children."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/duplicate.py"
-category: "Scripts"
+category: "[13] Scripts"
 sort: 1
 ---
 

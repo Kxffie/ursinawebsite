@@ -3,7 +3,7 @@ title: "Cursor"
 description: "Custom mouse cursor entity."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/cursor.py"
-category: "UI"
+category: "[11] UI"
 sort: 5
 ---
 

@@ -3,7 +3,7 @@ title: "Cone"
 description: "Procedural cone mesh with optional base cap and configurable resolution."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/models/procedural/cone.py"
-category: "Procedural Models"
+category: "[4] Procedural Models"
 sort: 4
 ---
 

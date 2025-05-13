@@ -2,7 +2,7 @@
 import { defineCollection, z } from 'astro:content';
 
 export const collections = {
-  projects: defineCollection({
+  samples: defineCollection({
     type: 'content',
     schema: z.object({
         title: z.string(),
@@ -18,24 +18,12 @@ export const collections = {
         type: 'content',
         schema: z.object({
             title: z.string(),
-            image: z.string(),
-            description: z.string(),
-            pubDate: z.string().transform((str) => new Date(str)),
-            source: z.string(),
-            author: z.string(),
-            authorImg: z.string(),
         }),
       }),
     assets: defineCollection({
         type: 'content',
         schema: z.object({
             title: z.string(),
-            image: z.string(),
-            description: z.string(),
-            pubDate: z.string().transform((str) => new Date(str)),
-            source: z.string(),
-            author: z.string(),
-            authorImg: z.string(),
         }),
       }),
     docs: defineCollection({

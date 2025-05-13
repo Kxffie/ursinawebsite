@@ -88,53 +88,65 @@ const { categories, grouped, base = '' } = Astro.props;
 </aside>
 
 <script is:inline>
-	document.addEventListener('DOMContentLoaded', () => {
-		const sidebar   = document.getElementById('sidebar');
-		const backdrop  = document.getElementById('sidebarBackdrop');
-		const toggleBtn = document.getElementById('sidebarToggle');
-		const nav       = document.getElementById('sidebarNav');
-		const input     = document.getElementById('searchDocs');
-		if (!sidebar || !backdrop || !toggleBtn || !nav || !input) return;
+(() => {
+	/* ---------------- cache DOM ---------------- */
+	const sidebar   = document.getElementById('sidebar');
+	const backdrop  = document.getElementById('sidebarBackdrop');
+	const toggleBtn = document.getElementById('sidebarToggle');
+	const nav       = document.getElementById('sidebarNav');
+	const input     = document.getElementById('searchDocs');
+	if (!sidebar || !backdrop || !toggleBtn || !nav || !input) return;
 
-		/* ---------------- sidebar open / close ---------------- */
-		const open  = () => { sidebar.classList.remove('-translate-x-full'); backdrop.classList.remove('hidden'); };
-		const close = () => { sidebar.classList.add('-translate-x-full'); backdrop.classList.add('hidden'); };
+	/* ---------------- helpers ---------------- */
+	const openSidebar  = () => { sidebar.classList.remove('-translate-x-full'); backdrop.classList.remove('hidden'); };
+	const closeSidebar = () => { sidebar.classList.add('-translate-x-full');  backdrop.classList.add('hidden');  };
 
-		toggleBtn .addEventListener('click', open);
-		backdrop  .addEventListener('click', close);
-		nav.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
-
-		/* ---------------- category toggle --------------------- */
-		nav.addEventListener('click', e => {
-			const btn = e.target.closest('button[data-toggle]');
-			if (!btn) return;
-			const sec = btn.parentElement;
-			sec.dataset.open = sec.dataset.open === 'false';
-			sec.querySelector('.links').classList.toggle('hidden');
-			btn.querySelector('.chevron').style.transform =
-				sec.dataset.open === 'true' ? '' : 'rotate(-90deg)';
-		});
-
-		/* ---------------- live filter ------------------------- */
-		const key = `sidebar-search-${nav.dataset.base || 'default'}`;
-		input.value = localStorage.getItem(key) || '';
-
-		const filter = () => {
-			const q = input.value.toLowerCase().trim();
-			localStorage.setItem(key, q);
-			nav.querySelectorAll('.category').forEach(sec => {
-				const cat = sec.dataset.cat.toLowerCase();
-				let showCat = false;
-				sec.querySelectorAll('a').forEach(a => {
-					const ok = !q || a.textContent.toLowerCase().includes(q) || cat.includes(q);
-					a.hidden = !ok;
-					if (ok) showCat = true;
-				});
-				sec.hidden = !showCat;
-			});
-		};
-
-		input.addEventListener('input', filter);
-		filter();
+	/* ---------------- open / close ---------------- */
+	toggleBtn.addEventListener('click', () => {
+		const isOpen = !sidebar.classList.contains('-translate-x-full');
+		if (isOpen) closeSidebar(); else openSidebar();
 	});
+	backdrop.addEventListener('click', closeSidebar);
+	nav.addEventListener('click', e => {
+		if (e.target.closest('a')) closeSidebar();
+	});
+
+	/* ---------------- category toggle ---------------- */
+	nav.addEventListener('click', e => {
+		const btn = e.target.closest('[data-toggle]');
+		if (!btn) return;
+		const section = btn.parentElement;
+		const links   = section.querySelector('.links');
+		const open    = section.dataset.open !== 'true';
+		section.dataset.open = open;
+		links.classList.toggle('hidden', !open);
+		btn.querySelector('.chevron').style.transform = open ? '' : 'rotate(-90deg)';
+	});
+
+	/* ---------------- live search ---------------- */
+	const storageKey = `sidebar-search-${nav.dataset.base || 'default'}`;
+	input.value = localStorage.getItem(storageKey) || '';
+
+	const allSections = Array.from(nav.querySelectorAll('.category'));
+	const filter = () => {
+		const q = input.value.toLowerCase().trim();
+		localStorage.setItem(storageKey, q);
+
+		allSections.forEach(sec => {
+			const cat = sec.dataset.cat.toLowerCase();
+			let visibleInCat = false;
+
+			sec.querySelectorAll('a').forEach(a => {
+				const show = !q || a.textContent.toLowerCase().includes(q) || cat.includes(q);
+				a.hidden = !show;
+				if (show) visibleInCat = true;
+			});
+
+			sec.hidden = !visibleInCat;
+		});
+	};
+	input.addEventListener('input', filter);
+	filter();
+})();
 </script>
+

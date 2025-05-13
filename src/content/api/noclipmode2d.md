@@ -3,7 +3,7 @@ title: "Noclip Mode 2D"
 description: "2D variant of NoclipMode for top-down or side-view games."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/scripts/noclip_mode.py"
-category: "Scripts"
+category: "[13] Scripts"
 sort: 5
 ---
 

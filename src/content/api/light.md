@@ -3,7 +3,7 @@ title: "Light"
 description: "Reference for the Light base class and its subclasses (DirectionalLight, PointLight, etc.), which provide scene illumination and shadow control."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/lights.py"
-category: "Graphics"
+category: "[3] Graphics"
 sort: 4
 ---
 

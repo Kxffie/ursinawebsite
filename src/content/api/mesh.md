@@ -3,7 +3,7 @@ title: "Mesh"
 description: "Reference for the Mesh class, which lets you define custom geometry (triangles, lines, points) by specifying vertices, indices, colors, UVs and normals."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/mesh.py"
-category: "Graphics"
+category: "[3] Graphics"
 sort: 1
 ---
 

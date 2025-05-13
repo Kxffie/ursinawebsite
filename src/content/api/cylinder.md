@@ -3,7 +3,7 @@ title: "Cylinder"
 description: "Procedural cylinder (tube) mesh, with configurable start offset and direction."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/models/procedural/cylinder.py"
-category: "Procedural Models"
+category: "[4] Procedural Models"
 sort: 5
 ---
 

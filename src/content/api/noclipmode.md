@@ -3,7 +3,7 @@ title: "Noclip Mode"
 description: "Allow free flying movement ignoring collisions when a key is held."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/scripts/noclip_mode.py"
-category: "Scripts"
+category: "[13] Scripts"
 sort: 4
 ---
 

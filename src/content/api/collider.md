@@ -3,7 +3,7 @@ title: "Collider"
 description: "Base class for attaching collision shapes to Entities."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/collider.py"
-category: "Collision"
+category: "[9] Collision"
 sort: 4
 ---
 

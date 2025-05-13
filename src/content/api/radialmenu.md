@@ -3,7 +3,7 @@ title: "RadialMenu"
 description: "Circular pop-up menu around cursor."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/radial_menu.py"
-category: "UI"
+category: "[11] UI"
 sort: 17
 ---
 

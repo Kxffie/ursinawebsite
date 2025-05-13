@@ -3,7 +3,7 @@ title: "ButtonGroup"
 description: "Group of toggleable buttons with single or multiple selection."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/button_group.py"
-category: "UI"
+category: "[11] UI"
 sort: 9
 ---
 

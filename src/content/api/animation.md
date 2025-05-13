@@ -3,7 +3,7 @@ title: "Animation"
 description: "Play a sequence of images or a GIF as an animated Sprite."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/animation.py"
-category: "Animation"
+category: "[6] Animation"
 sort: 0
 ---
 

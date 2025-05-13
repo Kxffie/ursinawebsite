@@ -3,7 +3,7 @@ title: "SSAO Shader"
 description: "Screen-space ambient occlusion post-process shader."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/shaders/screenspace_shaders/ssao.py"
-category: "Shaders"
+category: "[15] Shaders"
 sort: 12
 ---
 

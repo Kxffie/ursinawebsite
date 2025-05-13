@@ -3,7 +3,7 @@ title: "AmbientLight"
 description: "Ambient light that illuminates all objects equally, without direction or shadows."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/lights.py"
-category: "Graphics"
+category: "[3] Graphics"
 sort: 7
 ---
 

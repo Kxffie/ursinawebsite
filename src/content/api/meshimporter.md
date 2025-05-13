@@ -3,7 +3,7 @@ title: "MeshImporter"
 description: "Utilities to load 3D models from .bam, .ursinamesh, .obj, .gltf/.glb and .blend, with caching and optional conversion via Blender."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/mesh_importer.py"
-category: "Modules"
+category: "[5] Modules"
 sort: 1
 ---
 

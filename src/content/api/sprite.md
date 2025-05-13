@@ -3,7 +3,7 @@ title: "Sprite"
 description: "Reference for the Sprite prefab, a simple 2D quad that automatically sizes to its texture."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/sprite.py"
-category: "Basics"
+category: "[1] Basics"
 sort: 3
 ---
 

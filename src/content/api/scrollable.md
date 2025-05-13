@@ -3,7 +3,7 @@ title: "Scrollable"
 description: "Make an entity scrollable via mouse wheel over its area."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/scripts/scrollable.py"
-category: "Scripts"
+category: "[13] Scripts"
 sort: 3
 ---
 

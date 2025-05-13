@@ -3,7 +3,7 @@ title: "SpriteSheetAnimation"
 description: "Play named animations from a tiled sprite sheet texture."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/sprite_sheet_animation.py"
-category: "Animation"
+category: "[6] Animation"
 sort: 2
 ---
 

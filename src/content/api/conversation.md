@@ -3,7 +3,7 @@ title: "Conversation"
 description: "Dialogue system with branching choices and variable tracking."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/conversation.py"
-category: "Prefabs"
+category: "[10] Prefabs"
 sort: 5
 ---
 

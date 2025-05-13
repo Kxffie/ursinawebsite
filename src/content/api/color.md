@@ -3,7 +3,7 @@ title: "Color"
 description: "Reference for the Color utilities, presets and functions for working with colors in Ursina (HSV, RGB, alpha, tints, random, conversion, brightness, inverse)."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/color.py"
-category: "Graphics"
+category: "[3] Graphics"
 sort: 0
 ---
 

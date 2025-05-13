@@ -3,7 +3,7 @@ title: "Vec2"
 description: "2D vector class with swizzling and basic operations."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/vec2.py"
-category: "Math"
+category: "[7] Math"
 sort: 1
 ---
 

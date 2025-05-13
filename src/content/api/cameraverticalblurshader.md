@@ -3,7 +3,7 @@ title: "Camera Vertical Blur Shader"
 description: "Post-process vertical blur effect for the camera."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/shaders/screenspace_shaders/camera_vertical_blur.py"
-category: "Shaders"
+category: "[15] Shaders"
 sort: 16
 ---
 

@@ -1,15 +1,13 @@
 ---
 title: "Scale"
-description: "Adjusting the size of an Entity via its scale attribute."
+description: "Details scaling entities uniformly or per axis to change their size within the scene."
 pubDate: "2025-05-12"
-category: "Entity Basics"
+category: "[2] Entity Basics"
 sort: 6
 ---
 
-# Scale
-
-Change size by setting `scale`:
+Change the size of the entity by setting the `scale` attribute:
 
 ```python
-e = Entity(model='cube', scale=(3, 1, 1))
+e = Entity(model='cube', scale=(3,1,1))
 ```

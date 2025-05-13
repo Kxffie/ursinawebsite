@@ -3,7 +3,7 @@ title: "Circle"
 description: "Procedural circle mesh generator with configurable resolution, radius and primitive mode."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/models/procedural/circle.py"
-category: "Procedural Models"
+category: "[4] Procedural Models"
 sort: 1
 ---
 

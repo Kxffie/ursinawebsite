@@ -3,7 +3,7 @@ title: "Keys"
 description: "Enum of input key names and functions for rebinding and handling inputs."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/input_handler.py"
-category: "Gameplay"
+category: "[8] Gameplay"
 sort: 3
 ---
 

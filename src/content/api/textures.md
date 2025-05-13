@@ -3,7 +3,7 @@ title: "Textures"
 description: "Built-in texture assets for surface detail and UI."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/tree/master/ursina/textures"
-category: "Assets"
+category: "[14] Assets"
 sort: 1
 ---
 

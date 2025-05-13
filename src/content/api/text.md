@@ -3,7 +3,7 @@ title: "Text"
 description: "Reference for the Text class, which renders multi‑line, styled UI text with optional word‑wrapping, tags and images."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/text.py"
-category: "Basics"
+category: "[1] Basics"
 sort: 4
 ---
 

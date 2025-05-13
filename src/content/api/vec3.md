@@ -3,7 +3,7 @@ title: "Vec3"
 description: "3D vector class with swizzling and basic operations."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/vec3.py"
-category: "Math"
+category: "[7] Math"
 sort: 2
 ---
 

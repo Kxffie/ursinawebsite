@@ -3,7 +3,7 @@ title: "Plane"
 description: "Procedural subdivided plane mesh with UVs, for use as ground or grid."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/models/procedural/plane.py"
-category: "Procedural Models"
+category: "[4] Procedural Models"
 sort: 2
 ---
 

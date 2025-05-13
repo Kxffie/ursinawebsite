@@ -3,7 +3,7 @@ title: "InputField"
 description: "Text input field with label, default value, and submit handling."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/input_field.py"
-category: "UI"
+category: "[11] UI"
 sort: 6
 ---
 

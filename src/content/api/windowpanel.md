@@ -3,7 +3,7 @@ title: "WindowPanel"
 description: "Draggable window container with automatic layout."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/window_panel.py"
-category: "UI"
+category: "[11] UI"
 sort: 10
 ---
 

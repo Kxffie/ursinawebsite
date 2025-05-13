@@ -3,7 +3,7 @@ title: "Grid"
 description: "Procedural grid of lines, useful for debugging or graph paper backgrounds."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/models/procedural/grid.py"
-category: "Procedural Models"
+category: "[4] Procedural Models"
 sort: 3
 ---
 

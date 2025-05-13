@@ -3,7 +3,7 @@ title: "DirectionalLight"
 description: "Infinite directional light (like sunlight) with optional shadow casting and automatic shadow‐area fitting."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/lights.py"
-category: "Graphics"
+category: "[3] Graphics"
 sort: 5
 ---
 

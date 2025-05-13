@@ -4,7 +4,7 @@ import { getCollection } from 'astro:content'
 import Layout from '@/layouts/Layout.astro'
 import { ArrowRight } from 'lucide-react'
 
-const projects = await getCollection('projects')
+const samples = await getCollection('samples')
 ---
 
 <Layout
@@ -18,7 +18,7 @@ const projects = await getCollection('projects')
   <section class="py-16 bg-background/95">
     <div class="container mx-auto px-6">
       <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {projects
+        {samples
           .sort((b, a) => a.data.author.localeCompare(b.data.author))
           .map((entry) => {
             const { slug } = entry

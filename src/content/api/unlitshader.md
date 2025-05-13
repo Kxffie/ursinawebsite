@@ -3,7 +3,7 @@ title: "Unlit Shader"
 description: "Basic shader that applies texture without lighting."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/shaders/unlit_shader.py"
-category: "Shaders"
+category: "[15] Shaders"
 sort: 0
 ---
 

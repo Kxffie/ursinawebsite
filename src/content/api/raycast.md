@@ -3,7 +3,7 @@ title: "Raycast"
 description: "Cast a ray from a point and detect the first collider hit."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/raycast.py"
-category: "Collision"
+category: "[9] Collision"
 sort: 0
 ---
 

@@ -3,7 +3,7 @@ title: "UrsinaMath"
 description: "Utility math functions for interpolation, distance, clamping, and more."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/ursinamath.py"
-category: "Math"
+category: "[7] Math"
 sort: 0
 ---
 

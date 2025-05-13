@@ -3,7 +3,7 @@ title: "Draggable"
 description: "Enable dragging behavior on UI or world-space elements."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/draggable.py"
-category: "UI"
+category: "[11] UI"
 sort: 0
 ---
 

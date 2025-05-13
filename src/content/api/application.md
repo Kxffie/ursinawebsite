@@ -3,7 +3,7 @@ title: "Application"
 description: "Reference for the global Application singleton, which manages engine state, timing, asset folders, hot‑reloading and the main loop."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/application.py"
-category: "Core Modules"
+category: "[2] Core Modules"
 sort: 3
 ---
 

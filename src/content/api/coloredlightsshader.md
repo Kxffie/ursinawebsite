@@ -3,7 +3,7 @@ title: "Colored Lights Shader"
 description: "Vertex-lit shader with configurable colors for each face."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/shaders/colored_lights_shader.py"
-category: "Shaders"
+category: "[15] Shaders"
 sort: 3
 ---
 

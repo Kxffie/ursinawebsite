@@ -1,57 +1,57 @@
 import type { CollectionEntry, CollectionKey } from 'astro:content';
 import { getCollection } from 'astro:content';
 
-export interface SidebarOptions<Key extends CollectionKey> {
-	groupBy?: (doc: CollectionEntry<Key>) => string;
-	sortBy?: (doc: CollectionEntry<Key>) => number;
-}
+/* grab the first integer in any value, or undefined */
+const num = (v: unknown): number | undefined => {
+  const m = String(v ?? '').match(/-?\d+/);
+  return m ? parseInt(m[0], 10) : undefined;
+};
+
+/* remove “[n] ” prefix so visitors never see the weight */
+const clean = (label: string) => label.replace(/^\[\s*\d+]\s*/, '');
 
 export async function getSidebarData<Key extends CollectionKey>(
-	base: Key,
-	options: SidebarOptions<Key> = {}
+  base: Key,
 ): Promise<{
-	categories: string[];
-	grouped: Record<string, CollectionEntry<Key>[]>;
+  categories: string[];
+  grouped: Record<string, CollectionEntry<Key>[]>;
 }> {
-	const docs = await getCollection(base);
+  const files = await getCollection(base);
 
-	const group = options.groupBy ?? ((d: CollectionEntry<Key>) => (d.data as any).category ?? 'Uncategorized');
-	const sortVal =
-		options.sortBy ??
-		((d: CollectionEntry<Key>) => {
-			const s = (d.data as any).sort;
-			return typeof s === 'number' ? s : Number.POSITIVE_INFINITY;
-		});
+  /* group by raw category label */
+  const buckets = new Map<string, CollectionEntry<Key>[]>();
+  for (const f of files) {
+    const cat = String((f.data as any).category ?? 'Uncategorized');
+    (buckets.get(cat) ?? buckets.set(cat, []).get(cat)!).push(f);
+  }
 
-	// keep insertion order with Map
-	const groupedMap = new Map<string, CollectionEntry<Key>[]>();
+  /* sort inside each bucket */
+  for (const list of buckets.values()) {
+    list.sort((a, b) => {
+      const aSort = num((a.data as any).sort) ?? Number.MAX_SAFE_INTEGER;
+      const bSort = num((b.data as any).sort) ?? Number.MAX_SAFE_INTEGER;
+      if (aSort !== bSort) return aSort - bSort;
+      return a.data.title.localeCompare(b.data.title);
+    });
+  }
 
-	for (const doc of docs) {
-		const key = group(doc);
-		const arr = groupedMap.get(key) ?? [];
-		arr.push(doc);
-		groupedMap.set(key, arr);
-	}
+  /* sort the buckets themselves */
+  const ordered = Array.from(buckets.keys()).sort((a, b) => {
+    const aUnc = a.toLowerCase() === 'uncategorized';
+    const bUnc = b.toLowerCase() === 'uncategorized';
+    if (aUnc !== bUnc) return aUnc ? -1 : 1;
 
-	// sort each group once
-	for (const arr of groupedMap.values()) {
-		arr.sort((a, b) => {
-			const diff = sortVal(a) - sortVal(b);
-			return diff || a.data.title.localeCompare(b.data.title);
-		});
-	}
+    const aNum = num(a);
+    const bNum = num(b);
+    if (aNum != null && bNum != null && aNum !== bNum) return aNum - bNum;
+    if (aNum != null && bNum == null) return -1;
+    if (aNum == null && bNum != null) return 1;
 
-	const categories = Array.from(groupedMap.keys()).sort((a, b) => {
-		const ua = a.toLowerCase() === 'uncategorized';
-		const ub = b.toLowerCase() === 'uncategorized';
-		if (ua && !ub) return -1;
-		if (!ua && ub) return 1;
-		return 0; // preserve original order otherwise
-	});
+    return a.localeCompare(b);
+  });
 
-	// convert Map to plain object for Astro props
-	const grouped: Record<string, CollectionEntry<Key>[]> = {};
-	for (const cat of categories) grouped[cat] = groupedMap.get(cat)!;
+  const grouped: Record<string, CollectionEntry<Key>[]> = {};
+  ordered.forEach((raw) => (grouped[clean(raw)] = buckets.get(raw)!));
 
-	return { categories, grouped };
+  return { categories: ordered.map(clean), grouped };
 }

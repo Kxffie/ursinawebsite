@@ -3,7 +3,7 @@ title: "Entity"
 description: "Reference for the base Entity class, which represents any object in the scene with transform, rendering, collision, input and scripting support."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/entity.py"
-category: "Basics"
+category: "[1] Basics"  
 sort: 1
 ---
 

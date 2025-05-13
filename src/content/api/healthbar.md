@@ -3,7 +3,7 @@ title: "HealthBar"
 description: "Visual bar representing a value with optional text and lines."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/health_bar.py"
-category: "UI"
+category: "[11] UI"
 sort: 19
 ---
 

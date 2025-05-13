@@ -3,7 +3,7 @@ title: "Animator"
 description: "Manage multiple entities or animations as named states."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/animator.py"
-category: "Animation"
+category: "[6] Animation"
 sort: 3
 ---
 

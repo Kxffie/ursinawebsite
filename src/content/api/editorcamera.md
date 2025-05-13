@@ -3,7 +3,7 @@ title: "EditorCamera"
 description: "Debug camera with free movement and rotation."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/editor_camera.py"
-category: "Prefabs"
+category: "[10] Prefabs"
 sort: 1
 ---
 

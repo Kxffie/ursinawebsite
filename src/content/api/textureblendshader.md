@@ -3,7 +3,7 @@ title: "Texture Blend Shader"
 description: "Blend multiple textures using a blend map."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/shaders/texture_blend_shader.py"
-category: "Shaders"
+category: "[15] Shaders"
 sort: 6
 ---
 

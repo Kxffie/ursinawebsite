@@ -3,7 +3,7 @@ title: "SpotLight"
 description: "Spotlight that emits a cone of light, useful for flashlights or theater spot effects."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/lights.py"
-category: "Graphics"
+category: "[3] Graphics"
 sort: 8
 ---
 

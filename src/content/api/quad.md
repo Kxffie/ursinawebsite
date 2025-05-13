@@ -3,7 +3,7 @@ title: "Quad"
 description: "Procedurally generates a quad mesh with configurable radius, segment count, aspect ratio, scale, drawing mode, and thickness. Caches generated meshes for performance."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/models/procedural/quad.py"
-category: "Procedural Models"
+category: "[4] Procedural Models"
 sort: 0
 ---
 

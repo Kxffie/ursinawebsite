@@ -3,7 +3,7 @@ title: "Build"
 description: "Automate packaging your Ursina project for distribution."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/build.py"
-category: "Scripts"
+category: "[13] Scripts"
 sort: 6
 ---
 

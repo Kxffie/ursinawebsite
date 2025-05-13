@@ -3,7 +3,7 @@ title: "Pipe"
 description: "Procedural extruded mesh along a path: sweep a 2D base shape along a 3D polyline with per‑segment thickness, optional end caps and color gradient."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/models/procedural/pipe.py"
-category: "Procedural Models"
+category: "[4] Procedural Models"
 sort: 6
 ---
 

@@ -3,7 +3,7 @@ title: "Mouse"
 description: "Reference for the global mouse object, which tracks cursor position, button state, collisions and input routing."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/mouse.py"
-category: "Core Modules"
+category: "[2] Core Modules"
 sort: 1
 ---
 

@@ -3,7 +3,7 @@ title: "Tilemap"
 description: "GridEditor-based prefab for tilemap display and editing."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/tilemap.py"
-category: "Prefabs"
+category: "[10] Prefabs"
 sort: 2
 ---
 

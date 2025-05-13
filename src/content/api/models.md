@@ -3,7 +3,7 @@ title: "Models"
 description: "Built-in geometric meshes you can assign to any Entity."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/tree/master/ursina/models"
-category: "Assets"
+category: "[14] Assets"
 sort: 0
 ---
 

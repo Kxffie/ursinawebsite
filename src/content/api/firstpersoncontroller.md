@@ -3,7 +3,7 @@ title: "FirstPersonController"
 description: "Prefab for 3D first-person movement and looking."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/first_person_controller.py"
-category: "Prefabs"
+category: "[10] Prefabs"
 sort: 3
 ---
 

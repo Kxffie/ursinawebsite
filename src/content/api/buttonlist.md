@@ -3,7 +3,7 @@ title: "ButtonList"
 description: "Lists buttons generated from a dict of labels to callbacks."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/button_list.py"
-category: "UI"
+category: "[11] UI"
 sort: 8
 ---
 

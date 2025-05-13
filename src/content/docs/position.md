@@ -1,44 +1,47 @@
 ---
 title: "Position"
-description: "Guide to setting Entity positions locally and in world space."
+description: "Explains local versus world positioning, axis shortcuts, and practical examples of parent–child relationships."
 pubDate: "2025-05-12"
-category: "Entity Basics"
+category: "[2] Entity Basics"
 sort: 4
 ---
 
-# Position
-
-To set local position relative to its parent:
+To set the position relative to the parent, set `.position`:
 
 ```python
 e = Entity()
-e.position = Vec3(0, 0, 0)
-# or
-e.position = (0, 0, 0)
+e.position = Vec3(0,0,0)
+e.position = Vec2(0,0)
+e.position = (0,0,0)
+e.position = (0,0)
 ```
 
-You can also set individual axes:
+You can also set `x`, `y`, `z` for setting the position on a specific axis.
 
 ```python
-e = Entity(position=(1, 1, 1))
+e = Entity(position=Vec3(1,1,1))
 e.x = 0
-print(e.position)  # Vec3(0, 1, 1)
+print(position)
+>>> Vec3(0,1,1)
 ```
 
-For world-space coordinates (ignoring parent transform):
+To set the position relative to the scene, that is, ignoring the position of any parents, set `.world_position`:
 
 ```python
-parent = Entity(position=(0, 2, 0))
-e = Entity(parent=parent, position=(0, 2, 0))
-print(e.world_position)  # Vec3(0, 4, 0)
+parent_entity = Entity(position=Vec3(0,2,0))
+e = Entity(parent=parent_entity, position=Vec3(0,2,0))
+print(e.position)
+>>> Vec3(0,2,0)
+print(e.world_position)
+>>> Vec3(0,4,0)
 
-# assign world_position
-e.world_position = (0, 0, 0)
-print(e.position)        # Vec3(0, -2, 0)
+e.world_position = Vec3(0,0,0)
+print(e.position)
+>>> Vec3(0,-2,0)
 ```
 
-Shortcuts also exist:
+As with position, there's shortcuts for setting world position on individual axes too:
+`world_x`, `world_y` and `world_z`
 
-- `world_x`, `world_y`, `world_z`
-
-See <https://www.ursinaengine.org/coordinate_system.html> for details.
+See https://www.ursinaengine.org/coordinate_system.html for more
+information on how the coordinate system works.

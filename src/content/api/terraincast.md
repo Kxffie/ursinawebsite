@@ -3,7 +3,7 @@ title: "Terraincast"
 description: "Query terrain height at a given world position."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/terraincast.py"
-category: "Collision"
+category: "[9] Collision"
 sort: 1
 ---
 

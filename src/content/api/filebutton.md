@@ -3,7 +3,7 @@ title: "FileButton"
 description: "Button representing a file or folder entry."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/file_browser.py"
-category: "UI"
+category: "[11] UI"
 sort: 13
 ---
 

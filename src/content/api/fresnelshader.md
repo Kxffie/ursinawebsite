@@ -3,7 +3,7 @@ title: "Fresnel Shader"
 description: "Shader with edge highlighting based on view angle."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/shaders/fresnel_shader.py"
-category: "Shaders"
+category: "[15] Shaders"
 sort: 4
 ---
 

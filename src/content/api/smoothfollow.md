@@ -3,7 +3,7 @@ title: "Smooth Follow"
 description: "Script to smoothly follow a target entity with optional offset."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/scripts/smooth_follow.py"
-category: "Scripts"
+category: "[13] Scripts"
 sort: 2
 ---
 

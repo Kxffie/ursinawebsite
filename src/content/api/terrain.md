@@ -3,7 +3,7 @@ title: "Terrain"
 description: "Procedural heightmap terrain mesh: generate from image file or 2D list of height values, with optional color gradient and adjustable resolution."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/models/procedural/terrain.py"
-category: "Procedural Models"
+category: "[4] Procedural Models"
 sort: 7
 ---
 

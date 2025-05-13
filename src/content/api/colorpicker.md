@@ -3,7 +3,7 @@ title: "ColorPicker"
 description: "Interactive HSV color picker with alpha."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/color_picker.py"
-category: "UI"
+category: "[11] UI"
 sort: 20
 ---
 

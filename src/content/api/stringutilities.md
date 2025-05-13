@@ -3,7 +3,7 @@ title: "StringUtilities"
 description: "Helper functions for converting between camelCase and snake_case, multi‑replace, and debug printing."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/string_utilities.py"
-category: "Modules"
+category: "[5] Modules"
 sort: 3
 ---
 

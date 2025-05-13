@@ -3,7 +3,7 @@ title: "Scene"
 description: "Reference for the Scene singleton, which tracks all entities, handles scene‐wide fog and provides methods to clear or reset the scene."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/scene.py"
-category: "Core Modules"
+category: "[2] Core Modules"
 sort: 4
 ---
 

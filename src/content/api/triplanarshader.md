@@ -3,7 +3,7 @@ title: "Triplanar Shader"
 description: "Blend textures across three axes without visible seams."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/shaders/triplanar_shader.py"
-category: "Shaders"
+category: "[15] Shaders"
 sort: 8
 ---
 

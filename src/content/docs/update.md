@@ -1,35 +1,39 @@
 ---
 title: "Update"
-description: "Three ways to implement an Entity’s update method."
+description: "Describes three convenient methods to attach per‑frame behavior to entities using the update callback."
 pubDate: "2025-05-12"
-category: "Entity Basics"
+category: "[2] Entity Basics"
 sort: 7
 ---
 
-# Update
+An Entity's update method will be called automatically:
 
-An entity’s `update` method runs every frame.
+### By assigning `update` to an entity
 
-1. **Assign a function** to its `update` attribute:
+```python
+e = Entity()
 
-    ```python
-    e = Entity()
-    def my_update():
-        e.x += time.dt
-    e.update = my_update
-    ```
+def my_update():
+    e.x += 1 * time.dt # dt stands for delta time, the duration since the last frame.
 
-2. **Subclass Entity** and override `update`:
+e.update = my_update
+```
 
-    ```python
-    class Player(Entity):
-        def update(self):
-            self.x += time.dt
-    ```
+### By inheriting the Entity class
 
-3. **Global `update()` in your main script** (convenient for small examples):
+```python
+class Player(Entity):
+    def update(self):
+        self.x += 1 * time.dt
+```
 
-    ```python
-    def update():
-        print('frame tick')
-    ```
+### By having an `update` function in `__main__` (the starting script)
+
+The third option is to put a function called `update` in `__main__`, the starting script.
+You'll see this in many examples because it is convenient for small scripts.
+Keep in mind this will not work if you import a module with an `update` function defined at module level.
+
+```python
+def update():
+    print('update')
+```

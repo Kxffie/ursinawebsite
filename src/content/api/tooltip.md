@@ -3,7 +3,7 @@ title: "Tooltip"
 description: "Display contextual text on hover."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/tooltip.py"
-category: "UI"
+category: "[11] UI"
 sort: 1
 ---
 

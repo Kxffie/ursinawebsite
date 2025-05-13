@@ -3,7 +3,7 @@ title: "Audio"
 description: "Reference for the Audio class, which loads and controls playback of sound clips."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/audio.py"
-category: "Basics"
+category: "[1] Basics"
 sort: 5
 ---
 

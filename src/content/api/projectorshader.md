@@ -3,7 +3,7 @@ title: "Projector Shader"
 description: "Screen-space projector effect for textures."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/shaders/projector_shader.py"
-category: "Shaders"
+category: "[15] Shaders"
 sort: 5
 ---
 

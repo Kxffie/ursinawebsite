@@ -3,7 +3,7 @@ title: "Lit With Shadows Shader"
 description: "Shader with simple directional lighting and shadows."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/shaders/lit_with_shadows_shader.py"
-category: "Shaders"
+category: "[15] Shaders"
 sort: 1
 ---
 

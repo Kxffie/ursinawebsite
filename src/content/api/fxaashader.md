@@ -3,7 +3,7 @@ title: "FXAA Shader"
 description: "Fast approximate anti-aliasing post-process shader."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/shaders/screenspace_shaders/fxaa.py"
-category: "Shaders"
+category: "[15] Shaders"
 sort: 11
 ---
 

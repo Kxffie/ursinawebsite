@@ -3,7 +3,7 @@ title: "TrailRenderer"
 description: "Draw a fading trail behind a moving Entity using a 3D pipe mesh."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/trail_renderer.py"
-category: "Animation"
+category: "[6] Animation"
 sort: 4
 ---
 

@@ -3,7 +3,7 @@ title: "Slider"
 description: "Horizontal or vertical slider control."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/slider.py"
-category: "UI"
+category: "[11] UI"
 sort: 2
 ---
 

@@ -3,7 +3,7 @@ title: "Grid Layout"
 description: "Arrange a list of entities in a 2D grid pattern."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/scripts/grid_layout.py"
-category: "Scripts"
+category: "[13] Scripts"
 sort: 0
 ---
 

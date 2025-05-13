@@ -3,7 +3,7 @@ title: "HotReloader"
 description: "Prefab for live-reloading code, assets and shaders in the editor."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/hot_reloader.py"
-category: "Editor"
+category: "[12] Editor"
 sort: 0
 ---
 

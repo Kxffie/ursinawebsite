@@ -3,7 +3,7 @@ title: "MeshCollider"
 description: "Mesh‑based collision volume matching a model."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/collider.py"
-category: "Collision"
+category: "[9] Collision"
 sort: 7
 ---
 

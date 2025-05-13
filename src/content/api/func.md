@@ -3,7 +3,7 @@ title: "Func"
 description: "Wrap a callable and its arguments for use in a `Sequence`."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/sequence.py"
-category: "Gameplay"
+category: "[8] Gameplay"
 sort: 2
 ---
 

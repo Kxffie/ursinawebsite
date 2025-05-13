@@ -3,7 +3,7 @@ title: "Texture"
 description: "Reference for the Texture class, which represents an image loaded into GPU memory and provides pixel‑level access, filtering and saving."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/texture.py"
-category: "Graphics"
+category: "[3] Graphics"
 sort: 3
 ---
 

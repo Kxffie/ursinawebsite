@@ -3,7 +3,7 @@ title: "Button"
 description: "Detailed reference for the Ursina Button prefab"
 pubDate: "2025-05-06"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/button.py"
-category: "Basics"
+category: "[1] Basics"  
 sort: 2
 ---
 

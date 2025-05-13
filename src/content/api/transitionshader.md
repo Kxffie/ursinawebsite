@@ -3,7 +3,7 @@ title: "Transition Shader"
 description: "Shader to create cutoff transitions on textured quads."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/shaders/transition_shader.py"
-category: "Shaders"
+category: "[15] Shaders"
 sort: 10
 ---
 

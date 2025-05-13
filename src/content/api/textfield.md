@@ -3,7 +3,7 @@ title: "TextField"
 description: "Multi-line editable text input field."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/text_field.py"
-category: "UI"
+category: "[11] UI"
 sort: 4
 ---
 

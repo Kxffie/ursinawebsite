@@ -3,7 +3,7 @@ title: "Normals Shader"
 description: "Visualize normals of a mesh in screen-space."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/shaders/normals_shader.py"
-category: "Shaders"
+category: "[15] Shaders"
 sort: 9
 ---
 

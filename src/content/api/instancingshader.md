@@ -3,7 +3,7 @@ title: "Instancing Shader"
 description: "GPU instancing support for large numbers of entities."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/shaders/instancing_shader.py"
-category: "Shaders"
+category: "[15] Shaders"
 sort: 7
 ---
 

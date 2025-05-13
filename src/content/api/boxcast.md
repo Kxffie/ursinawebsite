@@ -3,7 +3,7 @@ title: "Boxcast"
 description: "Cast a swept box (thick ray) to detect collisions."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/boxcast.py"
-category: "Collision"
+category: "[9] Collision"
 sort: 2
 ---
 

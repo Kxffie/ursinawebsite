@@ -3,7 +3,7 @@ title: "CubicBezier"
 description: "Parametric cubic Bézier curve evaluator for custom easing."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/curve.py"
-category: "Math"
+category: "[7] Math"
 sort: 6
 ---
 

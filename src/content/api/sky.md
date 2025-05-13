@@ -3,7 +3,7 @@ title: "Sky"
 description: "Simple infinite skybox prefab."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/prefabs/sky.py"
-category: "Prefabs"
+category: "[10] Prefabs"
 sort: 0
 ---
 

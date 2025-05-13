@@ -3,7 +3,7 @@ title: "Window"
 description: "Reference for the Window class, which manages the application window, its properties, editor UI overlay and runtime stats."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/window.py"
-category: "Core Modules"
+category: "[2] Core Modules"
 sort: 2
 ---
 

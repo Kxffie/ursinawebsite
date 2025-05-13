@@ -3,7 +3,7 @@ title: "Shader"
 description: "Reference for the Shader class, which lets you compile and apply custom GPU shaders (vertex, fragment, geometry) in Ursina."
 pubDate: "2025-05-08"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/shader.py"
-category: "Graphics"
+category: "[3] Graphics"
 sort: 2
 ---
 

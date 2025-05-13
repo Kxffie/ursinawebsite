@@ -3,7 +3,7 @@ title: "Curve"
 description: "Collection of easing and interpolation functions for animations."
 pubDate: "2025-05-11"
 source: "https://github.com/pokepetter/ursina/blob/master/ursina/curve.py"
-category: "Animation"
+category: "[6] Animation"
 sort: 5
 ---
 
