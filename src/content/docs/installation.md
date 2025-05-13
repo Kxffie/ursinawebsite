@@ -6,8 +6,6 @@ category: "[1] Getting Started"
 sort: 0
 ---
 
-# Downloading and Installing Ursina
-
 ## Installing Python
 
 ### By getting Python from the official website
