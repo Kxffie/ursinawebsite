@@ -6,28 +6,34 @@ import { getSidebarData } from '@/lib/getSidebarData';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
-/* dynamic routes */
+/* ⇢ REQUIRED for every dynamic route */
 export async function getStaticPaths() {
-	const docs = await getCollection('docs');
+	const docs = await getCollection('docs');          // grab every markdown file
 	return docs.map(({ slug }) => ({ params: { slug } }));
 }
 
 const base = 'docs';
-let slug = Array.isArray(Astro.params.slug) ? Astro.params.slug[0] : Astro.params.slug;
 
+/* current slug */
+let slug = Array.isArray(Astro.params.slug)
+	? Astro.params.slug[0]
+	: Astro.params.slug;
+
+/* entry */
 const entry = await getEntry(base, slug);
 if (!entry) throw new Error(`No entry found in "${base}" for slug "${slug}"`);
 
 const { data } = entry;
 const { Content } = await entry.render();
 
-/* sidebar + prev/next */
+/* sidebar + navigation */
 const { categories, grouped } = await getSidebarData(base);
-const ordered = categories.flatMap((c) => grouped[c]);
-const idx  = ordered.findIndex((e) => e.slug === slug);
-const prev = idx > 0              ? ordered[idx - 1] : null;
-const next = idx + 1 < ordered.length ? ordered[idx + 1] : null;
+const ordered = categories.flatMap((cat) => grouped[cat]);
+const idx   = ordered.findIndex((e) => e.slug === slug);
+const prev  = idx > 0               ? ordered[idx - 1] : null;
+const next  = idx + 1 < ordered.length ? ordered[idx + 1] : null;
 ---
+
 <Layout
 	title={data.title}
 	heroImage="/heros/value_of_life_screenshot-lossy.jpg"
@@ -40,44 +46,46 @@ const next = idx + 1 < ordered.length ? ordered[idx + 1] : null;
 	primaryExternal
 >
 	<section class="py-16 bg-background/95 dark:bg-background">
-		<div
-			class="container mx-auto px-4 md:px-6
-			       flex flex-col md:flex-row
-			       gap-0 md:gap-8"
+	<div
+		class="container mx-auto
+		       flex flex-col lg:flex-row
+		       gap-6 lg:gap-10
+		       px-4 md:px-6"
+	>
+		<!-- sidebar: off-canvas on mobile, static on desktop -->
+		<Sidebar {categories} {grouped} base={base} />
+
+		<main
+			class="flex-1 min-w-0
+			       mt-6 lg:mt-0
+			       px-0 lg:px-4"
 		>
-			<!-- off-canvas sidebar on mobile, static on desktop -->
-			<Sidebar {categories} {grouped} base={base} />
-
-			<main
-				class="flex-1 w-full
-				       mt-4 md:mt-0
-				       p-0 md:p-6"
+			<article
+				class="prose-balance
+				       w-full max-w-none
+				       overflow-x-auto"
 			>
-				<article
-					class="prose prose-lg dark:prose-invert
-					       w-full overflow-x-auto"
-				>
-					<Content />
-				</article>
+				<Content />
+			</article>
 
-				<nav class="flex justify-between mt-12">
-					{prev ? (
-						<a href={`/${base}/${prev.slug}`} class="no-underline shrink-0">
-							<Button variant="outline" className="flex items-center gap-2">
-								<ArrowLeft className="w-4 h-4" /> Go Back
-							</Button>
-						</a>
-					) : <span></span>}
+			<nav class="flex justify-between mt-12">
+				{prev ? (
+					<a href={`/${base}/${prev.slug}`} class="shrink-0 no-underline">
+						<Button variant="outline" className="flex items-center gap-2">
+							<ArrowLeft className="w-4 h-4" /> Go&nbsp;Back
+						</Button>
+					</a>
+				) : <span></span>}
 
-					{next ? (
-						<a href={`/${base}/${next.slug}`} class="no-underline shrink-0">
-							<Button variant="outline" className="flex items-center gap-2">
-								Next Page <ArrowRight className="w-4 h-4" />
-							</Button>
-						</a>
-					) : <span></span>}
-				</nav>
-			</main>
-		</div>
-	</section>
+				{next ? (
+					<a href={`/${base}/${next.slug}`} class="shrink-0 no-underline">
+						<Button variant="outline" className="flex items-center gap-2">
+							Next&nbsp;Page <ArrowRight className="w-4 h-4" />
+						</Button>
+					</a>
+				) : <span></span>}
+			</nav>
+		</main>
+	</div>
+</section>
 </Layout>

@@ -5,6 +5,20 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@layer utilities {
+  .prose-balance {
+    @apply prose prose-sm md:prose lg:prose-lg dark:prose-invert;
+
+    /* balance headings and make them scale */
+    h1 { @apply text-3xl md:text-4xl lg:text-5xl leading-tight; text-wrap: balance; }
+    h2 { @apply text-2xl md:text-3xl lg:text-4xl leading-tight; text-wrap: balance; }
+    h3 { @apply text-xl  md:text-2xl lg:text-3xl leading-tight; text-wrap: balance; }
+
+    /* allow very long inline code / URLs to wrap */
+    code { word-break: break-word; }
+  }
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

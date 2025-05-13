@@ -3,6 +3,8 @@ import { getEntry } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
 import Sidebar from '@/components/Sidebar.astro';
 import { getSidebarData } from '@/lib/getSidebarData';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 /* build every /api/<slug> page */
 export async function getStaticPaths() {
@@ -21,7 +23,13 @@ if (!entry) throw new Error(`No entry found in "${base}" for slug "${slug}"`);
 const { data } = entry;
 const { Content } = await entry.render();
 
+
+/* sidebar + navigation */
 const { categories, grouped } = await getSidebarData(base);
+const ordered = categories.flatMap((cat) => grouped[cat]);
+const idx   = ordered.findIndex((e) => e.slug === slug);
+const prev  = idx > 0               ? ordered[idx - 1] : null;
+const next  = idx + 1 < ordered.length ? ordered[idx + 1] : null;
 ---
 <Layout
 	title={data.title}
@@ -35,27 +43,47 @@ const { categories, grouped } = await getSidebarData(base);
 	primaryExternal
 >
 	<section class="py-16 bg-background/95 dark:bg-background">
-		<div
-			class="container mx-auto px-4 md:px-6
-			       flex flex-col md:flex-row
-			       gap-0 md:gap-8"
-		>
-			<!-- sidebar: fixed/slide-in on mobile, static on desktop -->
-			<Sidebar {categories} {grouped} base={base} />
+	<div
+		class="container mx-auto
+		       flex flex-col lg:flex-row
+		       gap-6 lg:gap-10
+		       px-4 md:px-6"
+	>
+		<!-- sidebar: slides in on mobile, static on desktop -->
+		<Sidebar {categories} {grouped} base={base} />
 
-			<!-- content -->
-			<main
-        class="flex-1 w-full
-              mt-4 md:mt-0
-              p-0 md:p-6"
-      >
-        <article
-          class="prose prose-lg dark:prose-invert
-                w-full overflow-x-auto"
-        >
-          <Content />
-        </article>
-      </main>
-		</div>
-	</section>
+		<!-- content -->
+		<main
+			class="flex-1 min-w-0
+			       mt-6 lg:mt-0
+			       px-0 lg:px-4"
+		>
+			<article
+				class="prose prose-lg dark:prose-invert
+	       w-full max-w-none         <!-- remove width limit -->
+	       overflow-x-auto w-full prose-balance"
+			>
+				<Content />
+			</article>
+
+			<nav class="flex justify-between mt-12">
+				{prev ? (
+					<a href={`/${base}/${prev.slug}`} class="shrink-0 no-underline">
+						<Button variant="outline" className="flex items-center gap-2">
+							<ArrowLeft className="w-4 h-4" /> Go&nbsp;Back
+						</Button>
+					</a>
+				) : <span></span>}
+
+				{next ? (
+					<a href={`/${base}/${next.slug}`} class="shrink-0 no-underline">
+						<Button variant="outline" className="flex items-center gap-2">
+							Next&nbsp;Page <ArrowRight className="w-4 h-4" />
+						</Button>
+					</a>
+				) : <span></span>}
+			</nav>
+		</main>
+	</div>
+</section>
 </Layout>
