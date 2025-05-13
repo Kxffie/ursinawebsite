@@ -11,16 +11,17 @@ import {
 	Search,
 	FolderSearch
 } from 'lucide-react';
+import LinkSection from '@/components/LinkSection.astro';
 
 const base = 'docs';
 const { categories, grouped } = await getSidebarData(base);
 
 const helpLinks = [
 	{
-		title: 'Docs',
-		href: '/docs',
+		title: 'API Reference',
+		href: '/api',
 		icon: BookOpen,
-		desc: 'Beginner docs to help start your next project.'
+		desc: 'More detailed documentation page.'
 	},
 	{
 		title: 'Samples',
@@ -32,7 +33,8 @@ const helpLinks = [
 		title: 'Tutorials',
 		href: '/tutorials',
 		icon: PlayCircle,
-		desc: 'Follow step-by-step tutorials to get started quickly.'
+		desc: 'Follow step-by-step tutorials to get started quickly.',
+		disabled: true
 	}
 ];
 
@@ -87,76 +89,19 @@ const searchTips = [
 					</p>
 				</section>
 
-				<!-- Search tips -->
-				<!-- <section>
-					<h3 class="text-2xl font-bold mb-6">Quick search tips</h3>
-
-					<div class="grid gap-6 md:grid-cols-2">
-						{searchTips.map(({ icon: Icon, title, desc, example }) => (
-							<div class="rounded-lg bg-card p-6 space-y-4">
-								<div class="flex items-center">
-									<Icon className="h-5 w-5 text-primary mr-2" />
-									<h4 class="text-xl font-semibold">{title}</h4>
-								</div>
-								<p>{desc}</p>
-								<input
-									type="text"
-									value={example}
-									readonly
-									class="w-full rounded border border-border bg-input text-foreground px-3 py-2 cursor-default select-none"
-								/>
-							</div>
-						))}
-					</div>
-				</section> -->
-
-				<!-- Help -->
-				<section>
-					<h3 class="text-xl font-semibold mb-4">Need help?</h3>
-					<p class="mb-6 text-lg">
-						Check out these resources for examples, guides, and tutorials.
-					</p>
-					<div class="grid gap-6 sm:grid-cols-3">
-						{helpLinks.map(({ href, icon: Icon, title, desc }) => (
-							<a
-								href={href}
-								class="bg-card rounded-lg shadow transition px-6 py-5 hover:shadow-md hover:scale-105 active:scale-95"
-							>
-								<div class="flex items-center gap-6">
-									<Icon className="w-8 h-8 text-primary flex-shrink-0" />
-									<div>
-										<h4 class="font-semibold mb-1">{title}</h4>
-										<p class="text-sm">{desc}</p>
-									</div>
-								</div>
-							</a>
-						))}
-					</div>
-				</section>
-
-				<!-- Support -->
-				<section>
-					<h3 class="text-xl font-semibold mb-4">Something wrong?</h3>
-					<p class="mb-6 text-lg">
-						If you find a bug or have a suggestion, please let us know on our GitHub Issues tracker or join the Discord.
-					</p>
-					<div class="grid gap-6 sm:grid-cols-2">
-						{supportLinks.map(({ href, icon: Icon, title, desc }) => (
-							<a
-								href={href}
-								class="bg-card rounded-lg shadow transition px-6 py-5 hover:shadow-md hover:scale-105 active:scale-95"
-							>
-								<div class="flex items-center gap-6">
-									<Icon className="w-8 h-8 text-primary flex-shrink-0" />
-									<div>
-										<h4 class="font-semibold mb-1">{title}</h4>
-										<p class="text-sm">{desc}</p>
-									</div>
-								</div>
-							</a>
-						))}
-					</div>
-				</section>
+				<LinkSection
+					title="Need help?"
+					subtitle="Check out these resources for examples, guides, and tutorials."
+					links={helpLinks}
+					columns={3}
+				/>
+      
+				<LinkSection
+					title="Something wrong?"
+					subtitle="If you find a bug or have a suggestion, please let us know."
+					links={supportLinks}
+					columns={2}
+				/>
 			</main>
 		</div>
 	</section>

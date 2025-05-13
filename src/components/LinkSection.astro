@@ -1,0 +1,82 @@
+---
+interface LinkItem {
+  href: string;
+  icon: any;
+  title: string;
+  desc: string;
+  disabled?: boolean;
+}
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  links: LinkItem[];
+  columns?: number;
+}
+
+const { title, subtitle = '', links, columns = 3 } = Astro.props as Props;
+const colsClass = columns === 2 ? 'sm:grid-cols-2' : 'sm:grid-cols-3';
+
+// for "Submit a Sample"
+// const contributeLinks = [
+//   { href: '/samples/submit',     icon: UploadCloud,   title: 'Submit a Sample',    desc: 'Share your project...',            disabled: true },
+//   { href: '/docs/contributing',  icon: BookOpen,      title: 'Contribution Guide', desc: 'Learn how to format your...',      disabled: true },
+//   { href: 'https://discord.gg/x',icon: MessageCircleCode, title: 'Join the Community', desc: 'Chat with other users...',         },
+// ];
+
+// for "Need help?"
+// const helpLinks = [
+//   { href: '/docs/tutorials',      icon: BookOpen,      title: 'Tutorials',          desc: 'Step-by-step walkthroughs.'      },
+//   { href: '/docs/api',            icon: UploadCloud,   title: 'API Reference',      desc: 'Full component list & usage.'    },
+//   { href: 'https://forum.ursina', icon: MessageCircleCode, title: 'Community Forum',    desc: 'Ask questions and discuss.'      },
+// ];
+
+// for "Something wrong?"
+// const supportLinks = [
+//   { href: 'https://github.com/.../issues', icon: BookOpen,      title: 'Report an Issue',  desc: 'Open a bug report on GitHub.' },
+//   { href: 'https://discord.gg/x',           icon: MessageCircleCode, title: 'Join Discord',     desc: 'Chat with the team live.'      },
+// ];
+---
+
+<section class="mt-8">
+  <h3 class="text-xl font-semibold mb-4">{title}</h3>
+
+  {subtitle && (
+    <p class="mb-6 text-lg">{subtitle}</p>
+  )}
+
+  <div class={`grid grid-cols-1 gap-6 ${colsClass}`}>
+    {links.map(({ href, icon: Icon, title: linkTitle, desc, disabled }) => (
+      <a
+        href={disabled ? undefined : href}
+        class={`
+          bg-card rounded-lg shadow
+          px-6 py-5
+          transition-transform transform
+          ${disabled
+            ? 'opacity-50 cursor-not-allowed pointer-events-none'
+            : 'hover:shadow-md hover:scale-[1.02] active:scale-95'
+          }
+        `}
+      >
+        <div class="flex items-center gap-4">
+          <Icon
+            class={`
+              w-8 h-8 flex-shrink-0
+              ${disabled ? 'text-muted-foreground' : 'text-primary'}
+            `}
+          />
+          <div>
+            <h4 class={`
+              font-semibold mb-1
+              ${disabled ? 'text-muted-foreground' : 'text-foreground'}
+            `}>
+              {linkTitle}
+            </h4>
+            <p class="text-sm text-muted-foreground">{desc}</p>
+          </div>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>
