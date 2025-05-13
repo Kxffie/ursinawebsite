@@ -1,0 +1,120 @@
+---
+import { getSidebarData } from '@/lib/getSidebarData';
+import Layout from '@/layouts/Layout.astro';
+import { ArrowLeft, ArrowUpRight } from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
+import Sidebar from '@/components/Sidebar.astro';
+
+export async function getStaticPaths() {
+  const { categories, grouped } = await getSidebarData('samples');
+
+  const toSlug = (s: string) =>
+    s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+  return categories.flatMap(cat => {
+    const catSlug = toSlug(cat);
+    return grouped[cat].map(item => ({
+      params: { category: catSlug, slug: item.slug },
+    }));
+  });
+}
+
+const { category, slug } = Astro.params;
+const { categories, grouped } = await getSidebarData('samples');
+
+const toSlug = (s: string) =>
+  s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+const label = categories.find(cat => toSlug(cat) === category);
+if (!label) throw new Error(`Unknown category “${category}”`);
+
+const sample = grouped[label].find(i => i.slug === slug);
+if (!sample) throw new Error(`No sample “${slug}” in “${label}”`);
+
+const { Content } = await sample.render();
+const {
+  title,
+  description,
+  image,
+  source,
+  pubDate,
+  author,
+  authorImg,
+  officialSample,
+} = sample.data;
+
+const published = new Date(pubDate).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<Layout
+  title={title}
+  heroImage={`../${image}`}
+  heroHeight={30}
+  heroHeightMobile={25}
+  primaryText={title}
+  subText={description}
+>
+  <div class="container mx-auto px-6 flex gap-8 py-16">
+    <Sidebar {categories} {grouped} base="samples" />
+
+    <div class="flex-1 py-6 bg-card p-6 rounded-lg shadow-lg">
+      {officialSample && (
+        <span class="inline-block mb-4 px-2 py-1 text-xs font-semibold uppercase bg-primary text-background rounded">
+          Official
+        </span>
+      )}
+
+      <div class="mb-4 flex items-center space-x-2 text-sm text-muted-foreground">
+        <img
+          src={`/${authorImg}`}
+          alt={author}
+          loading="lazy"
+          class="h-10 w-10 rounded-full ring-2 ring-border"
+        />
+        <div class="flex items-center space-x-2">
+          <span>
+            By <span class="font-medium text-foreground">{author}</span>
+          </span>
+          <span aria-hidden="true">·</span>
+          <time datetime={new Date(pubDate).toISOString()}>
+            {published}
+          </time>
+        </div>
+      </div>
+
+      <Separator className="my-8" />
+
+      <div class="prose prose-lg max-w-none dark:prose-invert">
+        <Content />
+      </div>
+
+      {source && (
+        <p class="mt-8 text-sm text-muted-foreground">
+          <a
+            href={source}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center space-x-1 underline hover:text-primary"
+          >
+            <span>View source on GitHub</span>
+            <ArrowUpRight className="h-4 w-4 inline-block" />
+          </a>
+        </p>
+      )}
+
+      <Separator className="my-8" />
+
+      <a
+        href={`/samples/${category}`}
+        class="flex items-center space-x-2 text-primary hover:underline"
+      >
+        <ArrowLeft className="h-4 w-4 inline-block" />
+        <span>Back to {label}</span>
+      </a>
+    </div>
+  </div>
+</Layout>

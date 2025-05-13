@@ -1,10 +1,20 @@
 ---
-// src/pages/samples/index.astro
-import { getCollection } from 'astro:content'
-import Layout from '@/layouts/Layout.astro'
-import { ArrowRight } from 'lucide-react'
+import { getSidebarData } from '@/lib/getSidebarData';
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+import Sidebar from '@/components/Sidebar.astro';
+import { ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
-const samples = await getCollection('samples')
+const base = 'samples';
+const samples = await getCollection(base);
+const { categories, grouped } = await getSidebarData(base);
+
+// helper to turn “Creator Showcase” → “creator-showcase”
+const toSlug = (str: string) =>
+  str.toLowerCase()
+     .replace(/[^a-z0-9]+/g, '-')
+     .replace(/(^-|-$)/g, '');
 ---
 
 <Layout
@@ -15,71 +25,87 @@ const samples = await getCollection('samples')
   primaryText="Samples"
   subText="Explore a collection of projects and samples made with the Ursina Engine."
 >
-  <section class="py-16 bg-background/95">
-    <div class="container mx-auto px-6">
-      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {samples
-          .sort((b, a) => a.data.author.localeCompare(b.data.author))
-          .map((entry) => {
-            const { slug } = entry
-            const { title, image, description, author = 'Unknown', pubDate } =
-              entry.data
-            const published = new Date(pubDate).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'short',
-              day: 'numeric',
-            })
+  <div class="container mx-auto px-6 flex gap-8 py-16">
+    <Sidebar {categories} {grouped} base={base} />
 
-            return (
-              <div
-                id={slug}
-                class="
-                  flex flex-col
-                  bg-background
-                  dark:bg-[#1f1f1f]
-                  border border-border
-                  rounded-lg
-                  overflow-hidden
-                  hover:shadow-lg
-                  transition-shadow
-                "
+    <div class="flex-1 space-y-2">
+      {categories.map(category => {
+        const preview = grouped[category].slice(0, 3);
+        const catSlug = toSlug(category);
+
+        return (
+          <section id={catSlug}>
+            <div class="flex justify-between items-center mb-4">
+              <h2 class="text-2xl font-semibold text-foreground">
+                {category}
+              </h2>
+                <a
+                href={`/samples/${catSlug}`}
+                class="text-sm font-semibold text-primary flex items-center"
               >
-                <img
-                  src={`/samples/${image}`}
-                  alt={title}
-                  class="h-48 w-full object-cover"
-                />
-
-                <div class="p-4 flex-1">
-                  <h3 class="font-semibold text-lg mb-1 text-foreground">
-                    {title}
-                  </h3>
-                  <p class="text-sm text-muted-foreground">{description}</p>
-                </div>
-
-                <div
-                  class="
-                    border-t border-border
-                    px-4 py-2
-                    flex items-center justify-between
-                    text-xs text-muted-foreground
-                  "
+                <Button
+                  data-astro-prefetch="hover"
+                  variant="outline"
+                  className="hover:scale-105 active:scale-95 transition-transform"
+                  size="sm"
                 >
-                  <span>
-                    {author} · {published}
-                  </span>
-                  <a
-                    href={`/samples/${slug}`}
-                    class="flex items-center space-x-1 hover:text-primary"
+                  <span>View All</span>
+                  <ArrowRight className="h-4 w-4 ml-1" />
+                </Button>
+              </a>
+            </div>
+
+            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {preview.map(entry => {
+                const { slug, data } = entry;
+                const { title, description, image, author, pubDate, officialSample } = data;
+                const date = new Date(pubDate).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric',
+                });
+
+                return (
+                  <div
+                    class="flex bg-background dark:bg-[#1f1f1f] border border-border rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
                   >
-                    <span>More Details</span>
-                    <ArrowRight className="h-4 w-4" />
-                  </a>
-                </div>
-              </div>
-            )
-          })}
-      </div>
+                    <img
+                      src={`/samples/${image}`}
+                      alt={title}
+                      class="w-1/3 object-cover"
+                    />
+                    <div class="p-4 flex-1 flex flex-col justify-between">
+                      <div>
+                        <h3 class="font-semibold text-lg text-foreground">
+                          {title}
+                        </h3>
+                        <p class="text-sm text-muted-foreground mt-1">
+                          {description}
+                        </p>
+                        {officialSample && (
+                          <span class="inline-block mt-2 px-2 py-1 text-xs font-semibold uppercase bg-primary text-background rounded">
+                            Official
+                          </span>
+                        )}
+                      </div>
+                      <div class="flex justify-between items-center text-xs text-muted-foreground mt-4">
+                        <span>{author} · {date}</span>
+                        <a
+                          href={`/samples/${catSlug}/${slug}`}
+                          class="flex items-center space-x-1 hover:text-primary"
+                        >
+                          <span>More Details</span>
+                          <ArrowRight className="h-4 w-4" />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        );
+      })}
     </div>
-  </section>
+  </div>
 </Layout>

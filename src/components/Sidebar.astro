@@ -2,15 +2,22 @@
 import { SearchCode, X, ChevronDown } from 'lucide-react';
 
 export interface Props {
-	categories: string[];
-	grouped: Record<
-		string,
-		{ slug: string; data: { title: string; sort?: number } }[]
-	>;
-	base?: string;
+  categories: string[];
+  grouped: Record<
+    string,
+    { slug: string; data: { title: string; sort?: number } }[]
+  >;
+  base?: string;
 }
 
-const { categories, grouped, base } = Astro.props;
+const { categories, grouped, base = '' } = Astro.props;
+
+// helper to slugify a category name, e.g. "Ursina Originals" → "ursina-originals"
+const toSlug = (s: string) =>
+  s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
 ---
 
 <!-- mobile toggle button -->
@@ -43,53 +50,61 @@ const { categories, grouped, base } = Astro.props;
 
 	<nav id="sidebarNav" data-base={base} class="space-y-2">
 		{categories.map(cat => {
-			const unc = cat.toLowerCase() === 'uncategorized';
-			const docs = grouped[cat];
+			const unc     = cat.toLowerCase() === 'uncategorized';
+			const docs    = grouped[cat];
+			const catSlug = toSlug(cat);  // ← make sure this is here
 
 			return (
 				<div class="category" data-cat={cat} data-open={!unc}>
-					{!unc && (
-						<button
-							type="button"
-							class="w-full flex justify-between items-center px-3 py-1 hover:bg-sidebar-accent rounded group"
-							data-toggle
-						>
-							<span class="font-semibold text-sidebar-foreground">
-								{cat}
-							</span>
-							<ChevronDown
-								className="chevron transition-transform duration-200"
-								width={16}
-								height={16}
-							/>
-						</button>
-					)}
-
-					<div
-					class={`links ${unc ? 'pl-0' : 'pl-5 pt-1'} space-y-1`}
+				{!unc && (
+					<button
+					type="button"
+					class="w-full flex justify-between items-center px-3 py-1 hover:bg-sidebar-accent rounded group"
+					data-toggle
 					>
+					<span class="font-semibold text-sidebar-foreground">
+						{cat}
+					</span>
+					<ChevronDown
+						className="chevron transition-transform duration-200"
+						width={16}
+						height={16}
+					/>
+					</button>
+				)}
+
+				<div class={`links ${unc ? 'pl-0' : 'pl-5 pt-1'} space-y-1`}>
 					{docs
-						.slice()
-						.sort((a, b) => {
+					.slice()
+					.sort((a, b) => {
 						const aNum = a.data.sort ?? Number.MAX_SAFE_INTEGER;
 						const bNum = b.data.sort ?? Number.MAX_SAFE_INTEGER;
 						return aNum === bNum
-							? a.data.title.localeCompare(b.data.title)
-							: aNum - bNum;
-						})
-						.map(({ slug, data }) => (
+						? a.data.title.localeCompare(b.data.title)
+						: aNum - bNum;
+					})
+					.map(({ slug, data }) => {
+						// now use catSlug in your samples URLs
+						const href =
+						base === 'samples'
+							? `/${base}/${catSlug}/${slug}`
+							: `/${base}/${slug}`;
+
+						return (
 						<a
 							data-astro-prefetch="hover"
-							href={`/${base}/${slug}`}
+							href={href}
 							class="block px-2 py-1 rounded text-sidebar-foreground hover:bg-sidebar-accent/95"
 						>
 							{data.title}
 						</a>
-						))}
-					</div>
+						);
+					})}
+				</div>
 				</div>
 			);
-		})}
+			})}
+
 	</nav>
 </aside>
 

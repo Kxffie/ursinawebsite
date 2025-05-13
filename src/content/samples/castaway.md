@@ -6,6 +6,8 @@ source: "https://github.com/pokepetter/pyweek_30_castaway"
 pubDate: "5/6/2025"
 author: "Pokepetter"
 authorImg: "people/pokepetter.webp"
+category: "[1] Creator Showcase"
+sort: 0
 ---
 
 ![Castaway Screenshot](https://github.com/pokepetter/pyweek_30_castaway/blob/master/castaway_screenshot.jpg?raw=true)

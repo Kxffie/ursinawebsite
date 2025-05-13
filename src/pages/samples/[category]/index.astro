@@ -1,0 +1,120 @@
+---
+import { getSidebarData } from '@/lib/getSidebarData';
+import Layout from '@/layouts/Layout.astro';
+import Sidebar from '@/components/Sidebar.astro';
+import { ArrowRight } from 'lucide-react';
+
+const base = 'samples';
+
+/** normalize “Creator Showcase” → “creator-showcase” */
+const toSlug = (s: string) =>
+  s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+
+
+
+export async function getStaticPaths() {
+    const toSlug = (s: string) => s
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '');
+
+    const base = 'samples';
+    const { categories } = await getSidebarData(base);
+    return categories.map(cat => ({
+        params: { category: toSlug(cat) }
+    }));
+}
+
+const { categories, grouped } = await getSidebarData(base);
+const { category } = Astro.params;
+
+const label = categories.find(cat => toSlug(cat) === category);
+if (!label) throw new Error(`Unknown category “${category}”`);
+
+const items = grouped[label];
+---
+
+<Layout
+  title={label}
+  heroImage="/heros/value_of_life_screenshot-lossy.jpg"
+  heroHeight={30}
+  heroHeightMobile={25}
+  primaryText={label}
+  subText={`All samples in “${label}”`}
+>
+  <div class="container mx-auto px-6 flex gap-8 py-16">
+    <Sidebar {categories} {grouped} base={base} />
+
+    {/* samples list as 1-col on mobile, 2-cols on desktop */}
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+  {items.map(entry => {
+    /* unpack your data… */
+    return (
+      <article
+        class="
+          flex flex-col md:flex-row
+          bg-background dark:bg-[#1f1f1f]
+          border border-border
+          rounded-lg overflow-hidden
+          hover:shadow-lg transition-shadow
+        "
+      >
+        {/* thumbnail: half-width on desktop now */}
+        <img
+          src={`/samples/${entry.data.image}`}
+          alt={entry.data.title}
+          class="
+            w-full md:w-1/2
+            h-48 md:h-auto
+            object-cover
+          "
+        />
+
+        {/* content */}
+        <div class="p-6 flex flex-col justify-between flex-1">
+          <div>
+            <h2 class="text-xl font-semibold text-foreground">
+              {entry.data.title}
+            </h2>
+            <p class="mt-2 text-sm text-muted-foreground">
+              {entry.data.description}
+            </p>
+            {entry.data.officialSample && (
+              <span class="
+                inline-block mt-3 px-2 py-1
+                text-xs font-semibold uppercase
+                bg-primary text-background
+                rounded
+              ">
+                Official
+              </span>
+            )}
+          </div>
+          <div class="mt-6 flex items-center justify-between text-xs text-muted-foreground">
+            <span>
+              {entry.data.author} ·{' '}
+              {new Date(entry.data.pubDate).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+              })}
+            </span>
+            <a
+              href={`/samples/${category}/${entry.slug}`}
+              class="flex items-center space-x-1 hover:text-primary"
+            >
+              <span>More Details</span>
+              <ArrowRight className="h-4 w-4" />
+            </a>
+          </div>
+        </div>
+      </article>
+    );
+  })}
+</div>
+
+  </div>
+</Layout>

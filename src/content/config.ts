@@ -13,6 +13,8 @@ export const collections = {
         author: z.string(),
         authorImg: z.string(),
         officialSample: z.boolean().optional(),
+        sort: z.number(),
+        category: z.string().optional(),
     }),
   }),
     blog: defineCollection({

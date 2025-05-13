@@ -6,6 +6,8 @@ source: "https://github.com/pokepetter/ursina/blob/master/samples/particle_syste
 pubDate: "5/6/2025"
 author: "HarrisonTCodes"
 authorImg: "people/noprofile.png"
+category: "[3] Community"
+sort: 0
 ---
 
 ![Protein Example](https://github.com/HarrisonTCodes/ursina-proteins/raw/main/assets/example.png)
