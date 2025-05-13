@@ -8,17 +8,12 @@ sort: 2
 
 Ursina includes networking samples to illustrate common patterns:
 
-1. **hello_world.py**  
-   Low-level peer usage.
+1. **[hello_world.py](/samples/networking-samples/helloworld)** Low-level peer usage.
 
-2. **hello_world_rpc.py**  
-   Introduction to RPCs.
+2. **[hello_world_rpc.py](/samples/networking-samples/helloworldrpc)** Introduction to RPCs.
 
-3. **shared_object.py**  
-   Synchronize player controlled objects.
+3. **[shared_object.py](/samples/networking-samples/sharedobject)** Synchronize player controlled objects.
 
-4. **host_authoritative.py**  
-   Host controls object state.
+4. **[host_authoritative.py](/samples/networking-samples/hostauthoritative)** Host controls object state.
 
-5. **club_bear.py**  
-   Full realtime multiplayer game with chat and multiple players.
+5. **[club_bear.py](/samples/networking-samples/clubbear)** Full realtime multiplayer game with chat and multiple players.
