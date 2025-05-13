@@ -27,15 +27,16 @@ export const collections = {
         }),
       }),
     docs: defineCollection({
-    type: 'content',
-    schema: z.object({
-        title: z.string(),
-        image: z.string().optional(),
-        description: z.string(),
-        pubDate: z.string().transform(str => new Date(str)),
-        source: z.string().optional(),
-        category: z.string().optional(),
-    }),
+      type: 'content',
+      schema: z.object({
+          title: z.string(),
+          image: z.string().optional(),
+          description: z.string(),
+          sort: z.number(),
+          pubDate: z.string().transform((str) => new Date(str)),
+          source: z.string().optional(),
+          category: z.string().optional(),
+      }),
     }),
     api: defineCollection({
         type: 'content',

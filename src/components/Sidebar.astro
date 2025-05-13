@@ -10,7 +10,7 @@ export interface Props {
 	base?: string;
 }
 
-const { categories, grouped, base = '' } = Astro.props;
+const { categories, grouped, base } = Astro.props;
 ---
 
 <!-- mobile toggle button -->
@@ -25,12 +25,11 @@ const { categories, grouped, base = '' } = Astro.props;
 	<X     className="w-6 h-6 close-icon hidden" />
 </button>
 
-<!-- backdrop -->
 <div
 	id="sidebarBackdrop"
 	class="md:hidden fixed inset-0 bg-black/50 hidden z-40"
 ></div>
-<!-- sidebar -->
+
 <aside
 	id="sidebar"
 	class="fixed inset-y-0 left-0 z-50 w-64 transform -translate-x-full md:translate-x-0 bg-background p-4 overflow-y-auto transition-transform duration-200 md:w-64 md:p-0 md:sticky md:top-24"
@@ -67,18 +66,25 @@ const { categories, grouped, base = '' } = Astro.props;
 					)}
 
 					<div
-						class={`links ${
-							unc ? 'pl-0' : 'pl-5 pt-1'
-						} space-y-1`}
+					class={`links ${unc ? 'pl-0' : 'pl-5 pt-1'} space-y-1`}
 					>
-						{docs.map(({ slug, data }) => (
-							<a
-								data-astro-prefetch="hover"
-								href={`/${base}/${slug}`}
-								class="block px-2 py-1 rounded text-sidebar-foreground hover:bg-sidebar-accent/95"
-							>
-								{data.title}
-							</a>
+					{docs
+						.slice()
+						.sort((a, b) => {
+						const aNum = a.data.sort ?? Number.MAX_SAFE_INTEGER;
+						const bNum = b.data.sort ?? Number.MAX_SAFE_INTEGER;
+						return aNum === bNum
+							? a.data.title.localeCompare(b.data.title)
+							: aNum - bNum;
+						})
+						.map(({ slug, data }) => (
+						<a
+							data-astro-prefetch="hover"
+							href={`/${base}/${slug}`}
+							class="block px-2 py-1 rounded text-sidebar-foreground hover:bg-sidebar-accent/95"
+						>
+							{data.title}
+						</a>
 						))}
 					</div>
 				</div>
@@ -89,7 +95,6 @@ const { categories, grouped, base = '' } = Astro.props;
 
 <script is:inline>
 (() => {
-	/* ---------------- cache DOM ---------------- */
 	const sidebar   = document.getElementById('sidebar');
 	const backdrop  = document.getElementById('sidebarBackdrop');
 	const toggleBtn = document.getElementById('sidebarToggle');
@@ -97,11 +102,9 @@ const { categories, grouped, base = '' } = Astro.props;
 	const input     = document.getElementById('searchDocs');
 	if (!sidebar || !backdrop || !toggleBtn || !nav || !input) return;
 
-	/* ---------------- helpers ---------------- */
 	const openSidebar  = () => { sidebar.classList.remove('-translate-x-full'); backdrop.classList.remove('hidden'); };
 	const closeSidebar = () => { sidebar.classList.add('-translate-x-full');  backdrop.classList.add('hidden');  };
 
-	/* ---------------- open / close ---------------- */
 	toggleBtn.addEventListener('click', () => {
 		const isOpen = !sidebar.classList.contains('-translate-x-full');
 		if (isOpen) closeSidebar(); else openSidebar();
@@ -111,7 +114,6 @@ const { categories, grouped, base = '' } = Astro.props;
 		if (e.target.closest('a')) closeSidebar();
 	});
 
-	/* ---------------- category toggle ---------------- */
 	nav.addEventListener('click', e => {
 		const btn = e.target.closest('[data-toggle]');
 		if (!btn) return;
@@ -123,7 +125,6 @@ const { categories, grouped, base = '' } = Astro.props;
 		btn.querySelector('.chevron').style.transform = open ? '' : 'rotate(-90deg)';
 	});
 
-	/* ---------------- live search ---------------- */
 	const storageKey = `sidebar-search-${nav.dataset.base || 'default'}`;
 	input.value = localStorage.getItem(storageKey) || '';
 
