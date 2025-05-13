@@ -1,21 +1,55 @@
 ---
 title: "Rotation"
-description: "Covers controlling an entity's orientation with Euler angles and the look_at helper function."
-pubDate: "2025-05-12"
-category: "[2] Entity Basics"
-sort: 5
+description: "How rotations are applied to entities, axis conventions, and helper methods in Ursina Engine"
+pubDate: "2025-05-13"
+category: "[3] Coordinate System"
+sort: 2
 ---
 
+## Rotation
+
+Rotations are specified in degrees around each axis. The default sign convention is:
+
+- **X and Y axes** rotate clockwise when viewed from outside  
+- **Z axis** rotates counter-clockwise (so 2D rotation appears clockwise)  
+
+This is controlled by:
 ```python
-e.rotation = (0,0,0)
-e.rotation_y = 90
+Entity.rotation_directions = (-1, -1, 1)
 ```
 
-The `look_at()` method can also be used for pointing an entity at something:
-
-```python
-other_entity = Entity(position=(10,1,8))
-
-e.look_at(other_entity) # make z‑axis (forward) point at other_entity
-e.look_at(other_entity, axis='up') # optionally define which axis
+```text
+           _______
+          /
+          \->
+    __
+   /  \     y
+   v  |     |
+      |  z  |                __
+          \ |               /  \
+           \|               v   |
+            *---------- x       |
 ```
+
+#### Common methods
+- Absolute set:  
+  ```python
+  entity.rotation = Vec3(rx, ry, rz)
+  ```
+- Continuous rotate:  
+  ```python
+  entity.rotate(amount)
+  ```
+- Face a point in 3D:  
+  ```python
+  entity.look_at(target_position)
+  ```
+- Face a point in 2D:  
+  ```python
+  entity.look_at_2d(target_position)
+  ```
+- Direct quaternion access:  
+  ```python
+  q = entity.quaternion
+  entity.quaternion = new_q
+  ```
