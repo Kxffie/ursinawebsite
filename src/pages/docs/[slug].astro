@@ -1,82 +1,83 @@
 ---
-// src/pages/docs/[slug].astro
-import { getEntry } from 'astro:content'
-import Layout        from '@/layouts/Layout.astro'
-import Sidebar       from '@/components/Sidebar.astro'
-import { getSidebarData } from '@/lib/getSidebarData'
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { getEntry, getCollection } from 'astro:content';
+import Layout        from '@/layouts/Layout.astro';
+import Sidebar       from '@/components/Sidebar.astro';
+import { getSidebarData } from '@/lib/getSidebarData';
 import { Button } from '@/components/ui/button';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 
+/* dynamic routes */
 export async function getStaticPaths() {
-  const base = 'docs'
-  const { grouped } = await getSidebarData(base)
-
-  return Object.values(grouped)
-    .flat()
-    .map((entry) => ({ params: { slug: entry.slug } }))
+	const docs = await getCollection('docs');
+	return docs.map(({ slug }) => ({ params: { slug } }));
 }
 
-const base = 'docs'
+const base = 'docs';
+let slug = Array.isArray(Astro.params.slug) ? Astro.params.slug[0] : Astro.params.slug;
 
-let slug = Astro.params.slug
-if (Array.isArray(slug)) slug = slug[0]
+const entry = await getEntry(base, slug);
+if (!entry) throw new Error(`No entry found in "${base}" for slug "${slug}"`);
 
-const entry = await getEntry(base, slug)
-if (!entry) throw new Error(`No entry found in "${base}" for slug "${slug}"`)
+const { data } = entry;
+const { Content } = await entry.render();
 
-const { data } = entry
-const { Content } = await entry.render()
-
-// sidebar data (gives us the same ordering used elsewhere)
-const { categories, grouped } = await getSidebarData(base)
-const flat = categories.flatMap((cat) => grouped[cat])
-
-// work out previous / next
-const idx = flat.findIndex((e) => e.slug === slug)
-const prevEntry = idx > 0 ? flat[idx - 1] : null
-const nextEntry = idx < flat.length - 1 ? flat[idx + 1] : null
+/* sidebar + prev/next */
+const { categories, grouped } = await getSidebarData(base);
+const ordered = categories.flatMap((c) => grouped[c]);
+const idx  = ordered.findIndex((e) => e.slug === slug);
+const prev = idx > 0              ? ordered[idx - 1] : null;
+const next = idx + 1 < ordered.length ? ordered[idx + 1] : null;
 ---
-
 <Layout
-  title={data.title}
-  heroImage="/heros/value_of_life_screenshot-lossy.jpg"
-  heroHeight={40}
-  heroHeightMobile={25}
-  primaryText={data.title}
-  subText={data.description}
-  primaryBtn="View on GitHub"
-  primaryBtnHref={data.source}
-  primaryExternal={true}
+	title={data.title}
+	heroImage="/heros/value_of_life_screenshot-lossy.jpg"
+	heroHeight={40}
+	heroHeightMobile={25}
+	primaryText={data.title}
+	subText={data.description}
+	primaryBtn="View on GitHub"
+	primaryBtnHref={data.source}
+	primaryExternal
 >
-  <section class="py-16 bg-background/95 dark:bg-background">
-    <div class="container mx-auto px-6 flex gap-8">
-      <Sidebar {categories} {grouped} base={base} />
+	<section class="py-16 bg-background/95 dark:bg-background">
+		<div
+			class="container mx-auto px-4 md:px-6
+			       flex flex-col md:flex-row
+			       gap-0 md:gap-8"
+		>
+			<!-- off-canvas sidebar on mobile, static on desktop -->
+			<Sidebar {categories} {grouped} base={base} />
 
-      <main class="flex-1 prose prose-lg max-w-none p-6 rounded-lgdar dark:prose-invert">
-        <Content />
+			<main
+				class="flex-1 w-full
+				       mt-4 md:mt-0
+				       p-0 md:p-6"
+			>
+				<article
+					class="prose prose-lg dark:prose-invert
+					       w-full overflow-x-auto"
+				>
+					<Content />
+				</article>
 
-        <!-- navigation buttons -->
-        <div class="flex justify-between mt-12">
-        {prevEntry ? (
-            <a href={`/${base}/${prevEntry.slug}`} class="shrink-0 no-underline">
-            <Button variant="outline" className="flex items-center gap-2">
-                <ArrowLeft className="w-4 h-4" />
-                Go Back
-            </Button>
-            </a>
-        ) : <span></span>}
+				<nav class="flex justify-between mt-12">
+					{prev ? (
+						<a href={`/${base}/${prev.slug}`} class="no-underline shrink-0">
+							<Button variant="outline" className="flex items-center gap-2">
+								<ArrowLeft className="w-4 h-4" /> Go Back
+							</Button>
+						</a>
+					) : <span></span>}
 
-        {nextEntry ? (
-            <a href={`/${base}/${nextEntry.slug}`} class="shrink-0 no-underline">
-            <Button variant="outline" className="flex items-center gap-2">
-                Next Page
-                <ArrowRight className="w-4 h-4" />
-            </Button>
-            </a>
-        ) : <span></span>}
-        </div>
-
-      </main>
-    </div>
-  </section>
+					{next ? (
+						<a href={`/${base}/${next.slug}`} class="no-underline shrink-0">
+							<Button variant="outline" className="flex items-center gap-2">
+								Next Page <ArrowRight className="w-4 h-4" />
+							</Button>
+						</a>
+					) : <span></span>}
+				</nav>
+			</main>
+		</div>
+	</section>
 </Layout>

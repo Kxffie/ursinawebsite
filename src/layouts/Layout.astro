@@ -1,175 +1,153 @@
-a---
-// src/layouts/Layout.astro
+---
+/* src/layouts/Layout.astro */
 
 import Navbar from '@/components/Navbar.astro';
 import Footer from '@/components/Footer.astro';
+import Hero   from '@/components/Hero.astro';
 import '../styles/global.css';
 
-import Analytics             from '@vercel/analytics/astro';
-import SpeedInsights         from "@vercel/speed-insights/astro";
-import { SEO }               from 'astro-seo';
-import { getImagePath } from "astro-opengraph-images";
-import Hero              from '@/components/Hero.astro';
+import Analytics     from '@vercel/analytics/astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
+import { SEO }       from 'astro-seo';
+import { getImagePath } from 'astro-opengraph-images';
 
-const {url, site} = Astro;
-const openGraphImageUrl = getImagePath({ url, site });
+/* ----- props & helpers --------------------------------------------------- */
+const { url, site } = Astro;
 
 const {
-  title = 'Ursina Engine',
-  description = 'Free, open-source Python game engine built on Panda3D.',
-
-  heroImage,
-  heroHeight,
-  heroHeightMobile,
-  topLogo,
-  primaryText,
-  subText,
-  primaryBtn,
-  primaryBtnHref,
-  secondaryBtn,
-  secondaryBtnHref,
-
-  primaryExternal,
-  secondaryExternal,
-
-  canonical = `https://ursinaengine.org${Astro.url.pathname}`,
+	title               = 'Ursina Engine',
+	description         = 'Free, open source Python game engine built on Panda3D.',
+	heroImage,
+	heroHeight,
+	heroHeightMobile,
+	topLogo,
+	primaryText,
+	subText,
+	primaryBtn,
+	primaryBtnHref,
+	secondaryBtn,
+	secondaryBtnHref,
+	primaryExternal     = false,
+	secondaryExternal   = false,
+	canonical           = `https://ursinaengine.org${url.pathname}`,
 } = Astro.props;
+
+const ogImage = getImagePath({ url, site });
+const buttons = [
+	primaryBtn && {
+		text: primaryBtn,
+		href: primaryBtnHref,
+		variant: 'primary',
+		external: primaryExternal,
+	},
+	secondaryBtn && {
+		text: secondaryBtn,
+		href: secondaryBtnHref,
+		variant: 'outline',
+		external: secondaryExternal,
+	},
+].filter(Boolean);
 ---
-<!-- DARK MODE DEFAULT -->
-<html class="dark" lang="en">
-  <head>
-    <!-- sitemap -->
-    <link rel="sitemap" href="/sitemap-index.xml" />
 
-    <!-- Astro SEO: this will render all title/meta/og/twitter tags -->
-    <SEO
-      title={`Ursina Engine | ${title}`}
-      titleDefault="Ursina Engine"
-      description={description}
-      canonical={canonical}
-      noindex={false}
-      nofollow={false}
-      charset="utf-8"
-      languageAlternates={[
-        { href: 'https://ursinaengine.org/', hrefLang: 'en' },
-      ]}
-      openGraph={{
-        basic: {
-          title: title,
-          type: 'website',
-          image: openGraphImageUrl,
-          url: url
-        },
-        optional: {
-          description: description,
-          locale: 'en_US',
-          siteName: 'Ursina Engine'
-        },
-      }}
-      twitter={{
-        card: 'summary_large_image',
-        site: '@ursinaengine',
-        creator: '@ursinaengine',
-        title: `Ursina Engine | ${title}`,
-        description,
-        image: heroImage || '/default-og-image.png',
-        imageAlt: `${title} — preview image`
-      }}
-    />
+<html lang="en" class="dark">
+	<head>
+		<link rel="sitemap" href="/sitemap-index.xml" />
 
+		<SEO
+			title={`Ursina Engine | ${title}`}
+			description={description}
+			canonical={canonical}
+			openGraph={{
+				basic: {
+					title: `Ursina Engine | ${title}`,
+					type: 'website',
+					image: ogImage,
+					url,
+				},
+				optional: {
+					description,
+					locale: 'en_US',
+					siteName: 'Ursina Engine',
+				},
+			}}
+			twitter={{
+				card: 'summary_large_image',
+				site: '@ursinaengine',
+				creator: '@ursinaengine',
+				title: `Ursina Engine | ${title}`,
+				description,
+				image: heroImage ?? '/default-og-image.png',
+				imageAlt: `${title} preview image`,
+			}}
+		/>
 
-    <!-- legacy or custom fallbacks (optional) -->
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- end custom fallbacks -->
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
 
-    <!-- analytics, etc. -->
-    <script
-      is:inline
-      type="text/partytown"
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-021QZDYMWM"
-    ></script>
-    <script is:inline type="text/partytown">
-      window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
-      gtag('js', new Date());
-      gtag('config', 'G-021QZDYMWM');
-    </script>
-  </head>
+		<!-- Google Analytics through Partytown -->
+		<script
+			is:inline
+			type="text/partytown"
+			async
+			src="https://www.googletagmanager.com/gtag/js?id=G-021QZDYMWM"
+		></script>
+		<script is:inline type="text/partytown">
+			window.dataLayer = window.dataLayer || [];
+			function gtag() { dataLayer.push(arguments); }
+			gtag('js', new Date());
+			gtag('config', 'G-021QZDYMWM');
+		</script>
+	</head>
 
-  <body>
-    <!-- NAVBAR -->
-    <Navbar />
+	<body>
+		<Navbar />
 
+		{heroImage && (
+			<Hero
+				{heroImage}
+				{heroHeight}
+				{heroHeightMobile}
+				{topLogo}
+				{primaryText}
+				{subText}
+				buttons={buttons}
+			/>
+		)}
 
-    <!-- HERO SECTION -->
-        {heroImage && (
-          <Hero
-            heroImage={heroImage}
-            heroHeight={heroHeight}
-            heroHeightMobile={heroHeightMobile}
-            topLogo={topLogo}
-            primaryText={primaryText}
-            subText={subText}
-            buttons={[
-              primaryBtn && {
-                text: primaryBtn,
-                href: primaryBtnHref,
-                variant: 'primary',
-                external: primaryExternal ?? false,
-              },
-              secondaryBtn && {
-                text: secondaryBtn,
-                href: secondaryBtnHref,
-                variant: 'outline',
-                external: secondaryExternal ?? false,
-              },
-            ].filter(Boolean)}
-          />
-    )}
+		<main>
+			<slot />
+		</main>
 
+		<Footer />
 
-    <!-- MAIN CONTENT -->
-    <main>
-      <slot />
-    </main>
+		<!-- copy header-links to clipboard -->
+		<script is:inline>
+			document.addEventListener('click', (e) => {
+				const anchor = e.target.closest('a.header-anchor');
+				if (!anchor) return;
+				e.preventDefault();
+				const full = location.origin + location.pathname + anchor.getAttribute('href');
+				navigator.clipboard.writeText(full).then(() => {
+					const note = Object.assign(document.createElement('div'), {
+						textContent: 'Link copied!',
+					});
+					Object.assign(note.style, {
+						position: 'fixed',
+						bottom: '1rem',
+						right: '1rem',
+						background: 'rgba(0,0,0,.85)',
+						color: '#fff',
+						padding: '.5rem 1rem',
+						borderRadius: '.25rem',
+						zIndex: 9999,
+					});
+					document.body.append(note);
+					setTimeout(() => note.remove(), 2000);
+				});
+			});
+		</script>
 
-    <!-- FOOTER -->
-    <Footer />
-
-    
-    <!-- COPY HEADERS FROM MARKDOWN CORRECTLY -->
-    <script is:inline>
-      document.addEventListener('click', (e) => {
-        const link = e.target.closest('a.header-anchor')
-        if (!link) return
-        e.preventDefault()
-        const href = link.getAttribute('href')
-        const url = window.location.origin + window.location.pathname + href
-        navigator.clipboard.writeText(url).then(() => {
-          const msg = document.createElement('div')
-          msg.textContent = 'Link copied!'
-          Object.assign(msg.style, {
-            position: 'fixed',
-            bottom: '1rem',
-            right: '1rem',
-            background: 'rgba(0,0,0,0.8)',
-            color: 'white',
-            padding: '0.5rem 1rem',
-            borderRadius: '0.25rem',
-            zIndex: '9999',
-          })
-          document.body.append(msg)
-          setTimeout(() => msg.remove(), 2000)
-        })
-      })
-    </script>
-    
-    <!-- VERCEL ANALYTICS -->
-    <Analytics />
-    <SpeedInsights />
-    <!-- VERCEL ANALYTICS -->
-  </body>
+		<Analytics />
+		<SpeedInsights />
+	</body>
 </html>

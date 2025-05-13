@@ -1,144 +1,140 @@
 ---
-// src/components/Sidebar.astro
-import { ChevronDown } from 'lucide-react';
+import { SearchCode, X, ChevronDown } from 'lucide-react';
 
 export interface Props {
-  categories: string[];
-  grouped: Record<string, { slug: string; data: { title: string } }[]>;
-  base?: string;
+	categories: string[];
+	grouped: Record<
+		string,
+		{ slug: string; data: { title: string; sort?: number } }[]
+	>;
+	base?: string;
 }
+
 const { categories, grouped, base = '' } = Astro.props;
 ---
 
-<aside class="w-64 sticky top-24 overflow-y-auto pr-2">
-  <!-- search box -->
-  <input
-    id="searchDocs"
-    type="text"
-    placeholder="Search…"
-    class="w-full mb-4 px-3 py-2 border border-border bg-input text-foreground rounded"
-  />
+<!-- mobile toggle button -->
+<button
+	id="sidebarToggle"
+	aria-label="Open menu"
+	class="md:hidden fixed bottom-4 right-4 z-50
+	       p-3 rounded-full bg-card shadow-lg
+	       transition-transform active:scale-95"
+>
+	<SearchCode  className="w-6 h-6 menu-icon" />
+	<X     className="w-6 h-6 close-icon hidden" />
+</button>
 
-  <!-- expose current collection -->
-  <nav
-    id="sidebarNav"
-    data-base={base}
-    class="space-y-2"
-  >
-    {categories.map((cat) => {
-      const uncat = !cat || cat.toLowerCase() === 'uncategorized';
-      return (
-        <div class="category" data-open="true">
-          <button
-            type="button"
-            class={uncat
-              ? 'sr-only'
-              : 'w-full flex justify-between items-center px-3 py-1 hover:bg-sidebar-accent rounded group'}
-            data-astro-prefetch="hover"
-          >
-            <span class="font-semibold text-sidebar-foreground">{cat}</span>
-            {!uncat && (
-              <ChevronDown
-                className="chevron transition-transform duration-200"
-                width={16}
-                height={16}
-              />
-            )}
-          </button>
+<!-- backdrop -->
+<div
+	id="sidebarBackdrop"
+	class="md:hidden fixed inset-0 bg-black/50 hidden z-40"
+></div>
+<!-- sidebar -->
+<aside
+	id="sidebar"
+	class="fixed inset-y-0 left-0 z-50 w-64 transform -translate-x-full md:translate-x-0 bg-background p-4 overflow-y-auto transition-transform duration-200 md:w-64 md:p-0 md:sticky md:top-24"
+>
+	<input
+		id="searchDocs"
+		type="text"
+		placeholder="Search…"
+		class="w-full mb-4 px-3 py-2 border border-border bg-input text-foreground rounded"
+	/>
 
-          <div class={`links ${uncat ? 'pl-0' : 'pl-5 pt-1'} space-y-1`}>
-            {grouped[cat].map((doc) => (
-              <a
-                data-astro-prefetch="hover"
-                href={`/${base}/${doc.slug}`}
-                class="block px-2 py-1 rounded text-sidebar-foreground hover:bg-sidebar-accent/95"
-              >
-                {doc.data.title}
-              </a>
-            ))}
-          </div>
-        </div>
-      );
-    })}
-  </nav>
+	<nav id="sidebarNav" data-base={base} class="space-y-2">
+		{categories.map(cat => {
+			const unc = cat.toLowerCase() === 'uncategorized';
+			const docs = grouped[cat];
 
-  <!-- client JS -->
-  <script is:inline>
-  (() => {
-    const CHECK = 50;
-    const MAX   = 2000;
-    let waited  = 0;
+			return (
+				<div class="category" data-cat={cat} data-open={!unc}>
+					{!unc && (
+						<button
+							type="button"
+							class="w-full flex justify-between items-center px-3 py-1 hover:bg-sidebar-accent rounded group"
+							data-toggle
+						>
+							<span class="font-semibold text-sidebar-foreground">
+								{cat}
+							</span>
+							<ChevronDown
+								className="chevron transition-transform duration-200"
+								width={16}
+								height={16}
+							/>
+						</button>
+					)}
 
-    function ready() {
-      const nav   = document.getElementById('sidebarNav');
-      const input = document.getElementById('searchDocs');
-      if (!nav || !input) {
-        if (waited < MAX) {
-          waited += CHECK;
-          return setTimeout(ready, CHECK);
-        }
-        return;
-      }
-
-      const STORAGE_KEY = `sidebar-search-${nav.dataset.base || 'default'}`;
-      input.value = localStorage.getItem(STORAGE_KEY) || '';
-
-      nav.querySelectorAll('.category').forEach(section => {
-        const btn      = section.querySelector('button');
-        const linksDiv = section.querySelector('.links');
-        const chevron  = section.querySelector('.chevron');
-        function toggle(open) {
-          linksDiv.style.display = open ? '' : 'none';
-          if (chevron) {
-            chevron.style.transform = open ? 'rotate(0deg)' : 'rotate(-90deg)';
-            chevron.style.opacity   = open ? '0' : '1';
-          }
-        }
-        toggle(true);
-        btn.addEventListener('click', () => {
-          const open = section.getAttribute('data-open') === 'true';
-          section.setAttribute('data-open', String(!open));
-          toggle(!open);
-        });
-      });
-
-      function filter () {
-        const raw = input.value.trim().toLowerCase();
-        localStorage.setItem(STORAGE_KEY, raw);
-
-        let catFilter  = null;
-        let termFilter = raw;
-        const slash = raw.indexOf('/');
-        if (slash > -1) {
-          catFilter  = raw.slice(0, slash);
-          termFilter = raw.slice(slash + 1);
-        }
-
-        const links = [...nav.querySelectorAll('a')];
-        links.forEach(a => {
-          const title   = a.textContent.toLowerCase();
-          const catName = a.closest('.category')
-                          .querySelector('button')
-                          .textContent.toLowerCase();
-          const show =
-            (!catFilter  || catName.includes(catFilter)) &&
-            (!termFilter || title.includes(termFilter));
-          a.style.display = show ? '' : 'none';
-        });
-
-        nav.querySelectorAll('.category').forEach(section => {
-          const any = [...section.querySelectorAll('a')]
-            .some(a => a.style.display !== 'none');
-          section.style.display = any ? '' : 'none';
-        });
-      }
-
-      input.addEventListener('input', filter);
-      filter();
-    }
-
-    ready();
-  })();
-  </script>
-
+					<div
+						class={`links ${
+							unc ? 'pl-0' : 'pl-5 pt-1'
+						} space-y-1`}
+					>
+						{docs.map(({ slug, data }) => (
+							<a
+								data-astro-prefetch="hover"
+								href={`/${base}/${slug}`}
+								class="block px-2 py-1 rounded text-sidebar-foreground hover:bg-sidebar-accent/95"
+							>
+								{data.title}
+							</a>
+						))}
+					</div>
+				</div>
+			);
+		})}
+	</nav>
 </aside>
+
+<script is:inline>
+	document.addEventListener('DOMContentLoaded', () => {
+		const sidebar   = document.getElementById('sidebar');
+		const backdrop  = document.getElementById('sidebarBackdrop');
+		const toggleBtn = document.getElementById('sidebarToggle');
+		const nav       = document.getElementById('sidebarNav');
+		const input     = document.getElementById('searchDocs');
+		if (!sidebar || !backdrop || !toggleBtn || !nav || !input) return;
+
+		/* ---------------- sidebar open / close ---------------- */
+		const open  = () => { sidebar.classList.remove('-translate-x-full'); backdrop.classList.remove('hidden'); };
+		const close = () => { sidebar.classList.add('-translate-x-full'); backdrop.classList.add('hidden'); };
+
+		toggleBtn .addEventListener('click', open);
+		backdrop  .addEventListener('click', close);
+		nav.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+
+		/* ---------------- category toggle --------------------- */
+		nav.addEventListener('click', e => {
+			const btn = e.target.closest('button[data-toggle]');
+			if (!btn) return;
+			const sec = btn.parentElement;
+			sec.dataset.open = sec.dataset.open === 'false';
+			sec.querySelector('.links').classList.toggle('hidden');
+			btn.querySelector('.chevron').style.transform =
+				sec.dataset.open === 'true' ? '' : 'rotate(-90deg)';
+		});
+
+		/* ---------------- live filter ------------------------- */
+		const key = `sidebar-search-${nav.dataset.base || 'default'}`;
+		input.value = localStorage.getItem(key) || '';
+
+		const filter = () => {
+			const q = input.value.toLowerCase().trim();
+			localStorage.setItem(key, q);
+			nav.querySelectorAll('.category').forEach(sec => {
+				const cat = sec.dataset.cat.toLowerCase();
+				let showCat = false;
+				sec.querySelectorAll('a').forEach(a => {
+					const ok = !q || a.textContent.toLowerCase().includes(q) || cat.includes(q);
+					a.hidden = !ok;
+					if (ok) showCat = true;
+				});
+				sec.hidden = !showCat;
+			});
+		};
+
+		input.addEventListener('input', filter);
+		filter();
+	});
+</script>

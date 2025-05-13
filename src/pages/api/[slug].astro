@@ -1,55 +1,61 @@
 ---
 import { getEntry } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
-import { getSidebarData } from '@/lib/getSidebarData';
 import Sidebar from '@/components/Sidebar.astro';
+import { getSidebarData } from '@/lib/getSidebarData';
 
+/* build every /api/<slug> page */
 export async function getStaticPaths() {
-  const base = 'api';
-  const { grouped } = await getSidebarData(base);
-  const allEntries = Object.values(grouped).flat();
-
-  return allEntries.map((entry) => ({
-    params: { slug: entry.slug },
-  }));
+	const { grouped } = await getSidebarData('api');
+	return Object.values(grouped)
+		.flat()
+		.map(({ slug }) => ({ params: { slug } }));
 }
 
 const base = 'api';
-
-let slug = Astro.params.slug;
-if (Array.isArray(slug)) {
-  slug = slug[0];
-}
+let slug = Array.isArray(Astro.params.slug) ? Astro.params.slug[0] : Astro.params.slug;
 
 const entry = await getEntry(base, slug);
-if (!entry) {
-  throw new Error(`No entry found in "${base}" for slug "${slug}"`);
-}
+if (!entry) throw new Error(`No entry found in "${base}" for slug "${slug}"`);
 
 const { data } = entry;
 const { Content } = await entry.render();
+
 const { categories, grouped } = await getSidebarData(base);
 ---
-
 <Layout
-  title={data.title}
-  heroImage="/heros/value_of_life_screenshot-lossy.jpg"
-  heroHeight={40}
-  heroHeightMobile={25}
-  primaryText={data.title}
-  subText={data.description}
-
-  primaryBtn="View on GitHub"
-  primaryBtnHref={data.source}
-  primaryExternal={true}
+	title={data.title}
+	heroImage="/heros/value_of_life_screenshot-lossy.jpg"
+	heroHeight={40}
+	heroHeightMobile={25}
+	primaryText={data.title}
+	subText={data.description}
+	primaryBtn="View on GitHub"
+	primaryBtnHref={data.source}
+	primaryExternal
 >
-  <section class="py-16 bg-background/95 dark:bg-background">
-    <div class="container mx-auto px-6 flex gap-8">
-      <Sidebar {categories} {grouped} base={base} />
+	<section class="py-16 bg-background/95 dark:bg-background">
+		<div
+			class="container mx-auto px-4 md:px-6
+			       flex flex-col md:flex-row
+			       gap-0 md:gap-8"
+		>
+			<!-- sidebar: fixed/slide-in on mobile, static on desktop -->
+			<Sidebar {categories} {grouped} base={base} />
 
-      <main class="flex-1 prose prose-lg max-w-none p-6 dark:prose-invert">
-        <Content />
+			<!-- content -->
+			<main
+        class="flex-1 w-full
+              mt-4 md:mt-0
+              p-0 md:p-6"
+      >
+        <article
+          class="prose prose-lg dark:prose-invert
+                w-full overflow-x-auto"
+        >
+          <Content />
+        </article>
       </main>
-    </div>
-  </section>
+		</div>
+	</section>
 </Layout>

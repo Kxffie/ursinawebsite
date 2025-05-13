@@ -1,140 +1,161 @@
 ---
-import Sidebar from '@/components/Sidebar.astro';
 import Layout from '@/layouts/Layout.astro';
+import Sidebar from '@/components/Sidebar.astro';
 import { getSidebarData } from '@/lib/getSidebarData';
-import { Eye, BookOpen, PlayCircle, Bug, MessageCircleCode, Search, FolderSearch } from 'lucide-react';
+
+import {
+	BookOpen,
+	Eye,
+	PlayCircle,
+	Bug,
+	MessageCircleCode,
+	Search,
+	FolderSearch
+} from 'lucide-react';
 
 const base = 'api';
 const { categories, grouped } = await getSidebarData(base);
 
-let helpSection = [
-  { name: 'Docs', href: '/docs', icon: BookOpen, desc: "Beginner docs to help start your next project." },
-  { name: 'Samples', href: '/samples', icon: Eye, desc: "Explore sample projects to see how things work." },
-  { name: 'Tutorials', href: '/tutorials', icon: PlayCircle, desc: "Follow step-by-step tutorials to get started quickly." }
-]
+/* helper link arrays */
+const helpLinks = [
+	{
+		title: 'Docs',
+		href: '/docs',
+		icon: BookOpen,
+		desc: 'Beginner docs to help start your next project.'
+	},
+	{
+		title: 'Samples',
+		href: '/samples',
+		icon: Eye,
+		desc: 'Explore sample projects to see how things work.'
+	},
+	{
+		title: 'Tutorials',
+		href: '/tutorials',
+		icon: PlayCircle,
+		desc: 'Follow step-by-step tutorials to get started quickly.'
+	}
+];
 
-let bugSection = [
-  { name: 'GitHub Issues', href: 'https://github.com/pokepetter/ursina/issues', icon: Bug, desc: "Report bugs or request features." },
-  { name: 'Discord', href: 'https://discord.gg/ursina', icon: MessageCircleCode, desc: "Join our community for help and support." }
-]
+const supportLinks = [
+	{
+		title: 'GitHub Issues',
+		href: 'https://github.com/pokepetter/ursina/issues',
+		icon: Bug,
+		desc: 'Report bugs or request features.'
+	},
+	{
+		title: 'Discord',
+		href: 'https://discord.gg/ursina',
+		icon: MessageCircleCode,
+		desc: 'Join our community for help and support.'
+	}
+];
+
+const searchTips = [
+	{
+		icon: Search,
+		title: 'General search',
+		desc: 'Enter any word or phrase to scan every page.',
+		example: 'Texture'
+	},
+	{
+		icon: FolderSearch,
+		title: 'Category search',
+		desc: 'Add a category and a slash to focus on one group.',
+		example: 'Graphics/Color'
+	}
+];
 ---
-
 <Layout
-  title="Home"
-  heroImage="/heros/value_of_life_screenshot-lossy.jpg"
-  heroHeight={40}
-  heroHeightMobile={25}
-  primaryText="API Reference"
-  subText="Detailed documentation for every class, function and module."
+	title="API Reference"
+	heroImage="/heros/value_of_life_screenshot-lossy.jpg"
+	heroHeight={40}
+	heroHeightMobile={25}
+	primaryText="API Reference"
+	subText="Detailed documentation for every class, function and module."
 >
-  <section class="py-16 bg-background/95 dark:bg-background">
-    <div class="container mx-auto px-6 flex gap-8">
-      <Sidebar {categories} {grouped} base={base} />
+	<section class="py-16 bg-background/95 dark:bg-background">
+		<div class="container mx-auto px-6 flex gap-8">
+			<Sidebar {categories} {grouped} base={base} />
 
-      <main class="flex-1 space-y-8">
-        <!-- INTRO BLURB -->
-        <section>
-          <h2 class="text-2xl font-bold mb-2">Welcome to the API Reference</h2>
-          <p class="text-lg">
-            Browse detailed docs for every class, function and module.
-          </p>
-        </section>
+			<main class="flex-1 space-y-12">
+				<section>
+					<h2 class="text-2xl font-bold mb-2">Welcome to the API Reference</h2>
+					<p class="text-lg">
+						Browse detailed docs for every class, function and module.
+					</p>
+				</section>
 
-        <!-- SEARCH HELP -->
-        <section>
-          <h3 class="text-2xl font-bold mb-4">Quick search tips</h3>
+				<!-- <section>
+					<h3 class="text-2xl font-bold mb-6">Quick search tips</h3>
 
-          <div class="grid gap-6 md:grid-cols-2">
-            <!-- general search -->
-            <div class="rounded-lg bg-card p-6">
-              <div class="flex items-center mb-4">
-                <Search className="h-5 w-5 text-primary mr-2" />
-                <h4 class="text-xl font-semibold">General search</h4>
-              </div>
+					<div class="grid gap-6 md:grid-cols-2">
+						{searchTips.map(({ icon: Icon, title, desc, example }) => (
+							<div class="rounded-lg bg-card p-6 space-y-4">
+								<div class="flex items-center">
+									<Icon className="h-5 w-5 text-primary mr-2" />
+									<h4 class="text-xl font-semibold">{title}</h4>
+								</div>
+								<p>{desc}</p>
+								<input
+									type="text"
+									value={example}
+									readonly
+									class="w-full rounded border border-border bg-input text-foreground px-3 py-2 cursor-default select-none"
+								/>
+							</div>
+						))}
+					</div>
+				</section> -->
 
-              <p class="text-base mb-2">
-                Enter any word or phrase to scan every page.
-              </p>
+				<section>
+					<h3 class="text-xl font-semibold mb-4">Need help?</h3>
+					<p class="mb-6 text-lg">
+						Check out these resources for examples, guides, and tutorials.
+					</p>
+					<div class="grid gap-6 sm:grid-cols-3">
+						{helpLinks.map(({ href, icon: Icon, title, desc }) => (
+							<a
+								href={href}
+								class="bg-card rounded-lg shadow transition px-6 py-5 hover:shadow-md hover:scale-105 active:scale-95"
+							>
+								<div class="flex items-center gap-6">
+									<Icon className="w-8 h-8 text-primary flex-shrink-0" />
+									<div>
+										<h4 class="font-semibold mb-1">{title}</h4>
+										<p class="text-sm">{desc}</p>
+									</div>
+								</div>
+							</a>
+						))}
+					</div>
+				</section>
 
-              <input
-                type="text"
-                value="Texture"
-                readonly
-                class="w-full rounded border border-border bg-input text-foreground px-3 py-2 cursor-default select-none"
-              />
-            </div>
-
-            <!-- category search -->
-            <div class="rounded-lg bg-card p-6">
-              <div class="flex items-center mb-4">
-                <FolderSearch className="h-5 w-5 text-primary mr-2" />
-                <h4 class="text-xl font-semibold">Category search</h4>
-              </div>
-
-              <p class="text-base mb-2">
-                Add a category and a slash to focus on one group.
-              </p>
-
-              <input
-                type="text"
-                value="Graphics/Color"
-                readonly
-                class="w-full rounded border border-border bg-input text-foreground px-3 py-2 cursor-default select-none"
-              />
-            </div>
-          </div>
-        </section>
-
-
-        <!-- HELP SECTION -->
-        <section>
-          <h3 class="text-xl font-semibold mb-4">Need help?</h3>
-          <p class="mb-6 text-lg">
-            Check out these resources for examples, guides, and tutorials.
-          </p>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {helpSection.map(({ href, icon: Icon, name, desc }) => (
-              <a
-                href={href}
-                class="bg-card rounded-lg shadow hover:shadow-md transition px-6 py-5 hover:scale-105 active:scale-95"
-              >
-                <div class="flex items-center gap-6">
-                  <Icon className="w-8 h-8 text-primary flex-shrink-0" />
-                  <div>
-                    <h4 class="font-semibold mb-1">{name}</h4>
-                    <p class="text-sm">{desc}</p>
-                  </div>
-                </div>
-              </a>
-            ))}
-          </div>
-        </section>
-
-        <!-- BUG SECTION -->
-        <section>
-          <h3 class="text-xl font-semibold mb-4">Something wrong?</h3>
-          <p class="mb-6 text-lg">
-            If you find a bug or have a suggestion, please let us know on our Github Issues tracker or join the Discord.
-          </p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {bugSection.map(({ href, icon: Icon, name, desc }) => (
-              <a
-                href={href}
-                class="bg-card rounded-lg shadow hover:shadow-md transition px-6 py-5 hover:scale-105 active:scale-95"
-              >
-                <div class="flex items-center gap-6">
-                  <Icon className="w-8 h-8 text-primary flex-shrink-0" />
-                  <div>
-                    <h4 class="font-semibold mb-1">{name}</h4>
-                    <p class="text-sm">{desc}</p>
-                  </div>
-                </div>
-              </a>
-            ))}
-          </div>
-        </section>
-      </main>
-    </div>
-  </section>
-
+				<section>
+					<h3 class="text-xl font-semibold mb-4">Something wrong?</h3>
+					<p class="mb-6 text-lg">
+						If you find a bug or have a suggestion, please let us know on GitHub or join the Discord.
+					</p>
+					<div class="grid gap-6 sm:grid-cols-2">
+						{supportLinks.map(({ href, icon: Icon, title, desc }) => (
+							<a
+								href={href}
+								class="bg-card rounded-lg shadow transition px-6 py-5 hover:shadow-md hover:scale-105 active:scale-95"
+							>
+								<div class="flex items-center gap-6">
+									<Icon className="w-8 h-8 text-primary flex-shrink-0" />
+									<div>
+										<h4 class="font-semibold mb-1">{title}</h4>
+										<p class="text-sm">{desc}</p>
+									</div>
+								</div>
+							</a>
+						))}
+					</div>
+				</section>
+			</main>
+		</div>
+	</section>
 </Layout>
