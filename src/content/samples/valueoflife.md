@@ -6,7 +6,7 @@ source: "https://github.com/pokepetter/ursina/tree/master/samples/networking"
 pubDate: "5/6/2025"
 author: "Pokepetter"
 authorImg: "people/pokepetter.webp"
-category: "[2] Creator Showcase"
+category: "[2] Community"
 sort: 0
 ---
 

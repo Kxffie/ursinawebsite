@@ -62,11 +62,6 @@ const published = new Date(pubDate).toLocaleDateString('en-US', {
     <Sidebar {categories} {grouped} base="samples" />
 
     <div class="flex-1 py-6 p-6">
-      {officialSample && (
-        <span class="inline-block mb-4 px-2 py-1 text-xs font-semibold uppercase bg-primary text-background rounded">
-          Official
-        </span>
-      )}
 
       <div class="mb-4 flex items-center space-x-2 text-sm text-muted-foreground">
         <img
@@ -84,6 +79,12 @@ const published = new Date(pubDate).toLocaleDateString('en-US', {
             {published}
           </time>
         </div>
+
+        {officialSample && (
+        <span class="inline-block px-2 py-1 text-xs font-semibold uppercase bg-primary text-background rounded">
+          Official
+        </span>
+        )}
       </div>
 
       <Separator className="my-8" />

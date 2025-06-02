@@ -1,90 +1,81 @@
 ---
 import { getEntry, getCollection } from 'astro:content';
-import Layout        from '@/layouts/Layout.astro';
-import Sidebar       from '@/components/Sidebar.astro';
+import Layout from '@/layouts/Layout.astro';
+import Sidebar from '@/components/Sidebar.astro';
 import { getSidebarData } from '@/lib/getSidebarData';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
 
-/* ⇢ REQUIRED for every dynamic route */
 export async function getStaticPaths() {
-	const docs = await getCollection('docs');          // grab every markdown file
-	return docs.map(({ slug }) => ({ params: { slug } }));
+  const docs = await getCollection('docs');
+  return docs.map(({ slug }) => ({ params: { slug } }));
 }
 
 const base = 'docs';
-
-/* current slug */
-let slug = Array.isArray(Astro.params.slug)
-	? Astro.params.slug[0]
-	: Astro.params.slug;
-
-/* entry */
+const slug = Array.isArray(Astro.params.slug) ? Astro.params.slug[0] : Astro.params.slug;
 const entry = await getEntry(base, slug);
 if (!entry) throw new Error(`No entry found in "${base}" for slug "${slug}"`);
 
 const { data } = entry;
 const { Content } = await entry.render();
 
-/* sidebar + navigation */
 const { categories, grouped } = await getSidebarData(base);
 const ordered = categories.flatMap((cat) => grouped[cat]);
-const idx   = ordered.findIndex((e) => e.slug === slug);
-const prev  = idx > 0               ? ordered[idx - 1] : null;
-const next  = idx + 1 < ordered.length ? ordered[idx + 1] : null;
+const idx = ordered.findIndex((e) => e.slug === slug);
+const prev = idx > 0 ? ordered[idx - 1] : null;
+const next = idx + 1 < ordered.length ? ordered[idx + 1] : null;
 ---
 
 <Layout
-	title={data.title}
-	heroImage="/heros/value_of_life_screenshot-lossy.jpg"
-	heroHeight={30}
-	heroHeightMobile={25}
-	primaryText={data.title}
-	subText={data.description}
-	primaryBtn="View on GitHub"
-	primaryBtnHref={data.source}
-	primaryExternal
+  title={data.title}
+  description={data.description}
+  heroImage="/heros/value_of_life_screenshot-lossy.jpg"
+  heroHeight={30}
+  heroHeightMobile={25}
+  primaryText={data.title}
+  subText={data.description}
+  primaryBtn="View on GitHub"
+  primaryBtnHref={data.source}
+  primaryExternal
 >
-	<section class="py-16 bg-background/95 dark:bg-background">
-	<div
-		class="container mx-auto
-		       flex flex-col lg:flex-row
-		       gap-6 lg:gap-10
-		       px-4 md:px-6"
-	>
-		<!-- sidebar: slides in on mobile, static on desktop -->
-		<Sidebar {categories} {grouped} base={base} />
+  <section class="py-16 bg-background/95 dark:bg-background">
+    <div class="container mx-auto flex flex-col lg:flex-row gap-6 lg:gap-10 px-4 md:px-6">
+      <Sidebar {categories} {grouped} base={base} />
 
-		<!-- content -->
-		<main
-			class="flex-1 min-w-0
-			       mt-6 lg:mt-0
-			       px-0 lg:px-4"
-		>
-			<article
-				class="prose prose-lg max-w-none dark:prose-invert"
-			>
-				<Content />
-			</article>
+      <main class="flex-1 min-w-0 mt-6 lg:mt-0 px-0 lg:px-4" role="main">
+        <article class="prose prose-lg max-w-none dark:prose-invert" aria-label={data.title}>
+          <Content />
+        </article>
 
-			<nav class="flex justify-between mt-12">
-				{prev ? (
-					<a href={`/${base}/${prev.slug}`} class="shrink-0 no-underline">
-						<Button variant="outline" className="flex items-center gap-2">
-							<ArrowLeft className="w-4 h-4" /> Go&nbsp;Back
-						</Button>
-					</a>
-				) : <span></span>}
+        <nav class="flex justify-between mt-12" aria-label="Pagination navigation">
+          {prev ? (
+            <a href={`/${base}/${prev.slug}`} class="shrink-0 no-underline" rel="prev" data-astro-prefetch="hover">
+              <Button variant="outline" className="flex items-center gap-2">
+                <ArrowLeft className="w-4 h-4" /> Go Back
+              </Button>
+            </a>
+          ) : <div />}
 
-				{next ? (
-					<a href={`/${base}/${next.slug}`} class="shrink-0 no-underline">
-						<Button variant="outline" className="flex items-center gap-2">
-							Next&nbsp;Page <ArrowRight className="w-4 h-4" />
-						</Button>
-					</a>
-				) : <span></span>}
-			</nav>
-		</main>
-	</div>
-</section>
+          {next ? (
+            <a href={`/${base}/${next.slug}`} class="shrink-0 no-underline" rel="next" data-astro-prefetch="hover">
+              <Button variant="outline" className="flex items-center gap-2">
+                Next Page <ArrowRight className="w-4 h-4" />
+              </Button>
+            </a>
+          ) : <div />}
+        </nav>
+
+        <Separator className="my-8" />
+
+        <a
+          href={`/docs`}
+          class="flex items-center space-x-2 text-primary hover:underline"
+        >
+          <ArrowLeft className="h-4 w-4 inline-block" />
+          <span>Back to Docs</span>
+        </a>
+      </main>
+    </div>
+  </section>
 </Layout>

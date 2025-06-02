@@ -6,7 +6,7 @@ source: "https://github.com/pokepetter/ursina/blob/master/samples/particle_syste
 pubDate: "5/6/2025"
 author: "HarrisonTCodes"
 authorImg: "people/noprofile.png"
-category: "[3] Community"
+category: "[2] Community"
 sort: 0
 ---
 
