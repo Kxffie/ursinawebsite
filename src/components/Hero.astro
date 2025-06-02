@@ -52,14 +52,16 @@ const siteName = 'Ursina Engine'
   >
     <div class="md:w-1/2 text-white">
       {topLogo && (
-        <div class="flex items-center justify-center md:justify-start mb-4">
-          <img
-            src={logoSrc}
-            alt={logoAlt}
-            class="h-10 w-auto mr-3 transition-transform hover:scale-105"
-          />
-          <h1 class="text-2xl md:text-4xl font-bold">{siteName}</h1>
-        </div>
+        <a data-astro-prefetch="hover" href="/">
+          <div class="flex items-center justify-center md:justify-start mb-4">
+            <img
+              src={logoSrc}
+              alt={logoAlt}
+              class="h-10 w-auto mr-3 transition-transform hover:scale-105"
+            />
+            <h1 class="text-2xl md:text-4xl font-bold">{siteName}</h1>
+          </div>
+        </a>
       )}
 
       {primaryText && (
@@ -78,10 +80,12 @@ const siteName = 'Ursina Engine'
 
           return (
             btn.href && (<a
+              data-astro-prefetch="hover"
               href={btn.href}
               {...(btn.external ? { target: '_blank', rel: 'noopener' } : {})}
             >
               <Button
+                data-astro-prefetch="hover"
                 className={cls}
                 size="lg"
                 variant={variant === 'outline' ? 'outline' : undefined}
